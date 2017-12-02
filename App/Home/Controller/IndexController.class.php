@@ -55,7 +55,6 @@ class IndexController extends BaseController
 
     public function index()
     {	
-    	echo __ROOT__;exit;
     	echo 111; exit;
     }
 
