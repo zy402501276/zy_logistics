@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>新建订单</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/all.css" />
+	</head>
+
+	<body>
+
+		<!--菜单-->
+		<div class="newOrder-head">
+			<div class="newOrder-head-area">
+
+				<div class="newOrder-userImg-area">
+					<div class="newOrder-user-headImg">
+						<img class="userImg" src="images/138-140G1141348.jpg" alt="暂无图片">
+					</div>
+					<div class="newOrder-userName-area">
+						<span class="newOrder-userName-span">
+                    张生
+                </span>
+						<span class="newOrder-userAddress-span">
+                    南山集散中心
+                </span>
+					</div>
+				</div>
+
+				<div class="newOrder-nav-area">
+					<ul class="nva-ul">
+						<li><a href="###">首页  〉</a></li>
+						<li><a href="###">订单  〉</a></li>
+						<li class="newOrder-active"><a href="###">新建订单</a></li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+
+		<!--订单类别-->
+
+		<div class="newOrder-type">
+			<div class="newOrder-type-area">
+				<span class="newOrder-type-fonts">
+            订单类别
+        </span>
+				<ul class="newOrder-type-ul">
+					<li class="newOrder-type-li">
+						<span class="default-show">标准货物</span>
+						<ul class="type-ul1">
+							<li>标准货物</li>
+							<li>轻型货物</li>
+							<li>重型货物</li>
+							<li>超重货物</li>
+						</ul>
+					</li>
+					<li class="newOrder-type-li">
+						<span class="default-show">拼车1</span>
+						<ul class="type-ul1">
+							<li>拼车1</li>
+							<li>拼车2</li>
+							<li>拼车3</li>
+						</ul>
+					</li>
+					<li class="newOrder-type-li">
+						<input class="type-input" type="text" placeholder="车辆类型">
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="newOrder-content">
+
+			<!--货物清单信息-->
+			<div class="newOrder-goods-message-area">
+				<div class="newOder-goods-information">
+					<div class="title-box">货物信息</div>
+					<ul class="goods-information-ul">
+						<li>
+							<span>长:</span><input type="text">
+						</li>
+						<li>
+							<span>宽:</span><input type="text">
+						</li>
+						<li>
+							<span>高:</span><input type="text">
+						</li>
+						<li>
+							<span>重量:</span><input type="text">
+						</li>
+						<li>
+							<span>数量:</span><input type="text">
+						</li>
+						<li>
+							<span>类别:</span><input type="text">
+						</li>
+					</ul>
+
+					<div class="add-ul-btn"></div>
+				</div>
+
+				<div class="order-information-area">
+					<div class="title-box">订单信息</div>
+
+					<div class="stowage-area">
+						<span class="tilte-fonts">装货信息</span>
+						<ul class="stowage-ul">
+							<li>
+								<span>装货地点:</span><input type="text">
+							</li>
+							<li>
+								<span>装货联系人:</span><input class="name-input" type="text"><input class="phone-input" type="text">
+							</li>
+							<li>
+								<span>装货时间:</span><input type="text">
+							</li>
+							<li>
+								<span>装货备注:</span><input type="text">
+							</li>
+						</ul>
+					</div>
+					<div class="stowage-area discharge-cargo">
+						<span class="tilte-fonts">卸货信息</span>
+						<ul class="stowage-ul">
+							<li>
+								<span>装货地点:</span><input type="text">
+							</li>
+							<li>
+								<span>装货联系人:</span><input class="name-input" type="text"><input class="phone-input" type="text">
+							</li>
+							<li>
+								<span>装货时间:</span><input type="text">
+							</li>
+							<li>
+								<span>装货备注:</span><input type="text">
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--遮罩-->
+		<div class="overMasking"></div>
+		<footer>
+			<a href="###" style="float: right;">
+				<div class="place-order">
+					提交订单
+				</div>
+			</a>
+			<div class="foot-price">
+				<span class="foot-wen">装货率</span>
+				<span class="loading-rate">20%</span>
+				<span class="foot-wen">预计金额</span>
+				<span class="amount">600元</span>
+			</div>
+
+		</footer>
+
+	</body>
+
+</html>
+<script src="js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/all.js" type="text/javascript" charset="utf-8"></script>

@@ -1,8 +1,72 @@
 <?php
+// +----------------------------------------------------------------------
+// | Count.System [ All demangs in it! ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2015 http://www.tool.pub All rights reserved.
+// +----------------------------------------------------------------------
+// | Author: shigin <597852546@qq.com> <http://shigin.cc>
+// +----------------------------------------------------------------------
 namespace Home\Controller;
-use Think\Controller;
-class IndexController extends Controller {
-    public function index(){
-        $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
+class IndexController extends BaseController 
+{
+   	//----------------------------------
+    // 变量 - 成员变量
+    //----------------------------------
+
+    /**
+     * 引用对象[redis]
+     * @var $object
+     */
+    protected $redis         = NULL;
+
+    /**
+     * 引用对象[es]
+     * @var $model
+     */
+    protected $elasticsearch = NULL;
+
+    /**
+     * 模型对象[设备]
+     * @var $model
+     */
+    protected $model_device  = NULL;
+
+     /**
+     * 模型对象[APP]
+     * @var $model
+     */
+    protected $model_app     = NULL;
+
+
+   	/**
+     * 初始化
+     * @return void
+     * @author shigin <597852546@qq.com>
+     */
+    protected function _initialize() 
+    {
+        // ###超类调用
+        parent::_initialize();
+
+        // ###本类调用
+        // 实例模型[设备]
+        $this->model_app    = D('Api/App');
     }
+
+    public function index()
+    {
+    	echo 111; exit;
+    }
+
+   	/**
+   	 * 订单加载
+   	 * @author Loring<597852546@qq.com>
+   	 */
+   	public function orderLoading()
+   	{
+    	$this->display();
+	}
+
+
+
 }
