@@ -9,7 +9,7 @@ use Think\Controller;
 class OrderController extends Controller{
 
     /**
-     * 获取货物信息11
+     * 获取货物信息
      * @time 2017年11月30日23:25:45
      * @author: zy
      */
