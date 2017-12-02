@@ -50,7 +50,7 @@ class IndexController extends BaseController
 
         // ###本类调用
         // 实例模型[设备]
-        $this->model_app    = D('Api/App');
+        //$this->model_app    = D('Api/App');
     }
 
     public function index()
