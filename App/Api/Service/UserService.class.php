@@ -23,7 +23,6 @@ class UserService extends Model{
             $data['userName'] = '18649717819';
             $data['pwd'] = 'zhangye';
 
-
             if($user->create($data,1)){
                 $user->add($data);
             }else{

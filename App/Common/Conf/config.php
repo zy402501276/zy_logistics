@@ -96,11 +96,11 @@ return [
     /* 数据库配置 */
 	// mysql配置
 	'DB_TYPE'   => 'mysqli',
-    'DB_HOST'   => '127.0.0.1',
-    'DB_NAME'   => 'aiolos',
-    'DB_USER'   => 'root',
-    'DB_PWD'    => '',
-    'DB_PORT'   => 3306,
+    'DB_HOST'   => '120.77.245.217',
+    'DB_NAME'   => 'logistics',
+    'DB_USER'   => 'manager',
+    'DB_PWD'    => 'manager@123456',
+    'DB_PORT'   => 53175,
     'DB_PREFIX' => '',
 
     // Redis配置
