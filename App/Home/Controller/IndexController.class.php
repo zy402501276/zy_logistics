@@ -50,11 +50,12 @@ class IndexController extends BaseController
 
         // ###本类调用
         // 实例模型[设备]
-        $this->model_app    = D('Api/App');
+        // $this->model_app    = D('Api/App');
     }
 
     public function index()
-    {
+    {	
+    	echo __ROOT__;exit;
     	echo 111; exit;
     }
 
@@ -63,7 +64,7 @@ class IndexController extends BaseController
    	 * @author Loring<597852546@qq.com>
    	 */
    	public function orderLoading()
-   	{
+   	{	
     	$this->display();
 	}
 
