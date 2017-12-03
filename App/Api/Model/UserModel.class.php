@@ -7,13 +7,20 @@ use Think\Model;
  * @author zhangye
  * @time 2017年12月1日14:13:50
  */
-class UserModel extends Model{
+class UserModel extends BaseModel{
+    /**
+     * 状态--正常
+     */
+    CONST STATE_ON = 1;
+    /**
+     * 状态--冻结
+     */
+    CONST STATE_OFF = 0;
 
-    protected $_validate = array(
-        array('userName','require','请输入用户名',1,'unique',3),//用户名在新增修改的时候必须为唯一值
-        array('pwd','8,16','请输入密码',1,'length',3),//密码必须为8-16位的
-        array('account','checkAccount','账户名不能含有特殊字符',1,'function'),//验证账户是否有特殊字符
-    );
+    /**
+     * 用户密码生成规则
+     */
+    CONST PWD_KEY ='yunpeihuo1234567';
 
     /**
      * 登录验证
@@ -30,17 +37,57 @@ class UserModel extends Model{
         }
         return array('state'=>1,'result'=>$result);
     }
-
     /**
-     * 账户名验证是否有特殊符号
-     * @author: zy
-     * @param $arg
+     * 用户注册修改资料验证
+     * @time 2017年12月3日21:29:02
+     * @author zhangye
      */
-    public function checkAccount($arg){
-        $res= preg_match('/[^0-9a-zA-Z一-龥]/u', $arg);
-        if($res){
-            return true;
+    public function userValidate($data){
+        if(isset($data['userName'])){  //验证用户名
+            if(preg_match('/[^0-9a-zA-Z]/u', $data['userName'])){ //正则验证中文或特殊字符
+                return array('state'=>false,'msg'=>'用户名只能为数字或者英文的组合');
+            }
+            if(strlen($data['userName'])<6 ||strlen($data['userName'])>18){ //字数长度限制
+                return array('state'=>false,'msg'=>'用户名长度在6-18个字数之间');
+            }
+            $where['userName'] = trim($data['userName']);
+            $checkUnique = $this->where($where)->select();
+            if($checkUnique){
+                return array('state'=>false,'msg'=>'该用户名已存在');
+            }
+        }else{
+            return array('state'=>false,'msg'=>'请输入用户名');
         }
-        return false;
+
+        if(isset($data['account'])){ //账户验证
+            if(preg_match('/[^0-9a-zA-Z一-龥]/u', $data['account'])){ //正则验证特殊字符
+                return array('state'=>false,'msg'=>'账户名不能含有特殊字符');
+            }
+        }else{
+            return array('state'=>false,'msg'=>'请输入账户名');
+        }
+
+        if(isset($data['pwd'])){ //密码验证
+            if(strlen($data['pwd'])<6 ||strlen($data['pwd'])>18){ //密码长度
+                return array('state'=>false,'msg'=>'密码长度在6-18个字数之间');
+            }
+        }else{
+            return array('state'=>false,'msg'=>'请输入账户名');
+        }
+
+        if(isset($data['email'])){ //验证邮箱
+            if(!preg_match( "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i", $data['email'])){ //正则验证特殊字符
+                return array('state'=>false,'msg'=>'邮箱不合法');
+            }
+        }
+        if(isset($data['mobile'])){ //账户验证
+            if(preg_match('/[^0-9]/u', $data['mobile'])){ //正则验证电话
+                return array('state'=>false,'msg'=>'电话号码不正确');
+            }
+        }else{
+            return array('state'=>false,'msg'=>'请输入账户名');
+        }
+        return array('state'=>true);
     }
+
 }

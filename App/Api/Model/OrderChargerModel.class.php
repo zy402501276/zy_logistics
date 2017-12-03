@@ -30,15 +30,15 @@ class OrderChargerModel extends Model{
         switch ($type){
             case SELF::TYPE_LOAD ://装货
                 $where['type'] = SELF::TYPE_LOAD;
-                $obj = $this->where($where)->find();
-                $times = $obj['endTime']-$obj['startTime'];
-                return $times;
+            break;
             case SELF::TYPE_UNLOAD ://卸货
                 $where['type'] = SELF::TYPE_UNLOAD;
-                $obj = $this->where($where)->find();
-                $times = $obj['endTime']-$obj['startTime'];
-                return $times;
+            break;
+
         }
+        $obj = $this->where($where)->find();
+        $times = intval($obj['endtime'])-intval($obj['starttime']);
+        return $times;
     }
 
     /**

@@ -6,34 +6,50 @@
  */
 namespace Api\Controller;
 use Think\Controller;
-class OrderController extends Controller{
+class OrderController extends Controller
+{
 
     /**
      * 获取货物信息
      * @time 2017年11月30日23:25:45
      * @author: zy
      */
-    public function getGoods(){
+    public function getGoods()
+    {
         $id = I('id'); //货物ID;
-        if(empty($id)){
-            output(-1,'','没有传货物id');
+        if (empty($id)) {
+            output(-1, '', '没有传货物id');
         }
         $model = D('OrderGoods');
         $res = $model->findGoodsByPk($id);
-        output(0,$res);
+        output(0, $res);
+    }
+
+
+    /**
+     * 获取待接单列表
+     * @author zhangye
+     * @time 2017年12月4日00:00:13
+     */
+    public function orderList()
+    {
+        $cur_page = I('cur_page', 1);
+        $page_num = I('page_num', 1);
+
+        $model = D('Order');
+        $result = $model->where(['orderState'=>$model::ORDER_STATE_PUBLISH])->select();
+        $orderList = array();
+        foreach ($result as $key => $value){
+            $orderList[] = $model->getOrderInfo($value['id']);
+        }
+        var_dump($orderList);
     }
 
     /**
-     * 订单详情
-     * @time 2017年12月1日11:43:29
-     * @author zhangye
+     * 申请接单
+     * @author: zy
      */
-    public function orderInfo(){
-        $orderId = I('id');//物流单id
-        if(empty($orderId)){
-            output(-1,'','没有传订单id');
-        }
-        $model = D('Order');
-        $model->getOrderInfo(1);
+    public function newOrder(){
+
     }
 }

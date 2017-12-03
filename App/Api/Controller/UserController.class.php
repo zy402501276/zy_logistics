@@ -14,7 +14,11 @@ class UserController extends Controller{
      */
     public function doregister(){
         $service = D('User','Service');
-        $res = $service->register();
-        var_dump($res);
+        $res = $service->register($_POST);
+        if($res['state']){
+            output(0,'',$res['msg']);
+        }else{
+            output(-1,'',$res['msg']);
+        }
     }
 }

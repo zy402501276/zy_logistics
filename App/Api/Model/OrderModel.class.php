@@ -45,6 +45,11 @@ class OrderModel extends Model{
      */
     CONST STATE_OFF = 0;
 
+    /**
+     * 订单状态-发布中
+     */
+    CONST ORDER_STATE_PUBLISH = 1;
+
 
     /**
      * 根据主键id查询
@@ -53,38 +58,44 @@ class OrderModel extends Model{
      * @return array
      */
     public function getOrderInfo($id){
-        $userModel  = D('User');
-        $userInfo = $userModel->find(1);//用户信息
-
         $model = $this->find($id);//ORM方式查询订单
         $result = array();
         if(empty($model)){
             return $result;
         }
+        $userModel  = D('User');
+        $userInfo = $userModel->find($model['userId']);//用户信息
+
         $charger = D('OrderCharger');
         $loadTime = $charger->getTimes($model['id'],$charger::TYPE_LOAD);//装货时间 second
         $unloadTime = $charger->getTimes($model['id'],$charger::TYPE_UNLOAD);//卸货时间 second
-        $loader = $charger->getLoader($model['id'],$charger::TYPE_LOAD);
-        $unloader = $charger->getLoader($model['id'],$charger::TYPE_UNLOAD);
+        $loader = $charger->getLoader($model['id'],$charger::TYPE_LOAD);//装货人信息
+        $unloader = $charger->getLoader($model['id'],$charger::TYPE_UNLOAD);//卸货人信息
 
+        $lct_depart = array('region'=>$this->explodeArea($loader['area']),'detail'=>$loader['address'],'coords'=>array($loader['longitude'],$loader['latitude']));//出发地
+        $lct_dest = array('region'=>$this->explodeArea($unloader['area']),'detail'=>$unloader['address'],'coords'=>array($unloader['longitude'],$unloader['latitude']));//终点
+
+        $goodsModel = D('OrderGoods');
+        $goodsInfo = $goodsModel->findByOrderId($model['id']);
         $result = array(
                     'orderid'    => $model['ordernum'],//订单号
                     'status'     => intval($model['orderstate']),//订单状态
                     'price'      => intval($model['sumprice']),//费用
-                    'master'     => array($userInfo['userName'],$userInfo['mobile']),//货主信息
-                    'cargo_type' => intval($model['orderType']),//货物类型
-                    'rent_type'  => intval($model['vehicleType']),//用车类型
-                    'lct_depart' => json_encode($model['departArea']),//出发地
-                    'lct_dest'   => json_encode($model['destArea']),//目的地
-                    'time'       => array($model['departTime'],$loadTime,$model['arrivedTime'],$unloadTime),//出发时间戳，装货时间，到达时间戳，卸货时间
+                    'master'     => array($userInfo['account'],$userInfo['mobile']),//货主信息
+                    'cargo_type' => intval($model['ordertype']),//货物类型
+                    'rent_type'  => intval($model['vehicletype']),//用车类型
+                    'lct_depart' => json_encode($lct_depart),//出发地
+                    'lct_dest'   => json_encode($lct_dest),//目的地
+                    'time'       => array(intval($model['departtime']),$loadTime,intval($model['arrivedtime']),$unloadTime),//出发时间戳，装货时间，到达时间戳，卸货时间
                     'loader'     => array($loader['name'],$loader['mobile']),//装货人信息
                     'unloader'   => array($unloader['name'],$unloader['mobile']),//卸货人信息
-                    'cargo'      =>'',//货物
+                    'cargo'      => json_encode($goodsInfo),//货物
                     'loadphoto'  => $loader['photo'],//装货照片
-                    'loadsignature'  => $loader['signature'],//装货签名照
-                    'unloadphoto'  => $unloader['photo'],//卸货照片
-                    'unloadsignature'  => $unloader['signature'],//卸货签名照
+                    'loadsignature' => $loader['signature'],//装货签名照
+                    'unloadphoto' => $unloader['photo'],//卸货照片
+                    'unloadsignature' => $unloader['signature'],//卸货签名照
                     );
+        return $result;
     }
 
     /**
@@ -122,5 +133,12 @@ class OrderModel extends Model{
             SELF::VEHICLE_RENT => '包车',
         );
         return getState($array, $type, $echoString);
+    }
+    /**
+     * 分割地区
+     */
+    private function explodeArea($string){
+        $array = explode(" ",$string);
+        return $array;
     }
 }

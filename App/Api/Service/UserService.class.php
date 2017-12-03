@@ -16,23 +16,27 @@ class UserService extends Model{
      * @return array
      */
     public function register($post){
-       // $tranSaction = D()->startTrans();
         try{
             $user = D('User');
-            $data['account'] = '小野君3';
-            $data['userName'] = '18649717819';
-            $data['pwd'] = 'zhangye';
-
-            if($user->create($data,1)){
+            $data['account'] = trim($post['account']);
+            $data['userName'] = trim($post['userName']);
+            $data['pwd'] = trim($post['pwd']);
+            $data['role'] = isset($post['role'])?$post['role']:0;
+            $data['email'] = trim($post['email']);
+            $data['mobile'] = trim($post['mobile']);
+            $result = $user->userValidate($data);
+            if($result['state']){
+                $data['pwd'] = md5($post['pwd'].$user::PWD_KEY);
+                $data['state'] = $user::STATE_ON;
+                $data['createTime'] = $data['updateTime'] = time();
                 $user->add($data);
+                return ['state'=>true,'message'=>'注册成功'];
             }else{
-                throw new Exception($user->getError());
+                //throw new Exception($result['message']);
+                return ['state'=>false,'message'=>$result['msg']];
             }
-            $tranSaction->commit();
-            return ['state' => 1 ,'message'=>'修改成功'];
         }catch (Exception $e){
-           // $tranSaction->rollBack();
-            return ['state' => 0 ,'message'=>$e->getMessage()];
+            return ['state' => false ,'message'=>$e->getMessage()];
         }
     }
 }
