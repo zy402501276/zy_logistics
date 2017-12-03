@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-12-02 10:13:34
+Date: 2017-12-04 01:08:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -82,7 +82,7 @@ CREATE TABLE `order` (
 -- ----------------------------
 -- Records of order
 -- ----------------------------
-INSERT INTO `order` VALUES ('1', '1', '1', '1', '1', '第一笔订单', '80', '600', '123456adbcd', '1', '广东省 深圳市 南山区 中山大学', '广东省 惠州市 CBD 万达广场', null, null, '1', '1512105949', '1512105949');
+INSERT INTO `order` VALUES ('1', '1', '1', '1', '1', '第一笔订单', '80', '600', '123456adbcd', '1', '广东省 深圳市 南山区 中山大学', '广东省 惠州市 CBD 万达广场', '1512318454', '1514736000', '1', '1512105949', '1512105949');
 
 -- ----------------------------
 -- Table structure for `ordercharger`
@@ -93,26 +93,26 @@ CREATE TABLE `ordercharger` (
   `orderId` int(11) unsigned DEFAULT NULL COMMENT '订单-关联order表主键',
   `name` varchar(20) DEFAULT NULL COMMENT '负责人姓名',
   `mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
-  `provinceId` int(11) unsigned DEFAULT NULL COMMENT '省份id',
-  `cityId` int(11) unsigned DEFAULT NULL COMMENT '城市id',
-  `areaId` int(11) unsigned DEFAULT NULL COMMENT '地区id',
+  `area` varchar(40) DEFAULT NULL COMMENT '地理位置',
   `address` varchar(30) DEFAULT NULL COMMENT '具体位置',
   `startTime` int(40) unsigned DEFAULT NULL COMMENT '装卸货开始时间',
   `endTime` int(40) unsigned DEFAULT NULL COMMENT '装卸货结束时间',
   `type` tinyint(3) unsigned DEFAULT '1' COMMENT '类型[1 装货 | 2 卸货]',
+  `photo` varchar(60) DEFAULT NULL COMMENT '装卸货照片',
+  `signature` varchar(60) DEFAULT NULL COMMENT '签字照片',
+  `longitude` varchar(20) DEFAULT NULL COMMENT '经度',
+  `latitude` varchar(20) DEFAULT NULL COMMENT '纬度',
   `state` tinyint(3) unsigned DEFAULT '1' COMMENT '状态[1 正常 | 0 禁用]',
   `createTime` int(40) unsigned DEFAULT NULL COMMENT '新增时间',
   `updateTime` int(40) unsigned DEFAULT NULL COMMENT '最后更新时间',
-  `photo` varchar(60) DEFAULT NULL COMMENT '装卸货照片',
-  `signature` varchar(60) DEFAULT NULL COMMENT '签字照片',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='订单负责人';
 
 -- ----------------------------
 -- Records of ordercharger
 -- ----------------------------
-INSERT INTO `ordercharger` VALUES ('1', '1', '小王', '110', '1', '2', '3', '广door人', '1512111909', '1514736000', '1', '1', null, null, null, null);
-INSERT INTO `ordercharger` VALUES ('2', '1', '老王', '123', '3', '2', '1', ' 老乡', '1519837260', '1522515660', '2', '1', null, null, null, null);
+INSERT INTO `ordercharger` VALUES ('1', '1', '小王', '110', '深圳市 南山区', '广door人', '1512111909', '1514736000', '1', null, null, null, null, '1', null, null);
+INSERT INTO `ordercharger` VALUES ('2', '1', '老王', '123', '惠州市 惠州路', ' 老乡', '1519837260', '1522515660', '2', null, null, null, null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for `ordergoods`
@@ -150,16 +150,17 @@ CREATE TABLE `user` (
   `userName` varchar(20) DEFAULT NULL COMMENT '用户名',
   `mobile` varchar(30) DEFAULT NULL COMMENT '手机',
   `email` varchar(40) DEFAULT NULL COMMENT '邮箱',
-  `type` tinyint(4) unsigned DEFAULT '1' COMMENT '用户类型[1 司机 | 2 货主 | 3车队]',
+  `role` tinyint(4) unsigned DEFAULT '1' COMMENT '用户类型[1 司机 | 2 货主 | 3车队]',
   `utoken` varchar(20) DEFAULT NULL COMMENT '用户令牌',
   `state` tinyint(3) unsigned DEFAULT '1' COMMENT '状态[1 正常 | 0禁用]',
   `createTime` int(40) DEFAULT NULL COMMENT '新增时间',
   `updateTime` int(40) unsigned DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', '小野君', '0890c785bd9e23fc5df3d39e5425834c', '18649717819', '18649717819', '4012000@qq.com', '1', '123456789', '1', '1512105949', '1512105949');
 INSERT INTO `user` VALUES ('2', '小野君2号', '0890c785bd9e23fc5df3d39e5425834c', '13823517819', '13823517819', '4012000@qq.com', '1', '3214567', '1', '1512105949', null);
+INSERT INTO `user` VALUES ('5', '小野君4', '0890c785bd9e23fc5df3d39e5425834c', '18649717813', null, '402501276@qq.com', '1', null, '1', '1512316160', '1512316160');
