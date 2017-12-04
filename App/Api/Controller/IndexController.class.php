@@ -7,7 +7,6 @@ use Think\Controller;
  * @author zhangy
  */
 class IndexController extends Controller {
-
     /**
      * 文件上传规则
      * @time 2017年12月1日16:46:35
@@ -18,13 +17,16 @@ class IndexController extends Controller {
         $upload->exts = array('jpg','png','jpeg');//设置附件上传类型
         $upload->rootPath ='../../Upload/';//文件上传根目录1
         $upload->savePath = '';
+        $upload->saveName = uniqid();
         $upload->subName  = array('date','Ymd');
-        $info   =   $upload->upload();
+        $info   =   $upload->upload($_FILES);
         if(!$info) {// 上传错误提示错误信息
-            $this->error($upload->getError());
+            $error = $this->error($upload->getError());
+            output(-1, '', $error);
         }else{// 上传成功 获取上传文件信息
             foreach($info as $file){
-                echo $file['savepath'].$file['savename'];
+                $result ="./Upload/".$file['savepath'].$file['savename'];
+                output(0,$result);
             }
         }
 

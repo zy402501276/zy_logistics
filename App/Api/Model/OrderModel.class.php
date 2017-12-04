@@ -49,16 +49,48 @@ class OrderModel extends Model{
      * 订单状态-发布中
      */
     CONST ORDER_STATE_PUBLISH = 1;
-
+    /**
+     * 订单状态-前往装货
+     */
+    CONST ORDER_STATE_GOTOLOADING = 2;
+    /**
+     * 订单状态-装货并拍照
+     */
+    CONST ORDER_STATE_PHOTO = 3;
+    /**
+     * 订单状态-装货完成并且确认
+     */
+    CONST ORDER_STATE_CONFIRM = 4;
+    /**
+     * 订单状态-开始卸货
+     */
+    CONST DOWNORDER_STATE_START = 5;
+    /**
+     * 订单状态-卸货完成
+     */
+    CONST DOWNORDER_STATE_FINISH = 6;
+    /**
+     * 订单状态-卸货完成并且缺
+     */
+    CONST DOWNORDER_STATE_CONFIRM = 7;
+    /**
+     * 订单状态-完成
+     */
+    CONST ORDER_STATE_FINISH = 8;
 
     /**
      * 根据主键id查询
      * @author: zy
      * @param $id int  订单表主键id
+     * @param $type  int 1,根据主键id查询，2根据orderNum查询
      * @return array
      */
-    public function getOrderInfo($id){
-        $model = $this->find($id);//ORM方式查询订单
+    public function getOrderInfo($id,$type = 1){
+        if($type == 1){
+            $model = $this->find($id);//ORM方式查询订单
+        }elseif($type == 2){
+            $model = $this->where(array('orderNum'=>$id))->find();
+        }
         $result = array();
         if(empty($model)){
             return $result;
@@ -77,6 +109,14 @@ class OrderModel extends Model{
 
         $goodsModel = D('OrderGoods');
         $goodsInfo = $goodsModel->findByOrderId($model['id']);
+
+
+        $loadImg = $this->getImg($id,1);
+        $signatureImg = $this->getImg($id,3);
+        $unloadImg = $this->getImg($id,2);
+        $unsignatureImg = $this->getImg($id,4);
+
+
         $result = array(
                     'orderid'    => $model['ordernum'],//订单号
                     'status'     => intval($model['orderstate']),//订单状态
@@ -90,10 +130,10 @@ class OrderModel extends Model{
                     'loader'     => array($loader['name'],$loader['mobile']),//装货人信息
                     'unloader'   => array($unloader['name'],$unloader['mobile']),//卸货人信息
                     'cargo'      => json_encode($goodsInfo),//货物
-                    'loadphoto'  => $loader['photo'],//装货照片
-                    'loadsignature' => $loader['signature'],//装货签名照
-                    'unloadphoto' => $unloader['photo'],//卸货照片
-                    'unloadsignature' => $unloader['signature'],//卸货签名照
+                    'loadphoto'  => $loadImg,//装货照片
+                    'loadsignature' => $signatureImg,//装货签名照
+                    'unloadphoto' => $unloadImg,//卸货照片
+                    'unloadsignature' => $unsignatureImg,//卸货签名照
                     );
         return $result;
     }
@@ -141,4 +181,25 @@ class OrderModel extends Model{
         $array = explode(" ",$string);
         return $array;
     }
+
+    /**
+     * 获取图片
+     * @param $orderId
+     * @param $type
+     * @return array
+     */
+    private function getImg($orderId,$type){
+        $model = M('orderimg');
+        $where['type'] = $type ;
+        $where['orderid'] = $orderId;
+        $result = $model->where($where)->select();
+        $array = array();
+        if(!empty($result)){
+            foreach ($result as $key => $value){
+                $array[] = $value['img'];
+            }
+        }
+        return $array;
+    }
+
 }
