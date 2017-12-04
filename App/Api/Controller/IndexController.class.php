@@ -15,7 +15,7 @@ class IndexController extends Controller {
         $upload = new \Think\Upload();
         $upload->maxSize = 3145728 ; //文件上传的最大文件大小（以字节为单位），0为不限大小
         $upload->exts = array('jpg','png','jpeg');//设置附件上传类型
-        $upload->rootPath ='../../Upload/';//文件上传根目录1
+        $upload->rootPath ='../Static/Upload/';//文件上传根目录1
         $upload->savePath = '';
         $upload->saveName = uniqid();
         $upload->subName  = array('date','Ymd');
