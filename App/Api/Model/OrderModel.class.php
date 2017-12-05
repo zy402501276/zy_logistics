@@ -105,7 +105,7 @@ class OrderModel extends Model{
         $unloader = $charger->getLoader($model['id'],$charger::TYPE_UNLOAD);//卸货人信息
 
         $lct_depart = array('region'=>$this->explodeArea($loader['area']),'detail'=>$loader['address'],'coords'=>array($loader['longitude'],$loader['latitude']));//出发地
-        $lct_dest = array('region'=>$this->explodeArea($unloader['area']),'detail'=>$unloader['address'],'coords'=>array($unloader['longitude'],$unloader['latitude']));//终点
+        $lct_dest =  array('region'=>$this->explodeArea($unloader['area']),'detail'=>$unloader['address'],'coords'=>array($unloader['longitude'],$unloader['latitude']));//终点
 
         $goodsModel = D('OrderGoods');
         $goodsInfo = $goodsModel->findByOrderId($model['id']);
@@ -124,12 +124,12 @@ class OrderModel extends Model{
                     'master'     => array($userInfo['account'],$userInfo['mobile']),//货主信息
                     'cargo_type' => intval($model['ordertype']),//货物类型
                     'rent_type'  => intval($model['vehicletype']),//用车类型
-                    'lct_depart' => json_encode($lct_depart),//出发地
-                    'lct_dest'   => json_encode($lct_dest),//目的地
-                    'time'       => array(intval($model['departtime']),$loadTime,intval($model['arrivedtime']),$unloadTime),//出发时间戳，装货时间，到达时间戳，卸货时间
+                    'lct_depart' => $lct_depart,//出发地
+                    'lct_dest'   => $lct_dest,//目的地
+                    'times'       => array(intval($model['departtime']),$loadTime,intval($model['arrivedtime']),$unloadTime),//出发时间戳，装货时间，到达时间戳，卸货时间
                     'loader'     => array($loader['name'],$loader['mobile']),//装货人信息
                     'unloader'   => array($unloader['name'],$unloader['mobile']),//卸货人信息
-                    'cargo'      => json_encode($goodsInfo),//货物
+                    'cargo'      => $goodsInfo,//货物
                     'loadphoto'  => $loadImg,//装货照片
                     'loadsignature' => $signatureImg,//装货签名照
                     'unloadphoto' => $unloadImg,//卸货照片

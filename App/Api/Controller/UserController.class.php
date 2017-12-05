@@ -16,9 +16,9 @@ class UserController extends Controller{
         $service = D('User','Service');
         $res = $service->register($_POST);
         if($res['state']){
-            output(0,'',$res['msg']);
+            output(0,'',$res['message']);
         }else{
-            output(-1,'',$res['msg']);
+            output(-1,'',$res['message']);
         }
     }
 }

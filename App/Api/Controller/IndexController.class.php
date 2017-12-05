@@ -11,10 +11,11 @@ class IndexController extends Controller {
      * 文件上传规则
      * @time 2017年12月1日16:46:35
      */
-    public function uploadFile(){
+    public function photo(){
         $upload = new \Think\Upload();
         $upload->maxSize = 3145728 ; //文件上传的最大文件大小（以字节为单位），0为不限大小
         $upload->exts = array('jpg','png','jpeg');//设置附件上传类型
+        //$upload->rootPath ='../../Uploads';//文件上传根目录1
         $upload->rootPath ='../Static/Upload/';//文件上传根目录1
         $upload->savePath = '';
         $upload->saveName = uniqid();
@@ -25,8 +26,9 @@ class IndexController extends Controller {
             output(-1, '', $error);
         }else{// 上传成功 获取上传文件信息
             foreach($info as $file){
-                $result ="./Upload/".$file['savepath'].$file['savename'];
-                output(0,$result);
+                $result =$file['savepath'].$file['savename'];
+                //output(0,$result);
+                echo json_encode(array('status'=>0,'msg'=>'','photo'=>$result));exit;
             }
         }
 

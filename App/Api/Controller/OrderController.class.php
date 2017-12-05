@@ -43,7 +43,7 @@ class OrderController extends Controller
             $orderList[] = $model->getOrderInfo($value['id']);
         }
         //output(0, $orderList);
-        echo json_encode(array('status'=>0,'msg'=>'获取订单列表成功','order'=>$orderList));exit;
+        echo json_encode(array('status'=>0,'msg'=>'获取订单列表成功','orders'=>$orderList));exit;
     }
 
 
@@ -56,12 +56,11 @@ class OrderController extends Controller
     {
         $cur_page = I('cur_page', 1);
         $page_num = I('page_num', 1);
-//        $driver = session('user');
-//        if(empty($driver)){
-//            output(-1, '', '请重新登录');
-//
-//        }
-        $driver['id'] =2;
+        $driver = session('user');
+        if(empty($driver)){
+            output(-1, '', '请重新登录');
+
+        }
         $model = D('Order');
         $where['orderState'] = array('neq',$model::ORDER_STATE_FINISH);
         $where['driverId'] = $driver['id'];
@@ -71,7 +70,7 @@ class OrderController extends Controller
             $orderList[] = $model->getOrderInfo($value['id']);
         }
         //output(0, $orderList);
-        echo json_encode(array('status'=>0,'msg'=>'获取列表成功','order'=>$orderList));exit;
+        echo json_encode(array('status'=>0,'msg'=>'获取列表成功','orders'=>$orderList));exit;
     }
     /**
      * 司机查看自己所接的正在进行的订单
@@ -82,12 +81,12 @@ class OrderController extends Controller
     {
         $cur_page = I('cur_page', 1);
         $page_num = I('page_num', 1);
-//        $driver = session('user');
-//        if(empty($driver)){
-//            output(-1, '', '请重新登录');
-//
-//        }
-        $driver['id'] =2;
+        $driver = session('user');
+        if(empty($driver)){
+            output(-1, '', '请重新登录');
+
+        }
+
         $model = D('Order');
         $where['orderState'] = array('eq',$model::ORDER_STATE_FINISH);
         $where['driverId'] = $driver['id'];
@@ -97,7 +96,7 @@ class OrderController extends Controller
             $orderList[] = $model->getOrderInfo($value['id']);
         }
         //output(0, $orderList);
-        echo json_encode(array('status'=>0,'msg'=>'获取列表成功','order'=>$orderList));exit;
+        echo json_encode(array('status'=>0,'msg'=>'获取列表成功','orders'=>$orderList));exit;
     }
 
     /**
@@ -169,9 +168,11 @@ class OrderController extends Controller
             output(-1, '', 'id为空');
         }
         $model = D('order');
-        $model->orderState = $model::ORDER_STATE_GOTOLOADING;//前往装货
-        $model->updateTime = time();
-        $model->where("orderNum=$orderid")->save();
+        //$model->orderState = $model::ORDER_STATE_GOTOLOADING;//前往装货
+        $data['orderState'] = $model::ORDER_STATE_GOTOLOADING;
+        $data['updateTime'] = time();
+       // $model->updateTime = time();
+        $model->where("orderNum='$orderid'")->save($data);
         echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::ORDER_STATE_GOTOLOADING));exit;
 
     }
@@ -186,11 +187,13 @@ class OrderController extends Controller
             output(-1, '', 'id为空');
         }
         $model = D('order');
-        $model->orderState = $model::ORDER_STATE_PHOTO;//装货并拍照
-        $model->updateTime = time();
-        $model->where("orderNum=$orderid")->save();
+        //$model->orderState = $model::ORDER_STATE_PHOTO;//装货并拍照
+        $data['orderState'] = $model::ORDER_STATE_PHOTO;
+        $data['updateTime'] = time();
+        //$model->updateTime = time();
+        $model->where("orderNum='$orderid'")->save($data);
         
-        $order = $model->where("orderNum=$orderid")->find();
+        $order = $model->where("orderNum='$orderid'")->find();
         $imgModel = M('orderimg');
         $data = array();
         if(isset($_REQUEST['img1'])){
@@ -223,10 +226,17 @@ class OrderController extends Controller
             output(-1, '', 'id为空');
         }
         $model = D('order');
-        $model->orderState = $model::ORDER_STATE_CONFIRM;//完成确认
-        $model->updateTime = time();
-        $model->where("orderNum=$orderid")->save();
-        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::ORDER_STATE_CONFIRM));exit;
+        //$model->orderState = $model::ORDER_STATE_CONFIRM;//完成确认
+//        $data['orderState'] = $model::ORDER_STATE_CONFIRM;
+//        $data['updateTime'] = time();
+       // $model->updateTime = time();
+        $result = $model->where("orderNum='$orderid'")->find();
+        if($result['orderstate'] == $model::DOWNORDER_STATE_START){
+            echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::DOWNORDER_STATE_START));exit;
+        }else{
+            output(-1, '', '订单还没有被确认');
+        }
+
     }
 
     /**
@@ -239,10 +249,12 @@ class OrderController extends Controller
             output(-1, '', 'id为空');
         }
         $model = D('order');
-        $model->orderState = $model::DOWNORDER_STATE_START;//开始卸货
-        $model->updateTime = time();
-        $model->where("orderNum=$orderid")->save();
-        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::DOWNORDER_STATE_START));exit;
+        $data['orderState'] = $model::DOWNORDER_STATE_FINISH;
+        $data['updateTime'] = time();
+//        $model->orderState = $model::DOWNORDER_STATE_START;//开始卸货
+//        $model->updateTime = time();
+        $model->where("orderNum='$orderid'")->save($data);
+        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::DOWNORDER_STATE_FINISH));exit;
     }
     /**
      * 卸货完成
@@ -254,11 +266,13 @@ class OrderController extends Controller
             output(-1, '', 'id为空');
         }
         $model = D('order');
-        $model->orderState = $model::DOWNORDER_STATE_START;//卸货完成并拍照
-        $model->updateTime = time();
-        $model->where("orderNum=$orderid")->save();
+        $data['orderState'] = $model::DOWNORDER_STATE_CONFIRM;
+        $data['updateTime'] = time();
+//        $model->orderState = $model::DOWNORDER_STATE_START;//卸货完成并拍照
+//        $model->updateTime = time();
+        $model->where("orderNum='$orderid'")->save($data);
 
-        $order = $model->where("orderNum=$orderid")->find();
+        $order = $model->where("orderNum='$orderid'")->find();
         $imgModel = M('orderimg');
         $data = array();
         if(isset($_REQUEST['img1'])){
@@ -278,7 +292,7 @@ class OrderController extends Controller
         }
         $imgModel->addAll($data);
 
-        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::DOWNORDER_STATE_START));exit;
+        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::DOWNORDER_STATE_CONFIRM));exit;
     }
 
     /**
@@ -291,10 +305,16 @@ class OrderController extends Controller
             output(-1, '', 'id为空');
         }
         $model = D('order');
-        $model->orderState = $model::DOWNORDER_STATE_CONFIRM;//卸货完成并且确认
-        $model->updateTime = time();
-        $model->where("orderNum=$orderid")->save();
-        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::DOWNORDER_STATE_CONFIRM));exit;
+       // $data['orderState'] = $model::DOWNORDER_STATE_CONFIRM;
+//        $data['updateTime'] = time();
+//        $model->orderState = $model::DOWNORDER_STATE_CONFIRM;//卸货完成并且确认
+//        $model->updateTime = time();
+        $result = $model->where("orderNum='$orderid'")->find();
+        if($result['orderstate'] == $model::ORDER_STATE_FINISH){
+            echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::ORDER_STATE_FINISH));exit;
+        }else{
+            output(-1, '', '订单还没有被确认');
+        }
     }
 
 }

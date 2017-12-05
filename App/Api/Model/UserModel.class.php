@@ -59,13 +59,13 @@ class UserModel extends BaseModel{
             return array('state'=>false,'msg'=>'请输入用户名');
         }
 
-        if(isset($data['account'])){ //账户验证
-            if(preg_match('/[^0-9a-zA-Z一-龥]/u', $data['account'])){ //正则验证特殊字符
-                return array('state'=>false,'msg'=>'账户名不能含有特殊字符');
-            }
-        }else{
-            return array('state'=>false,'msg'=>'请输入账户名');
-        }
+//        if(isset($data['account'])){ //账户验证
+//            if(preg_match('/[^0-9a-zA-Z一-龥]/u', $data['account'])){ //正则验证特殊字符
+//                return array('state'=>false,'msg'=>'账户名不能含有特殊字符');
+//            }
+//        }else{
+//            return array('state'=>false,'msg'=>'请输入账户名');
+//        }
 
         if(isset($data['pwd'])){ //密码验证
             if(strlen($data['pwd'])<6 ||strlen($data['pwd'])>18){ //密码长度
@@ -75,18 +75,18 @@ class UserModel extends BaseModel{
             return array('state'=>false,'msg'=>'请输入账户名');
         }
 
-        if(isset($data['email'])){ //验证邮箱
-            if(!preg_match( "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i", $data['email'])){ //正则验证特殊字符
-                return array('state'=>false,'msg'=>'邮箱不合法');
-            }
-        }
-        if(isset($data['mobile'])){ //账户验证
-            if(preg_match('/[^0-9]/u', $data['mobile'])){ //正则验证电话
-                return array('state'=>false,'msg'=>'电话号码不正确');
-            }
-        }else{
-            return array('state'=>false,'msg'=>'请输入账户名');
-        }
+//        if(isset($data['email'])){ //验证邮箱
+//            if(!preg_match( "/^([0-9A-Za-z\\-_\\.]+)@([0-9a-z]+\\.[a-z]{2,3}(\\.[a-z]{2})?)$/i", $data['email'])){ //正则验证特殊字符
+//                return array('state'=>false,'msg'=>'邮箱不合法');
+//            }
+//        }
+//        if(isset($data['mobile'])){ //账户验证
+//            if(preg_match('/[^0-9]/u', $data['mobile'])){ //正则验证电话
+//                return array('state'=>false,'msg'=>'电话号码不正确');
+//            }
+//        }else{
+//            return array('state'=>false,'msg'=>'请输入账户名');
+//        }
         return array('state'=>true);
     }
 

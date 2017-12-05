@@ -18,12 +18,12 @@ class UserService extends Model{
     public function register($post){
         try{
             $user = D('User');
-            $data['account'] = trim($post['account']);
-            $data['userName'] = trim($post['userName']);
-            $data['pwd'] = trim($post['pwd']);
+           // $data['account'] = trim($post['account']);
+            $data['userName'] = trim($post['username']);
+            $data['pwd'] = trim($post['password']);
             $data['role'] = isset($post['role'])?$post['role']:0;
-            $data['email'] = trim($post['email']);
-            $data['mobile'] = trim($post['mobile']);
+//            $data['email'] = trim(isset($post['email']));
+//            $data['mobile'] = trim(isset($post['mobile']));
             $result = $user->userValidate($data);
             if($result['state']){
                 $data['pwd'] = md5($post['pwd'].$user::PWD_KEY);

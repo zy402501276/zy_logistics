@@ -31,10 +31,12 @@ class OrderService extends Model{
                 return array('state'=>false,'message'=>'请先完成之前的订单');
             }
             $order = D('Order');
-            $order->driverId = $driver['id'];
+//            $order->driverId = $driver['id'];
+            $data['driverId'] = $driver['id'];
+            $data['updateTime'] = time();
             //$order->orderState = $order::ORDER_STATE_GOTOLOADING;//状态
-            $order->updateTime = time();
-            $order->where("orderNum=$orderId")->save();
+//            $order->updateTime = time();
+            $order->where("orderNum=$orderId")->save($data);
             return array('state'=> true);
 
         }catch (Exception $e){

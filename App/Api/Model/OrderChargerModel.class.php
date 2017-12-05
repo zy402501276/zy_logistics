@@ -28,11 +28,11 @@ class OrderChargerModel extends Model{
     public function getTimes($orderId,$type){
         $where['orderId'] = $orderId;
         switch ($type){
-            case SELF::TYPE_LOAD ://装货
-                $where['type'] = SELF::TYPE_LOAD;
+            case 1 ://装货
+                $where['type'] = 1;
             break;
-            case SELF::TYPE_UNLOAD ://卸货
-                $where['type'] = SELF::TYPE_UNLOAD;
+            case 2 ://卸货
+                $where['type'] = 2;
             break;
 
         }
