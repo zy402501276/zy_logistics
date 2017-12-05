@@ -3,7 +3,8 @@
 	outline: 0;
 	margin: 0;
 	padding: 0;
-	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);;
+	font-family: "微软雅黑";
 }
 *:focus {
 	outline: 0
@@ -47,4 +48,11 @@ button{
 span {
 	display: inline-block;
 }
-
+.amap-call,.amap-lib-driving{
+	display: none;
+}
+#container{
+	width: 400px;
+	height: 400px;
+	border: 1px solid;
+}

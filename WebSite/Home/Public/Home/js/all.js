@@ -77,3 +77,19 @@ $('.pop1-close').click(function(){
 $('.check-span').click(function() {
 		$(this).toggleClass('check-span-icon');
 	})
+
+
+
+
+
+
+
+
+//完成订单
+
+$('.driver-advice').click(function(){
+    $('.driver-evaluate-area').toggle();
+    $('.add-evaluate').click(function () {
+
+    });
+});
