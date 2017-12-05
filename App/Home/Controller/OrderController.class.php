@@ -52,10 +52,10 @@ class OrderController extends BaseController
     }
 
     /**
-     * 新增订单
+     * 保存订单
      * @author: zy
      */
-    public function add()
+    public function save()
     {    
         // ###操作数据
         // 订单信息
@@ -152,6 +152,39 @@ class OrderController extends BaseController
         // ###渲染页面
         $this->display();
     }
+
+
+    /**
+     * 新增页面
+     * @author shigin <597852546@qq.com>
+     */
+    public function add()
+    {
+        // ###渲染页面
+        $this->display();
+    }
+
+    /**
+     * 编辑页面
+     * @author shigin <597852546@qq.com>
+     */
+    public function edit()
+    {
+        // ###渲染页面
+        $this->display();
+    }
+
+    /**
+     * 更新
+     * @author shigin <597852546@qq.com>
+     */
+    public function update()
+    {
+
+    }
+
+
+
 
     /**
      * 检验数据

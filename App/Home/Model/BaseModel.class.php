@@ -12,7 +12,7 @@ use Think\Model;
 /**
  * 基础模型
  */
-class BaseModel extends BaseModel 
+class BaseModel extends Model 
 {    
     //----------------------------------
     // 方法 - 检索数据
