@@ -49,7 +49,7 @@ $('.overMasking').click(function () {
 
 
 
-var newDom = '<ul class="goods-information-ul"><li><span>长:</span><input type="text"></li><li><span>宽:</span><input type="text"></li><li><span>高:</span><input type="text"></li><li><span>重量:</span><input type="text"></li><li><span>数量:</span><input type="text"></li><li><span>类别:</span><input type="text"><div class="delete-btn"></div></li></ul>';
+var newDom = '<ul class="goods-information-ul"><li><span>长:</span><input type="text" name="goodsLength[]" value=""></li><li><span>宽:</span><input type="text" name="goodsWidth[]" value=""></li><li><span>高:</span><input type="text" name="goodsHeight[]" value=""></li><li><span>重量:</span><input type="text" name="goodsWeight[]" value=""></li><li><span>数量:</span><input type="text" name="count[]" value=""></li><li><span>类别:</span><input type="text"><div class="delete-btn"></div></li></ul>';
 var domIndex = 0;
 //新增货物信息
 $('.add-ul-btn').click(function (event) {

@@ -1,0 +1,216 @@
+
+		<!--订单类别-->
+<form action="{:U('Order/add')}" method="post" name="order" >
+		<div class="newOrder-type">
+			<div class="newOrder-type-area">
+				<span class="newOrder-type-fonts">
+            订单类别
+        </span>
+				<ul class="newOrder-type-ul">
+					<li class="newOrder-type-li">
+						<span class="default-show">标准货物</span>
+						<ul class="type-ul1">
+							<li>标准货物</li>
+							<li>轻型货物</li>
+							<li>重型货物</li>
+							<li>超重货物</li>
+						</ul>
+					</li>
+					<li class="newOrder-type-li">
+						<span class="default-show">拼车1</span>
+						<ul class="type-ul1">
+							<li>拼车1</li>
+							<li>拼车2</li>
+							<li>拼车3</li>
+						</ul>
+					</li>
+					<li class="newOrder-type-li">
+						<input class="type-input" type="text" placeholder="车辆类型">
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="newOrder-content">
+
+			<!--货物清单信息-->
+			<div class="newOrder-goods-message-area">
+				<div class="newOder-goods-information">
+					<div class="title-box">货物信息</div>
+					<ul class="goods-information-ul">
+						<li>
+							<span>长:</span><input type="text" name="goodsLength[]" >
+						</li>
+						<li>
+							<span>宽:</span><input type="text" name="goodsWidth[]">
+						</li>
+						<li>
+							<span>高:</span><input type="text" name="goodsHeight[]">
+						</li>
+						<li>
+							<span>重量:</span><input type="text" name="goodsWeight[]">
+						</li>
+						<li>
+							<span>数量:</span><input type="text" name="count[]">
+						</li>
+						<li>
+							<span>类别:</span><input type="text" >
+						</li>
+					</ul>
+
+					<div class="add-ul-btn"></div>
+				</div>
+
+				<div class="order-information-area">
+					<div class="title-box">订单信息</div>
+
+					<div class="stowage-area">
+						<span class="tilte-fonts">装货信息</span>
+						<ul class="stowage-ul">
+							<li>
+								<span>装货地点:</span>
+								<input type="text" id="input_id">
+								<div id="map_box"></div>
+								 <div id = 'message'></div>
+							</li>
+							<li>
+								<span>装货联系人:</span><input class="name-input" type="text"><input class="phone-input" type="text">
+							</li>
+							<li>
+								<span>装货时间:</span><input type="text">
+							</li>
+							<li>
+								<span>装货备注:</span><input type="text">
+							</li>
+						</ul>
+					</div>
+					<div class="stowage-area discharge-cargo">
+						<span class="tilte-fonts">卸货信息</span>
+						<ul class="stowage-ul">
+							<li>
+								<span>装货地点:</span><input type="text">
+							</li>
+							<li>
+								<span>装货联系人:</span><input class="name-input" type="text"><input class="phone-input" type="text">
+							</li>
+							<li>
+								<span>装货时间:</span><input type="text">
+							</li>
+							<li>
+								<span>装货备注:</span><input type="text">
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--遮罩-->
+		<div class="overMasking"></div>
+		<footer>
+			<a href="###" style="float: right;">
+				<div class="place-order submit" >
+					提交订单
+				</div>
+			</a>
+			<div class="foot-price">
+				<span class="foot-wen">装货率</span>
+				<span class="loading-rate">20%</span>
+				<span class="foot-wen">预计金额</span>
+				<span class="amount">600元</span>
+			</div>
+
+		</footer>
+</form>>
+
+
+	<div class="hide_box">
+		 <div id="container" class="map" tabindex="0"></div>
+    <div id='right'>
+        <div>
+            <div class='title'>选择模式</div>
+            <input type='radio' name='mode' value='dragMap' checked>拖拽地图模式</input>
+            </br>
+            <input type='radio' name='mode' value='dragMarker'>拖拽Marker模式</input>
+        </div>
+        <div>
+            <button id='start'>开始选点</button>
+            <button id='stop'>关闭选点</button>
+        </div>
+        <div>
+            <div class='title'>选址结果</div>
+            <div class='c'>经纬度:</div>
+            <div id='lnglat'></div>
+            <div class='c'>地址:</div>
+            <div id='address'></div>
+            <div class='c'>最近的路口:</div>
+            <div id='nearestJunction'></div>
+            <div class='c'>最近的路:</div>
+            <div id='nearestRoad'></div>
+            <div class='c'>最近的POI:</div>
+            <div id='nearestPOI'></div>
+        </div>
+    </div>
+	</div>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.2&key=199fbca875e24c457e78f2a07468a86f"></script>
+   <script type="text/javascript">
+	//提交订单
+	$(".submit").click(function(){
+	    $("[name='order']").submit();
+	});
+
+   	$(function(){
+		$('#input_id').focus(function(event) {
+			$(this).css({'border-color':'#4791ff'});
+			$('#map_box').show();
+		});
+		// $('#input_id').blur(function(event) {
+		// 	$(this).css({'border-color':'#CDCDCD'});
+		// 	$('#map_box').hide();
+		// });
+	});
+    var map = new AMap.Map('map_box',{
+            resizeEnable: true,
+            zoom: 13,
+            center: [116.39,39.9]
+    });
+    AMap.plugin('AMap.Geocoder',function(){
+        var geocoder = new AMap.Geocoder({
+            city: "010"//城市，默认：“全国”
+        });
+        var marker = new AMap.Marker({
+            map:map,
+            bubble:true
+        })
+        var input = document.getElementById('input_id');
+        var message = document.getElementById('message');
+        map.on('click',function(e){
+            marker.setPosition(e.lnglat);
+            
+            geocoder.getAddress(e.lnglat,function(status,result){
+              if(status=='complete'){
+                 input.value = result.regeocode.formattedAddress
+                 
+                 message.innerHTML = ''
+              }else{
+                 message.innerHTML = '无法获取地址'
+              }
+            })
+            console.log(e.lnglat);
+        })
+        
+        input.onchange = function(e){
+            var address = input.value;
+            geocoder.getLocation(address,function(status,result){
+              if(status=='complete'&&result.geocodes.length){
+                marker.setPosition(result.geocodes[0].location);
+                map.setCenter(marker.getPosition())
+                message.innerHTML = ''
+              }else{
+                message.innerHTML = '无法获取位置'
+              }
+            })
+        }
+
+    });
+   </script>
+   <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
