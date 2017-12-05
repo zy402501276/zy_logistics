@@ -1,13 +1,19 @@
 <?php
+// +----------------------------------------------------------------------
+// | wuliu.System [ All demangs in it! ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2015 http://www.yoursite.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Author: shigin <597852546@qq.com> <http://shigin.cc>
+// +----------------------------------------------------------------------
 namespace Home\Model;
-use Think\Model;
-
 /**
  * 订单负责人模型类
  * @time 2017年12月1日14:54:26
  * @author zhangye
  */
-class OrderChargerModel extends Model{
+class OrderChargerModel extends BaseModel
+{
     /**
      * 负责人类型-装货
      */
