@@ -175,7 +175,7 @@
 
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.2&key=199fbca875e24c457e78f2a07468a86f"></script>
 <script type="text/javascript">
-	var newDom = '<ul class="goods-information-ul"><li><input type="text"></li><li><input type="text"></li><li><input type="text"></li><li><input type="text"></li><li><input type="text"></li><li><select class="newOrder-type-li"><option value ="">拼车1</option><option value ="">拼车2</option><option value="">拼车3</option></select><li><input type="text"></li><li><div class="delete-btn"></div></li></ul>';
+	var newDom = '<ul class="goods-information-ul"><li><input type="text" name="goodsLength[]" value="" ></li><li><input type="text" name="goodsWidth[]" value=""></li><li><input type="text"name="goodsHeight[]" value=""></li><li><input type="text"name="goodsWeight[]" value=""></li><li><input type="text" name="count[]"></li><li><select class="newOrder-type-li" name="goodsType[]" ><option value ="">拼车1</option><option value ="">拼车2</option><option value="">拼车3</option></select><li><input type="text" name="goodsName[]"></li><li><div class="delete-btn"></div></li></ul>';
 	var domIndex = 0;
 	//新增货物信息
 	$('.add-ul-btn').click(function(event) {
