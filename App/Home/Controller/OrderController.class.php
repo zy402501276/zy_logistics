@@ -86,29 +86,29 @@ class OrderController extends BaseController
 
         
         // ###封装数据
-        // 订单类型
+        // 赋值数据[订单类型]
         $data['orderType']        = $orderType;
-         // 运输类型  
+         // 赋值数据[运输类型]  
         $data['transType']        = $transType;
-        // 用车类型
+        // 赋值数据[用车类型]
         $data['vehicleType']      = $vehicleType;
-        // 出发地
+        // 赋值数据[出发地]
         $data['departArea']       = $departArea;
-        // 目的地
+        // 赋值数据[目的地]
         $data['destArea']         = $destArea;
-        // 预估出发时间
+        // 赋值数据[预估出发时间]
         $data['departTime']       = time();
-        // 预估到达时间
+        // 赋值数据[预估到达时间]
         $data['arrivedTime']      = time();
-        // 生成订单号
+        // 赋值数据[生成订单号]
         $data['orderNum']      = generateOrderSn(); 
-        //订单状态变更为发布中 1
+        // 赋值数据[订单状态变更为发布中 1]
         $data['orderState']    = ORDER_STATE_PUBLISH; 
-        // 
+        // 赋值数据[状态]
         $data['state']         = STATE_ON;
-        // 订单生成时间
+        // 赋值数据[订单生成时间]
         $data['createTime']    = time();
-        // 订单修改时间
+        // 赋值数据[订单修改时间]
         $data['updateTime']    = time();
 
 
@@ -179,7 +179,7 @@ class OrderController extends BaseController
      * @author shigin <597852546@qq.com>
      */
     public function update()
-    {
+    {   
 
     }
 
