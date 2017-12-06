@@ -36,7 +36,7 @@ class OrderController extends BaseController
      * 引用对象[下单货物信息表]
      * @var $model
      */
-    protected $model_order_goods = NULL;
+    protected $model_order_goods   = NULL;
 
     /**
      * 初始化
@@ -69,8 +69,8 @@ class OrderController extends BaseController
      */
     public function save()
     {    
-        echo '<pre>';
-        print_r($_POST);
+        // echo '<pre>';
+        // print_r($_POST);
         // ###操作数据
         // ###订单信息
         // 订单类型
@@ -84,9 +84,9 @@ class OrderController extends BaseController
         // 总费用
         $sumPrice    = I('sumPrice', '', 'intval');
         // 出发时间
-        $departTime  = I('departTime', '', 'strval');
+        // $departTime  = I('departTime', '', 'strval');
         // 到货时间
-        $arrivedTime = I('arrivedTime', '', 'strval');
+        // $arrivedTime = I('arrivedTime', '', 'strval');
 
 
         // ###装货人信息
@@ -99,11 +99,11 @@ class OrderController extends BaseController
         // 具体位置
         $s_address       = I('s_address', '', 'strval');
         // 经度
-        $s_longitude     = I('s_longitude', '', 'strval');
+        $s_longitude     = explode('  ', I('s_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $s_latitude      = I('s_latitude', '', 'strval');
+        $s_latitude      = explode('  ', I('s_LngAndLat', '', 'strval'))[1];
         // 装货时间
-        $s_startTime     = I('s_startTime', '', 'strval');
+        $s_startTime     = strtotime(I('s_startTime', '', 'strval'));
         // 预估时间
         $s_estimatedTime = I('s_estimatedTime', '', 'strval');
         // type
@@ -121,11 +121,11 @@ class OrderController extends BaseController
         // 具体位置
         $d_address       = I('d_address', '', 'strval');
         // 经度
-        $d_longitude     = I('d_longitude', '', 'strval');
+        $d_longitude     = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $d_latitude      = I('d_latitude', '', 'strval');
+        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 装货时间
-        $d_startTime     = I('d_startTime', '', 'intval');
+        $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
         // 预估时间
         $d_estimatedTime = I('d_estimatedTime', '', 'intval');
         // type
@@ -133,12 +133,9 @@ class OrderController extends BaseController
         // 备注
         $d_desc          = I('d_desc', '', 'strval');
 
-        // ###物品信息
-        // 物品集合
-        $goods   = I('goods');
 
         // ###检验数据   
-        $result = $this->orderValidate($data);
+        // $result = $this->orderValidate($data);
         
         // ###保存数据
         do {
@@ -161,13 +158,13 @@ class OrderController extends BaseController
                 // 赋值数据[总费用]
                 $data['sumPrice']         = $sumPrice;
                 // 赋值数据[出发地]
-                $data['departArea']       = $s_area.''.$s_area;
+                $data['departArea']       = $s_area.''.$s_address;
                 // 赋值数据[目的地]
-                $data['destArea']         = $d_area.''.$d_area;
+                $data['destArea']         = $d_area.''.$d_address;
                 // 赋值数据[预估出发时间]
-                $data['departTime']       = $departTime;
+                $data['departTime']       = $s_startTime + $s_estimatedTime * 3600;;
                 // 赋值数据[预估到达时间]
-                $data['arrivedTime']      = $arrivedTime;
+                $data['arrivedTime']      = $d_startTime + $d_estimatedTime * 3600;
                 // 赋值数据[生成订单号]
                 $data['orderNum']      = generateOrderSn(); 
                 // 赋值数据[订单状态变更为发布中 1]
@@ -179,11 +176,10 @@ class OrderController extends BaseController
                 // 赋值数据[订单修改时间]
                 $data['updateTime']    = time();
 
-                echo '<pre>';
-                print_r($data);exit;
                 
                  //todo登入系统后加上userId以及费用的算法
                 $orderId = $this->model_order->saveData($data);
+                echo M()->getlastsql(); exit;
 
                 if ($orderId === false) {
                     // ###设置结果
