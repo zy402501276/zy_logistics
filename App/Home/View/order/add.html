@@ -226,7 +226,81 @@
 	});
 
 	$('.place-order').click(function() {
-		$('#btns').click();
+        var save = true;
+        $("[name='goodsLength[]']").each(function(){
+            var goodsLength = $(this).val();
+            if( $.trim(goodsLength) ==''){
+                alert('请填写货物长度');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+        $("[name='goodsWidth[]']").each(function(){
+            var goodsWidth = $(this).val();
+            if( $.trim(goodsWidth) ==''){
+                alert('请填写货物宽度');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+
+        $("[name='goodsHeight[]']").each(function(){
+            var goodsHeight = $(this).val();
+            if( $.trim(goodsHeight) ==''){
+                alert('请填写货物高度');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+        $("[name='goodsWeight[]']").each(function(){
+            var goodsWeight = $(this).val();
+            if( $.trim(goodsWeight) ==''){
+                alert('请填写货物重量');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+        $("[name='count[]']").each(function(){
+            var count = $(this).val();
+            if( $.trim(count) ==''){
+                alert('请填写货物数量');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+        $("[name='goodsType[]']").each(function(){
+            var goodsType = $(this).val();
+            if( $.trim(goodsType) ==''){
+                alert('请选择货物类型');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+        $("[name='goodsName[]']").each(function(){
+            var goodsName = $(this).val();
+            if( $.trim(goodsName) ==''){
+                alert('请填写货物名称');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+        if(save){
+            $('#btns').click();
+        }
 	});
 
 	var map = new AMap.Map('map_box', {
@@ -314,8 +388,25 @@
 			})
 		};
 	});
-	
-	
+	//提交事件
+    $(document).on("click",".save",function(){
+        var save = true;
+
+        $("[name='goodsName[]']").each(function(){
+            var goodsName = $(this).val();
+            if( $.trim(goodsName) ==''){
+                alert('xxx');
+                save =  false;
+            }
+        });
+        if(!save){
+            return false;
+        }
+
+        if(save){
+            $(".orders").submit();
+        }
+    })
 	
 
 	
