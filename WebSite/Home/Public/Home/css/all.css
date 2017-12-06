@@ -96,7 +96,7 @@
 /*新建订单*************************************************************************************************/
 .overMasking{
     width: 100%;
-    height:100%;
+    height:780px;
     position: absolute;
     top:0;
     left:0;
@@ -218,7 +218,7 @@
     margin-left: 30px;
     font-weight: 600;
 }
-.newOrder-type-ul{
+.newOrder-type-ul li{
     height: 50px;
     margin-left: 20px;
     float: left;
@@ -235,7 +235,14 @@
     margin-top: 13px;
     position: relative;
 }
-.newOrder-type-ul .newOrder-type-li:nth-child(2){
+.newOrder-type-li{
+	width: 80px;
+	height: 24px;
+	border:1px solid #CDCDCD;
+	font-size:14px;
+    color: #898989;
+}
+/*.newOrder-type-ul .newOrder-type-li:nth-child(2){
     margin: 13px 30px;
 }
 .newOrder-type-ul .newOrder-type-li:nth-child(3){
@@ -271,7 +278,7 @@
     font-size: 14px;
     color: #898989;
     cursor: pointer;
-}
+}*/
 .default-show{
     cursor: pointer;
 }
@@ -285,10 +292,23 @@
 .newOder-goods-information{
     width: 940px;
     margin: 0 auto;
-    height: 80px;
+    height: 100px;
     background-color: #fff;
     position: relative;
     margin-top: 40px;
+}
+.goods-information-ulname{
+	width: 100%;
+	height: 20px;
+	background: #E6E6E6;
+}
+.goods-information-ulname li{
+	margin-left: 30px;
+	width: 80px;
+	text-align: center;
+	float: left;
+	font-size: 14px;
+	color: #898989;
 }
 .goods-information-ul{
     width: 100%;
@@ -397,6 +417,7 @@
     line-height: 40px;
     float: left;
     margin-right: 30px;
+    position: relative;
 }
 .stowage-ul li span{
     font-size:14px;
@@ -429,6 +450,19 @@
 }
 .stowage-ul li:nth-child(3){
     margin-right: 300px;
+}
+.stowage-icon{
+	position: absolute;
+	top: 14px;
+	right: 0;
+	width: 10px;
+	height: 14px;
+}
+.green-icon{
+	background: url(../img/green-icon.png) no-repeat;
+}
+.red-icon{
+	background: url(../img/red-icon.png) no-repeat;
 }
 /*尾部*/
 footer{
@@ -539,7 +573,7 @@ footer{
 	margin: auto;
 }
 .order{
-	width: 350px;
+	width: 405px;
 }
 .num{
 	width: 80px;
@@ -673,7 +707,7 @@ footer{
 }
 .order-table-list{
 	width: 850px;
-	height: 120px;
+	height: 140px;
 	border: 1px solid rgba(137,137,137,0);
 	margin-bottom: 20px;
 }
@@ -712,7 +746,7 @@ footer{
 }
 .order-main{
 	width: 100%;
-	height: 88px;
+	height: 108px;
 	background: #fff;
 }
 .starting-point{
@@ -1011,7 +1045,7 @@ footer{
 	color: #E6E6E6;
 }
 .goods-information-ul2 li:nth-child(1){
-	margin-left: 47px;
+	margin-left: 35px;
 }
 .ul-bottom{
 	padding-bottom: 5px;
@@ -1065,7 +1099,7 @@ footer{
 }
 .stowage-ul2 li:nth-child(4){
 	position: absolute;
-	top: 30px;
+	top: 20px;
 	left: 250px;
 }
 .stowage-ul2 li span:nth-child(1){
@@ -1083,6 +1117,10 @@ footer{
 .stowage-ul2 li span:nth-child(4){
 	font-size: 14px;
 	color: #898989;
+}
+.stowage-ul2 .stowage-icon{
+	left: 190px;
+	top: 3px;
 }
 .nono-border{
 	border: 0;
@@ -1572,7 +1610,6 @@ footer{
     border:2px solid #FEBD4E;
     border-radius: 15px;
     text-align:  center;
-    line-height: 25px;
     font-size:14px;
     color: #FEBD4E;
     position: absolute;
@@ -1684,6 +1721,9 @@ footer{
     font-weight: 100;
     color: #898989;
 }
+.discharge-cargo  .tilte-fonts4{
+	top: -40px;
+}
 .driver-evaluate-area{
     width: 760px;
     margin:10px auto;
@@ -1750,7 +1790,16 @@ footer{
     background-color: #fff;
     display:none;
 }
-
+#map_box2{
+    width: 350px;
+    height: 350px;
+    position: absolute;
+    top: 33px;
+    left: 69px;
+    z-index:99;
+    background-color: #fff;
+    display:none;
+}
 .hide_box{
     overflow: hidden;
     width:100%;
@@ -1803,3 +1852,119 @@ footer{
     .title {
         padding-left: 15px;
     }
+    
+
+/*建议评价弹框*/
+.pop2{
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 14;
+}
+.proposal-evaluate{
+	width: 600px;
+	height: 270px;
+	background: #fff;
+	margin: 250px auto;
+}
+.proposal-head{
+	width: 600px;
+	height: 30px;
+	background: #FFC13B;
+	color: #fff;
+	font-size: 14px;
+	text-align: center;
+	line-height: 30px;
+}
+.proposal-hh{
+	width: 115px;
+	margin: auto;
+}
+.login_content {
+position: absolute;
+text-align: center;
+min-width: 115px;
+}
+/*CSS伪类用法*/
+.login_content span:after, .login_content span:before {
+background: #fff;
+content: "";
+height: 1px;
+position: absolute;
+top: 50%;
+width: 15%;
+}
+/*调整背景横线的左右距离*/
+.login_content span:before {
+left: 0;
+}
+.login_content span:after {
+right: 0;
+}
+.proposal-content{
+	padding: 10px;
+	width: 600px;
+	height: 240px;
+	
+}
+.content-star{
+	height: 50px;
+	padding: 0 150px;
+}
+.star-icon{
+	width: 38px;
+	height: 36px;
+	background: url(../img/grade-n.png) no-repeat;
+	margin: 0 7px;
+	cursor: pointer;
+}
+.star-icon1{
+	background: url(../img/grade-p.png) no-repeat;
+}
+.advice-box{
+	text-indent: 10px;
+}
+.content-textarea{
+	position: relative;
+}
+.words-num{
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	color: #CDCDCD;
+	font-size: 14px;
+}
+.content-textarea textarea{
+	width: 580px;
+	height: 120px;
+	resize: none;
+	background: #f5f5f5;
+	border: none;
+	padding-top: 10px;
+}
+.content-btn{
+	height: 50px;
+}
+.content-button{
+	width: 120px;
+	height: 40px;
+	font-size: 14px;
+	color: #fff;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 40px;
+	background: #FFC13B;
+	margin-top: 5px;
+	float: right;
+	margin-right: 10px;
+}
+
+
+
+
+
+
