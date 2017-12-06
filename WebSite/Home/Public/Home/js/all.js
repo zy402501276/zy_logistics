@@ -49,24 +49,7 @@ $('.overMasking').click(function () {
 
 
 
-var newDom = '<ul class="goods-information-ul"><li><span>长:</span><input type="text" name="goodsLength[]" value=""></li><li><span>宽:</span><input type="text" name="goodsWidth[]" value=""></li><li><span>高:</span><input type="text" name="goodsHeight[]" value=""></li><li><span>重量:</span><input type="text" name="goodsWeight[]" value=""></li><li><span>数量:</span><input type="text" name="count[]" value=""></li><li><span>类别:</span><input type="text"><div class="delete-btn"></div></li></ul>';
-var domIndex = 0;
-//新增货物信息
-$('.add-ul-btn').click(function (event) {
-    domIndex++;
-    $(this).prev().after(newDom);
-    $('.newOder-goods-information').height(domIndex*40+80);
-    console.log(domIndex,$('.newOder-goods-information').height());
 
-    //删除
-    $('.delete-btn').unbind('click');
-    $('.delete-btn').click(function (event) {
-        domIndex--;
-        $(this).parent().parent().remove();
-        $('.newOder-goods-information').height(domIndex*40+80);
-        console.log(domIndex,$('.newOder-goods-information').height());
-    });
-});
 $('.contact-driver').click(function(){
 	$('.pop').show();
 });
@@ -87,9 +70,59 @@ $('.check-span').click(function() {
 
 //完成订单
 
+//$('.driver-advice').click(function(){
+//  $('.driver-evaluate-area').toggle();
+//  $('.add-evaluate').click(function () {
+//		$('.pop2').show();
+//  });
+//});
 $('.driver-advice').click(function(){
-    $('.driver-evaluate-area').toggle();
-    $('.add-evaluate').click(function () {
-
-    });
+		$('.pop2').show();
 });
+//评价   星星
+//$('.star-icon').unbind('click');
+$('.star-icon').click(function(){
+	var s = $(this).index();
+	if($(this).hasClass('star-icon1')){
+		$('.star-icon').each(function(i,element){
+			if($(element).index()>=s){
+					$(element).removeClass('star-icon1');	
+			};
+		})
+	}else{
+		$('.star-icon').each(function(i,ele){
+			if($(ele).index()<=s){
+				$(ele).addClass('star-icon1');
+			}else{
+				$(ele).removeClass('star-icon1');	
+			};
+			
+		});
+	}
+});
+
+
+$('.content-button').click(function(){
+	var selStar = 0;		
+	$('.star-icon').each(function(){
+		if($(this).hasClass('star-icon1')){
+			selStar++;
+		}
+	});
+});
+
+
+$('.advice-box').bind('input propertychange', function(){  
+	var l= $(this).val().length;
+	if(l>500){
+		$(this).val($(this).val().substring(0, 500));
+	};
+	$('.words-num').html(500-l*1);
+});  	
+
+$('.proposal-evaluate').click(function(event){
+	event.stopPropagation();
+})
+$('.pop2').click(function(event){
+	$(this).hide();
+})
