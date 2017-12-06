@@ -113,25 +113,25 @@ class OrderController extends BaseController
 
         // ###卸货人信息
         // 姓名
-        $name          = I('loadName', '', 'strval');
+        $d_name          = I('d_name', '', 'strval');
         // 手机号码
-        $mobile        = I('loadMobile', '', 'strval');
+        $d_mobile        = I('d_mobile', '', 'strval');
         // 地理位置
-        $area          = I('area', '', 'strval');
+        $d_area          = I('d_area', '', 'strval');
         // 具体位置
-        $address       = I('address', '', 'strval');
+        $d_address       = I('d_address', '', 'strval');
         // 经度
-        $longitude     = I('longitude', '', 'strval');
+        $d_longitude     = I('d_longitude', '', 'strval');
         // 纬度
-        $latitude      = I('latitude', '', 'strval');
+        $d_latitude      = I('d_latitude', '', 'strval');
         // 装货时间
-        $startTime     = I('startTime', '', 'intval');
+        $d_startTime     = I('d_startTime', '', 'intval');
         // 预估时间
-        $estimatedTime = I('estimatedTime', '', 'intval');
+        $d_estimatedTime = I('d_estimatedTime', '', 'intval');
         // type
-        $type          = I('type', '', 'intval');
+        $d_type          = I('d_type', '', 'intval');
         // 备注
-        $desc          = I('desc', '', 'strval');
+        $d_desc          = I('d_desc', '', 'strval');
 
         // ###物品信息
         // 物品集合
@@ -161,9 +161,9 @@ class OrderController extends BaseController
                 // 赋值数据[总费用]
                 $data['sumPrice']         = $sumPrice;
                 // 赋值数据[出发地]
-                $data['departArea']       = $area.''.$area;
+                $data['departArea']       = $s_area.''.$s_area;
                 // 赋值数据[目的地]
-                $data['destArea']         = $area.''.$area;
+                $data['destArea']         = $d_area.''.$d_area;
                 // 赋值数据[预估出发时间]
                 $data['departTime']       = $departTime;
                 // 赋值数据[预估到达时间]
@@ -202,23 +202,23 @@ class OrderController extends BaseController
 
                 // ###封装数据
                 // 赋值数据[订单id]
-                $data['orderId']       = $orderId;
+                $data['orderId']       = $s_orderId;
                  // 赋值数据[装货人名称]  
-                $data['name']          = $name;
+                $data['name']          = $s_name;
                 // 赋值数据[手机号码]
-                $data['mobile']        = $mobile;
+                $data['mobile']        = $s_mobile;
                 // 赋值数据[地理位置]
-                $data['area']          = $area;
+                $data['area']          = $s_area;
                 // 赋值数据[具体位置]
-                $data['address']       = $address;
+                $data['address']       = $s_address;
                 // 赋值数据[经度]
-                $data['longitude']     = $longitude;
+                $data['longitude']     = $s_longitude;
                 // 赋值数据[纬度]
-                $data['latitude']      = $latitude;
+                $data['latitude']      = $s_latitude;
                 // 赋值数据[装货时间]
-                $data['startTime']     = $startTime;
+                $data['startTime']     = $s_startTime;
                 // 赋值数据[卸货时间]
-                $data['endTime']       = $startTime + $estimatedTime * 3600;
+                $data['endTime']       = $s_startTime + $s_estimatedTime * 3600;
                 // 赋值数据[类型]
                 $data['type']          = 1; 
                 // 赋值数据[订单状态变更为发布中 1]
@@ -226,7 +226,7 @@ class OrderController extends BaseController
                 // 赋值数据[状态]
                 $data['state']         = STATE_ON;
                 // 赋值数据[描述]
-                $data['desc']          = $desc;
+                $data['desc']          = $s_desc;
                 // 赋值数据[订单生成时间]
                 $data['createTime']    = time();
                 // 赋值数据[订单修改时间]
@@ -253,23 +253,23 @@ class OrderController extends BaseController
 
                 // ###封装数据
                 // 赋值数据[订单id]
-                $data['orderId']       = $orderId;
+                $data['orderId']       = $d_orderId;
                  // 赋值数据[装货人名称]  
-                $data['name']          = $name;
+                $data['name']          = $d_name;
                 // 赋值数据[手机号码]
-                $data['mobile']        = $mobile;
+                $data['mobile']        = $d_mobile;
                 // 赋值数据[地理位置]
-                $data['area']          = $area;
+                $data['area']          = $d_area;
                 // 赋值数据[具体位置]
-                $data['address']       = $address;
+                $data['address']       = $d_address;
                 // 赋值数据[经度]
-                $data['longitude']     = $longitude;
+                $data['longitude']     = $d_longitude;
                 // 赋值数据[纬度]
-                $data['latitude']      = $latitude;
+                $data['latitude']      = $d_latitude;
                 // 赋值数据[装货时间]
-                $data['startTime']     = $startTime;
+                $data['startTime']     = $d_startTime;
                 // 赋值数据[卸货时间]
-                $data['endTime']       = $startTime + $estimatedTime * 3600;
+                $data['endTime']       = $d_startTime + $d_estimatedTime * 3600;
                 // 赋值数据[类型]
                 $data['type']          = 2; 
                 // 赋值数据[订单状态变更为发布中 1]
@@ -277,7 +277,7 @@ class OrderController extends BaseController
                 // 赋值数据[状态]
                 $data['state']         = STATE_ON;
                 // 赋值数据[描述]
-                $data['desc']          = $desc;
+                $data['desc']          = $d_desc;
                 // 赋值数据[订单生成时间]
                 $data['createTime']    = time();
                 // 赋值数据[订单修改时间]
