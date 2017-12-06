@@ -1,0 +1,86 @@
+
+
+		<!--订单类别-->
+
+		<div class="newOrder-type">
+			<div class="order-progress">
+				<ul class="order-progress-list">
+					<li <eq name="state" value="1">class="order-active"</eq>>
+						<a href="{:U('lists',array('orderState'=>1))}">未处理</a><span class="order-bar"></span><eq name="state" value="1"><span class="message1"></span></eq>
+					</li>
+					<li <eq name="state" value="2">class="order-active"</eq>>
+						<a href="{:U('lists',array('orderState'=>2))}">进行中</a><span class="order-bar"></span><eq name="state" value="2"><span class="message1"></span></eq>
+					</li>
+					<li <eq name="state" value="8">class="order-active"</eq>>
+						<a href="{:U('lists',array('orderState'=>8))}">已完成</a><span class="order-bar"></span><eq name="state" value="8"><span class="message1"></span></eq>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="order-list">
+			<div class="order-list-name">
+				<span class="order">订单</span>
+				<span class="num">数量</span>
+				<span class="num">总重量</span>
+				<span class="category">货物类别</span>
+				<span class="total-amount">总金额</span>
+				<span class="delet"></span>
+			</div>
+		</div>
+		<div class="order-content">
+			<!--订单消息列表-->
+			<div class="order-table">
+				<div class="order-list-icon">
+					<a href="newOrder.html"><span class="add-order"></span></a>
+					<a href="###"><span class="more"></span></a>
+				</div>
+				<volist name="list" id="list">
+				<div class="order-table-list">
+					<div class="order-table-head">
+						<div class="order-table-left">
+							<span class="message2"></span>
+							<span class="check-span"><input type="checkbox"/></span>
+							<span class="order-www">{$list['createTime']}</span>
+							<span class="order-www">订单号:{$list['orderNum']}</span>
+						</div>
+						<div class="order-table-right" style="justify-content: flex-end;">
+							<span class="order-state"><span class="order-span evaluation-order">评价订单</span></span>
+						</div>
+
+					</div>
+					<div class="order-main">
+						<div class="starting-point">
+							<span class="start-name">{$list['depart']}</span>
+							<span class="start-date"><span>{$list['startTime']}</span><span>{$list['startTimeDay']}</span></span>
+							<span class="start-time"><span>{$list['loadTime']}</span><span>{$list['loadTimeH']}</span></span>
+						</div>
+						<div class="right">
+							<span></span>
+						</div>
+						<div class="starting-point end">
+							<span class="start-name">{$list['dest']}</span>
+							<span class="start-date"><span>{$list['endTime']}</span><span>{$list['endTimeDay']}</span></span>
+							<span class="start-time"><span>{$list['unloadTime']}</span><span>{$list['unloadTimeH']}</span></span>
+						</div>
+						<div class="order-num">
+							<span>{$list['num']}件</span>
+						</div>
+						<div class="order-num">
+							<span>{$list['weight']}kg</span>
+						</div>
+						<div class="order-goods">
+							<span>{$list['goodsType']}	</span>
+						</div>
+						<div class="order-price">
+							<span>￥{$list['cost']}</span><br />
+							<span>(含加急费:￥0.00)</span>
+						</div>
+					</div>
+
+				</div>
+				</volist>
+
+			</div>
+
+		</div>
+
