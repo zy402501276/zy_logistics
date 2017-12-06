@@ -73,6 +73,7 @@
 .login-inp input:-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: #898989;
 }
+
 .login-tips{
 	display: none;
 	width: 220px;
@@ -382,7 +383,7 @@
 .stowage-area{
     width: 920px;
     margin:0 auto;
-    height:160px;
+    height:230px;
     border-top:1px solid #E6E6E6;
     border-bottom:1px solid #E6E6E6;
     position: relative;
@@ -413,6 +414,7 @@
     margin-left: 20px;
 }
 .stowage-ul li{
+	width: 100%;
     height:40px;
     line-height: 40px;
     float: left;
@@ -420,9 +422,11 @@
     position: relative;
 }
 .stowage-ul li span{
-    font-size:14px;
+    font-size: 14px;
     color: #898989;
     margin-right: 10px;
+    width: 80px;
+    text-align: right;
 }
 .stowage-ul li input{
     width: 270px;
@@ -432,29 +436,38 @@
     color: #363636;
     text-indent: 10px;
 }
+.stowage-ul li select{
+	width: 40px;
+    height:24px;
+    border:1px solid #CDCDCD;
+    font-size:14px;
+    color: #363636;
+    text-indent: 5px;
+    margin-right: 10px;
+}
 .stowage-ul li:nth-child(1) input{
     width: 350px;
 }
-.stowage-ul li:nth-child(2) .name-input{
+.stowage-ul li:nth-child(3) .name-input{
     width: 80px;
     margin-right: 5px;
 }
-.stowage-ul li:nth-child(2) .phone-input{
+.stowage-ul li:nth-child(3) .phone-input{
     width: 150px;
-}
-.stowage-ul li:nth-child(3) input{
-    width: 270px;
 }
 .stowage-ul li:nth-child(4) input{
     width: 270px;
 }
-.stowage-ul li:nth-child(3){
+.stowage-ul li:nth-child(5) input{
+    width: 270px;
+}
+.stowage-ul li:nth-child(4){
     margin-right: 300px;
 }
 .stowage-icon{
 	position: absolute;
 	top: 14px;
-	right: 0;
+	left: 420px;
 	width: 10px;
 	height: 14px;
 }
@@ -463,6 +476,12 @@
 }
 .red-icon{
 	background: url(../img/red-icon.png) no-repeat;
+}
+.stowage-span{
+	margin-left: 30px;
+}
+.stowage-ul li .stowage-hour{
+	width: 30px;
 }
 /*尾部*/
 footer{
@@ -1795,7 +1814,7 @@ footer{
     height: 350px;
     position: absolute;
     top: 33px;
-    left: 69px;
+    left: 90px;
     z-index:99;
     background-color: #fff;
     display:none;

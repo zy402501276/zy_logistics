@@ -1,31 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<body>
 
 		<!--订单类别-->
-<form action="{:U('Order/add')}" method="post" name="order" >
+
 		<div class="newOrder-type">
 			<div class="newOrder-type-area">
 				<span class="newOrder-type-fonts">
             订单类别
         </span>
 				<ul class="newOrder-type-ul">
-					<li class="newOrder-type-li">
-						<span class="default-show">标准货物</span>
-						<ul class="type-ul1">
-							<li>标准货物</li>
-							<li>轻型货物</li>
-							<li>重型货物</li>
-							<li>超重货物</li>
-						</ul>
+					<li>
+						<select class="newOrder-type-li" name="orderType" form="dataForm">
+							<option value="1">标准货物</option>
+							<option value="2">非常标准货物</option>
+						</select>
 					</li>
-					<li class="newOrder-type-li">
-						<span class="default-show">拼车1</span>
-						<ul class="type-ul1">
-							<li>拼车1</li>
-							<li>拼车2</li>
-							<li>拼车3</li>
-						</ul>
+					<li>
+						<select class="newOrder-type-li" name="transType" form="dataForm">
+							<option value="">用车类型</option>
+							<option value="1">正常模式</option>
+							<option value="2">拼车模式</option>
+							
+						</select>
 					</li>
-					<li class="newOrder-type-li">
-						<input class="type-input" type="text" placeholder="车辆类型">
+					<li>
+						<select class="newOrder-type-li" name="vehicleType" form="dataForm">
+							<option value="">用车类型</option>
+							<option value="1">重量体积</option>
+							<option value="2">包车</option>
+						</select>
 					</li>
 				</ul>
 			</div>
@@ -33,82 +38,117 @@
 		<div class="newOrder-content">
 
 			<!--货物清单信息-->
-			<div class="newOrder-goods-message-area">
-				<div class="newOder-goods-information">
-					<div class="title-box">货物信息</div>
-					<ul class="goods-information-ul">
-						<li>
-							<span>长:</span><input type="text" name="goodsLength[]" >
-						</li>
-						<li>
-							<span>宽:</span><input type="text" name="goodsWidth[]">
-						</li>
-						<li>
-							<span>高:</span><input type="text" name="goodsHeight[]">
-						</li>
-						<li>
-							<span>重量:</span><input type="text" name="goodsWeight[]">
-						</li>
-						<li>
-							<span>数量:</span><input type="text" name="count[]">
-						</li>
-						<li>
-							<span>类别:</span><input type="text" >
-						</li>
-					</ul>
+			<form action="{:U('save')}" id="dataForm" method="post">
 
-					<div class="add-ul-btn"></div>
-				</div>
-
-				<div class="order-information-area">
-					<div class="title-box">订单信息</div>
-
-					<div class="stowage-area">
-						<span class="tilte-fonts">装货信息</span>
-						<ul class="stowage-ul">
+				<div class="newOrder-goods-message-area">
+					<div class="newOder-goods-information">
+						<div class="title-box">货物信息</div>
+						<ul class="goods-information-ulname">
+							<li>长</li>
+							<li>宽</li>
+							<li>高</li>
+							<li>重量</li>
+							<li>数量</li>
+							<li>类别</li>
+							<li>物品名</li>
+						</ul>
+						<ul class="goods-information-ul">
 							<li>
-								<span>装货地点:</span>
-								<input type="text" id="input_id">
-								<div id="map_box"></div>
-								 <div id = 'message'></div>
+								<input type="text" name="goodsLength[]">
 							</li>
 							<li>
-								<span>装货联系人:</span><input class="name-input" type="text"><input class="phone-input" type="text">
+								<input type="text" name="goodsWidth[]">
 							</li>
 							<li>
-								<span>装货时间:</span><input type="text">
+								<input type="text" name="goodsHeight[]">
 							</li>
 							<li>
-								<span>装货备注:</span><input type="text">
+								<input type="text" name="goodsWeight[]">
+							</li>
+							<li>
+								<input type="text" name="count[]">
+							</li>
+							<li>
+								<select class="newOrder-type-li" name="goodsType[]">
+									<option value="">请选择</option>
+									<option value="1">固体</option>
+									<option value="2">液体</option>
+								</select>
+							</li>
+							<li>
+								<input type="text" name="goodsName[]">
 							</li>
 						</ul>
+
+						<div class="add-ul-btn"></div>
 					</div>
-					<div class="stowage-area discharge-cargo">
-						<span class="tilte-fonts">卸货信息</span>
-						<ul class="stowage-ul">
-							<li>
-								<span>装货地点:</span><input type="text">
-							</li>
-							<li>
-								<span>装货联系人:</span><input class="name-input" type="text"><input class="phone-input" type="text">
-							</li>
-							<li>
-								<span>装货时间:</span><input type="text">
-							</li>
-							<li>
-								<span>装货备注:</span><input type="text">
-							</li>
-						</ul>
+
+					<div class="order-information-area">
+						<div class="title-box">订单信息</div>
+
+						<div class="stowage-area">
+							<span class="tilte-fonts">装货信息</span>
+							<ul class="stowage-ul">
+								<li>
+									<span>装货地点:</span><input type="text" id="input_id"><input type="hidden" id="jingdu" name="s_area" value="" />
+									<div id="map_box"></div>
+									<div id='message'></div>
+									<span class="stowage-icon green-icon"></span>
+								</li>
+								<li><span>详细地址:</span><input type="text" name="s_address"></li>
+								<li>
+									<span>装货联系人:</span><input class="name-input" type="text" placeholder="姓名" name="s_name"><input class="phone-input" type="text" placeholder="电话" name="s_mobile">
+								</li>
+								<li>
+									<span>装货时间:</span><input type="text" id="test4">
+									<span class="stowage-span">预计装货:</span>
+									<select>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="2">3</option>
+								</select><span class="stowage-hour">小时</span>
+								</li>
+								<li>
+									<span>装货备注:</span><input type="text" name="s_desc">
+								</li>
+							</ul>
+						</div>
+						<div class="stowage-area discharge-cargo">
+							<span class="tilte-fonts">卸货信息</span>
+							<ul class="stowage-ul">
+								<li>
+									<span>卸货地点:</span><input type="text" id="input_id2"><input type="hidden" id="jingdu2" name="d_area" value="" />
+									<div id="map_box2"></div>
+									<span class="stowage-icon red-icon"></span>
+								</li>
+								<li><span>详细地址:</span><input type="text" name="d_address"></li>
+								<li>
+									<span>卸货联系人:</span><input class="name-input" type="text" placeholder="姓名" name="d_name"><input class="phone-input" type="text" placeholder="电话" name="d_mobile">
+								</li>
+								<li>
+									<span>卸货时间:</span><input type="text" id="test5">
+									<span class="stowage-span">预计卸货:</span>
+									<select>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+								</select><span class="stowage-hour">小时</span>
+								</li>
+								<li>
+									<span>卸货备注:</span><input type="text">
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
+
+				<input type="submit" id="btns" value="" />
+			</form>
 		</div>
 
-		<!--遮罩-->
-		<div class="overMasking"></div>
 		<footer>
 			<a href="###" style="float: right;">
-				<div class="place-order submit" >
+				<div class="place-order">
 					提交订单
 				</div>
 			</a>
@@ -120,97 +160,169 @@
 			</div>
 
 		</footer>
-</form>>
 
+		<div class="hide_box">
+			<div id="container" class="map" tabindex="0"></div>
+		</div>
 
-	<div class="hide_box">
-		 <div id="container" class="map" tabindex="0"></div>
-    <div id='right'>
-        <div>
-            <div class='title'>选择模式</div>
-            <input type='radio' name='mode' value='dragMap' checked>拖拽地图模式</input>
-            </br>
-            <input type='radio' name='mode' value='dragMarker'>拖拽Marker模式</input>
-        </div>
-        <div>
-            <button id='start'>开始选点</button>
-            <button id='stop'>关闭选点</button>
-        </div>
-        <div>
-            <div class='title'>选址结果</div>
-            <div class='c'>经纬度:</div>
-            <div id='lnglat'></div>
-            <div class='c'>地址:</div>
-            <div id='address'></div>
-            <div class='c'>最近的路口:</div>
-            <div id='nearestJunction'></div>
-            <div class='c'>最近的路:</div>
-            <div id='nearestRoad'></div>
-            <div class='c'>最近的POI:</div>
-            <div id='nearestPOI'></div>
-        </div>
-    </div>
-	</div>
+		<!--遮罩-->
+		<div class="overMasking"></div>
+	</body>
+
+</html>
+<script src="__JS__/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__LAYDATE__/laydate.js" type="text/javascript" charset="utf-8"></script>
+
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.2&key=199fbca875e24c457e78f2a07468a86f"></script>
-   <script type="text/javascript">
-	//提交订单
-	$(".submit").click(function(){
-	    $("[name='order']").submit();
-	});
+<script type="text/javascript">
+	var newDom = '<ul class="goods-information-ul"><li><input type="text"></li><li><input type="text"></li><li><input type="text"></li><li><input type="text"></li><li><input type="text"></li><li><select class="newOrder-type-li"><option value ="">拼车1</option><option value ="">拼车2</option><option value="">拼车3</option></select><li><input type="text"></li><li><div class="delete-btn"></div></li></ul>';
+	var domIndex = 0;
+	//新增货物信息
+	$('.add-ul-btn').click(function(event) {
+		domIndex++;
+		$(this).prev().after(newDom);
+		$('.newOder-goods-information').height(domIndex * 40 + 100);
+		console.log(domIndex, $('.newOder-goods-information').height());
 
-   	$(function(){
-		$('#input_id').focus(function(event) {
-			$(this).css({'border-color':'#4791ff'});
-			$('#map_box').show();
+		//删除
+		$('.delete-btn').unbind('click');
+		$('.delete-btn').click(function(event) {
+			domIndex--;
+			$(this).parent().parent().remove();
+			$('.newOder-goods-information').height(domIndex * 40 + 100);
+			console.log(domIndex, $('.newOder-goods-information').height());
 		});
-		// $('#input_id').blur(function(event) {
-		// 	$(this).css({'border-color':'#CDCDCD'});
-		// 	$('#map_box').hide();
-		// });
 	});
-    var map = new AMap.Map('map_box',{
-            resizeEnable: true,
-            zoom: 13,
-            center: [116.39,39.9]
-    });
-    AMap.plugin('AMap.Geocoder',function(){
-        var geocoder = new AMap.Geocoder({
-            city: "010"//城市，默认：“全国”
-        });
-        var marker = new AMap.Marker({
-            map:map,
-            bubble:true
-        })
-        var input = document.getElementById('input_id');
-        var message = document.getElementById('message');
-        map.on('click',function(e){
-            marker.setPosition(e.lnglat);
-            
-            geocoder.getAddress(e.lnglat,function(status,result){
-              if(status=='complete'){
-                 input.value = result.regeocode.formattedAddress
-                 
-                 message.innerHTML = ''
-              }else{
-                 message.innerHTML = '无法获取地址'
-              }
-            })
-            console.log(e.lnglat);
-        })
-        
-        input.onchange = function(e){
-            var address = input.value;
-            geocoder.getLocation(address,function(status,result){
-              if(status=='complete'&&result.geocodes.length){
-                marker.setPosition(result.geocodes[0].location);
-                map.setCenter(marker.getPosition())
-                message.innerHTML = ''
-              }else{
-                message.innerHTML = '无法获取位置'
-              }
-            })
-        }
+	//执行一个laydate实例
+	//时间选择器
+	laydate.render({
+		elem: '#test4',
+		type: 'datetime'
+	});
+	laydate.render({
+		elem: '#test5',
+		type: 'datetime'
+	});
+	//地图
+	$('#input_id').focus(function(event) {
+		$(this).css({
+			'border-color': '#4791ff'
+		});
+		$('#map_box').show();
+		$('.overMasking').show();
+		$('.overMasking').click(function() {
+			$('#map_box').hide();
+		});
+	});
+	$('#input_id2').focus(function(event) {
+		$(this).css({
+			'border-color': '#4791ff'
+		});
+		$('#map_box2').show();
+		$('.overMasking').show();
+		$('.overMasking').click(function() {
+			$('#map_box2').hide();
+		});
+	});
 
-    });
-   </script>
-   <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+	$('.place-order').click(function() {
+		$('#btns').click();
+	});
+
+	var map = new AMap.Map('map_box', {
+		resizeEnable: true,
+		zoom: 13
+	});
+	var map2 = new AMap.Map('map_box2', {
+		resizeEnable: true,
+		zoom: 13
+	});
+	AMap.plugin('AMap.Geocoder', function() {
+		var geocoder = new AMap.Geocoder({
+			enableHighAccuracy: true,
+			timeout: 10000, //超过10秒后停止定位，默认：无穷大
+			buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+			buttonPosition: 'RB'
+		});
+		var marker = new AMap.Marker({
+			map: map,
+			bubble: true
+		});
+		var marker2 = new AMap.Marker({
+			map: map2,
+			bubble: true
+		})
+		var input = document.getElementById('input_id');
+		var input2 = document.getElementById('input_id2');
+		var message = document.getElementById('message');
+
+		map.on('click', function(e) {
+			marker.setPosition(e.lnglat);
+			geocoder.getAddress(e.lnglat, function(status, result) {
+				console.log(result.regeocode)
+				if(status == 'complete') {
+					$('#input_id').val(result.regeocode.addressComponent.province + '  ' + result.regeocode.addressComponent.city + '  ' +
+						result.regeocode.addressComponent.district + '   ' + result.regeocode.addressComponent.township + '  ' + result.regeocode.addressComponent.street);
+					$('#jingdu').val(e.lnglat.L + '  ' + e.lnglat.N);
+					message.innerHTML = ''
+				} else {
+					message.innerHTML = '无法获取地址'
+				}
+			});
+			console.log(e.lnglat);
+		})
+
+		input.onchange = function(e) {
+			var address = input.value;
+			geocoder.getLocation(address, function(status, result) {
+				if(status == 'complete' && result.geocodes.length) {
+					marker.setPosition(result.geocodes[0].location);
+					map.setCenter(marker.getPosition())
+					message.innerHTML = ''
+				} else {
+					message.innerHTML = '无法获取位置'
+				}
+			})
+		};
+
+		map2.on('click', function(e) {
+			marker2.setPosition(e.lnglat);
+			geocoder.getAddress(e.lnglat, function(status, result) {
+				console.log(result.regeocode)
+				if(status == 'complete') {
+					$('#input_id2').val(result.regeocode.addressComponent.province + '  ' + result.regeocode.addressComponent.city + '  ' +
+						result.regeocode.addressComponent.district + '   ' + result.regeocode.addressComponent.township + '  ' + result.regeocode.addressComponent.street);
+					$('#jingdu2').val(e.lnglat.L + '  ' + e.lnglat.N);
+					message.innerHTML = ''
+				} else {
+					message.innerHTML = '无法获取地址'
+				}
+			});
+			console.log(e.lnglat);
+		})
+
+		input2.onchange = function(e) {
+			var address = input.value;
+			geocoder.getLocation(address, function(status, result) {
+				if(status == 'complete' && result.geocodes.length) {
+					marker.setPosition(result.geocodes[0].location);
+					map.setCenter(marker.getPosition())
+					message.innerHTML = ''
+				} else {
+					message.innerHTML = '无法获取位置'
+				}
+			})
+		};
+	});
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>

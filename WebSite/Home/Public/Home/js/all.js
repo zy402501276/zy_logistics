@@ -126,3 +126,4 @@ $('.proposal-evaluate').click(function(event){
 $('.pop2').click(function(event){
 	$(this).hide();
 })
+
