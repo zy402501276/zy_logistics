@@ -1218,9 +1218,10 @@ footer{
 }
 .goods-info{
 	width: 450px;
-	height: 430px;
+	/*height: 430px;*/
 	background: #fff;
 	float: left;
+	margin-bottom: 80px;
 }
 .driver-info{
 	width: 450px;
@@ -1413,7 +1414,7 @@ footer{
 }
 .goods-pictures{
 	width: 450px;
-	height: 120px;
+	height: 250px;
 	padding-left: 10px;
 	color: #898989;
 	font-size: 12px;
@@ -1428,11 +1429,12 @@ footer{
 	margin-right: 10px;
 	background: #CDCDCD;
 	text-align: center;
-	line-height: 70px;
+	line-height: 90px;
 	float: left;
 	font-size: 12px;
 	color: #fff;
 	position: relative;
+	margin-bottom: 10px;
 }
 .goods-img span img{
 	width: 100%;
@@ -1678,12 +1680,7 @@ footer{
     color: #898989;
     line-height: 20px;
     margin: 5px 0;
-}
-.order-complate-details-ul li:nth-child(-n+3){
     padding-left: 30px;
-}
-.order-complate-details-ul li:nth-child(n+4){
-    padding-left: 50px;
 }
 .order-genre-area{
     width: 860px;
