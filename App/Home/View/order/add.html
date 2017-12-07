@@ -79,7 +79,6 @@
 								<input type="text" name="goodsName[]">
 							</li>
 						</ul>
-
 						<div class="add-ul-btn"></div>
 					</div>
 
@@ -90,7 +89,7 @@
 							<span class="tilte-fonts">装货信息</span>
 							<ul class="stowage-ul">
 								<li>
-									<span>装货地点:</span><input type="text" id="input_id"><input type="hidden" id="jingdu" name="s_area" value="" />
+									<span>装货地点:</span><input type="text" id="input_id"><input type="hidden" id="jingdu" name="s_LngAndLat" value="" />
 									<div id="map_box"></div>
 									<div id='message'></div>
 									<span class="stowage-icon green-icon"></span>
@@ -102,7 +101,7 @@
 								<li>
 									<span>装货时间:</span><input type="text" id="test4" name="s_startTime">
 									<span class="stowage-span">预计装货:</span>
-									<select>
+									<select name="s_estimatedTime">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="2">3</option>
@@ -117,7 +116,7 @@
 							<span class="tilte-fonts">卸货信息</span>
 							<ul class="stowage-ul">
 								<li>
-									<span>卸货地点:</span><input type="text" id="input_id2"><input type="hidden" id="jingdu2" name="d_area" value="" />
+									<span>卸货地点:</span><input type="text" id="input_id2"><input type="hidden" id="jingdu2" name="d_LngAndLat" value="" />
 									<div id="map_box2"></div>
 									<span class="stowage-icon red-icon"></span>
 								</li>
@@ -128,14 +127,14 @@
 								<li>
 									<span>卸货时间:</span><input type="text" id="test5" name="d_startTime">
 									<span class="stowage-span">预计卸货:</span>
-									<select>
+									<select name="d_estimatedTime">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
 								</select><span class="stowage-hour">小时</span>
 								</li>
 								<li>
-									<span>卸货备注:</span><input type="text">
+									<span>卸货备注:</span><input type="text" name="d_desc">
 								</li>
 							</ul>
 						</div>

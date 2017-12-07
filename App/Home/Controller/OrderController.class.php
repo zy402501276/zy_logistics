@@ -10,7 +10,7 @@
 namespace Home\Controller;
 /**
  * 订单操作模块控制器
- * @author zhangy
+ * @author  shigin <597852546@qq.com>
  * @time 2017年12月5日21:08:50
  */
 class OrderController extends BaseController
@@ -36,7 +36,7 @@ class OrderController extends BaseController
      * 引用对象[下单货物信息表]
      * @var $model
      */
-    protected $model_order_goods = NULL;
+    protected $model_order_goods   = NULL;
 
     /**
      * 初始化
@@ -69,9 +69,9 @@ class OrderController extends BaseController
      */
     public function save()
     {    
-        echo '<pre>';
-        print_r($_POST);
-        // ###操作数据
+        // ----------------------------
+        // *.操作数据
+        // ----------------------------
         // ###订单信息
         // 订单类型
         $orderType   = I('orderType', '', 'intval');
@@ -83,10 +83,6 @@ class OrderController extends BaseController
         $loadRate    = I('loadRate', '', 'strval');
         // 总费用
         $sumPrice    = I('sumPrice', '', 'intval');
-        // 出发时间
-        $departTime  = I('departTime', '', 'strval');
-        // 到货时间
-        $arrivedTime = I('arrivedTime', '', 'strval');
 
 
         // ###装货人信息
@@ -99,11 +95,11 @@ class OrderController extends BaseController
         // 具体位置
         $s_address       = I('s_address', '', 'strval');
         // 经度
-        $s_longitude     = I('s_longitude', '', 'strval');
+        $s_longitude     = explode('  ', I('s_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $s_latitude      = I('s_latitude', '', 'strval');
+        $s_latitude      = explode('  ', I('s_LngAndLat', '', 'strval'))[1];
         // 装货时间
-        $s_startTime     = I('s_startTime', '', 'strval');
+        $s_startTime     = strtotime(I('s_startTime', '', 'strval'));
         // 预估时间
         $s_estimatedTime = I('s_estimatedTime', '', 'strval');
         // type
@@ -121,11 +117,11 @@ class OrderController extends BaseController
         // 具体位置
         $d_address       = I('d_address', '', 'strval');
         // 经度
-        $d_longitude     = I('d_longitude', '', 'strval');
+        $d_longitude     = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $d_latitude      = I('d_latitude', '', 'strval');
+        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 装货时间
-        $d_startTime     = I('d_startTime', '', 'intval');
+        $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
         // 预估时间
         $d_estimatedTime = I('d_estimatedTime', '', 'intval');
         // type
@@ -134,14 +130,28 @@ class OrderController extends BaseController
         $d_desc          = I('d_desc', '', 'strval');
 
         // ###物品信息
-        // 物品集合
-        $goods   = I('goods');
+        // 姓名
+        $goodsName   = I('goodsName');
+        // 货物长度
+        $goodsLength = I('goodsLength');
+        // 货物宽度
+        $goodsWidth  = I('goodsWidth');
+        // 货物高度
+        $goodsHeight = I('goodsHeight');
+        // 货物重量
+        $goodsWeight = I('goodsWeight');
+        // 货物数量
+        $count       = I('count');
+        // 货物类型
+        $goodsType   = I('goodsType');
 
         // ###检验数据   
-        $result = $this->orderValidate($data);
+        // $result = $this->orderValidate($data);
         
         // ###保存数据
         do {
+            // 状态值
+            $status = true;
             // ###开启事务
             $this->startTrans();
 
@@ -151,23 +161,25 @@ class OrderController extends BaseController
             if(true) {
                 // ###封装数据
                 // 赋值数据[订单类型]
-                $data['orderType']        = $orderType;
+                $data['userId']        = 1;  
+                // 赋值数据[订单类型]
+                $data['orderType']     = $orderType;
                  // 赋值数据[运输类型]  
-                $data['transType']        = $transType;
+                $data['transType']     = $transType;
                 // 赋值数据[用车类型]
-                $data['vehicleType']      = $vehicleType;
+                $data['vehicleType']   = $vehicleType;
                 // 赋值数据[装货率]
-                $data['loadRate']         = $loadRate;
+                $data['loadRate']      = $loadRate;
                 // 赋值数据[总费用]
-                $data['sumPrice']         = $sumPrice;
+                $data['sumPrice']      = $sumPrice;
                 // 赋值数据[出发地]
-                $data['departArea']       = $s_area.''.$s_area;
+                $data['departArea']    = $s_area.''.$s_address;
                 // 赋值数据[目的地]
-                $data['destArea']         = $d_area.''.$d_area;
+                $data['destArea']      = $d_area.''.$d_address;
                 // 赋值数据[预估出发时间]
-                $data['departTime']       = $departTime;
+                $data['departTime']    = $s_startTime + $s_estimatedTime * 3600;;
                 // 赋值数据[预估到达时间]
-                $data['arrivedTime']      = $arrivedTime;
+                $data['arrivedTime']   = $d_startTime + $d_estimatedTime * 3600;
                 // 赋值数据[生成订单号]
                 $data['orderNum']      = generateOrderSn(); 
                 // 赋值数据[订单状态变更为发布中 1]
@@ -179,8 +191,6 @@ class OrderController extends BaseController
                 // 赋值数据[订单修改时间]
                 $data['updateTime']    = time();
 
-                echo '<pre>';
-                print_r($data);exit;
                 
                  //todo登入系统后加上userId以及费用的算法
                 $orderId = $this->model_order->saveData($data);
@@ -202,7 +212,7 @@ class OrderController extends BaseController
 
                 // ###封装数据
                 // 赋值数据[订单id]
-                $data['orderId']       = $s_orderId;
+                $data['orderId']       = $orderId;
                  // 赋值数据[装货人名称]  
                 $data['name']          = $s_name;
                 // 赋值数据[手机号码]
@@ -236,6 +246,7 @@ class OrderController extends BaseController
                 // ###保存
                 $chargerId = $this->model_order_charger->saveData($data);
 
+
                 if ($orderId === false) {
                     // ###设置结果
                     $status  = false;
@@ -253,7 +264,7 @@ class OrderController extends BaseController
 
                 // ###封装数据
                 // 赋值数据[订单id]
-                $data['orderId']       = $d_orderId;
+                $data['orderId']       = $orderId;
                  // 赋值数据[装货人名称]  
                 $data['name']          = $d_name;
                 // 赋值数据[手机号码]
@@ -298,49 +309,48 @@ class OrderController extends BaseController
             //----------------------
             // *.保存货品信息
             //----------------------
-            foreach ($goods as $key => $value) {
+            foreach ($goodsName as $key => $value) {
                if (true) {
                     // ###释放数据
                     unset($data);
                     // 货物名称
-                    $goodsName   = strval($value['goodsName']);
+                    $name      = strval($goodsName[$key]);
                     // 货物长度
-                    $goodsLength = strval($value['goodsLength']);
+                    $length    = strval($goodsLength[$key]);
                     // 货物宽度
-                    $goodsWidth  = strval($value['goodsWidth']);
+                    $width     = strval($goodsWidth[$key]);
                     // 货物高度
-                    $goodsHeight = strval($value['goodsHeight']);
+                    $height    = strval($goodsHeight[$key]);
                     // 货物重量
-                    $goodsWeight = strval($value['goodsWeight']);
+                    $weight    = strval($goodsWeight[$key]);
                     // 货物数量
-                    $count       = intval($value['count']);
+                    $no        = intval($count[$key]);
                     // 货物类型
-                    $goodsType   = intval($value['goodsType']);
+                    $type      = intval($goodsType[$key]);
 
                     // ###封装数据
                     // 赋值数据[订单id]
                     $data['orderId']       = $orderId;
-                     // 赋值数据[货物名称]  
-                    $data['goodsName']     = $goodsName;
+                    // 赋值数据[货物名称]  
+                    $data['goodsName']     = $name;
                     // 赋值数据[货物长度]
-                    $data['goodsLength']   = $goodsLength;
+                    $data['goodsLength']   = $length;
                     // 赋值数据[货物宽度]
-                    $data['goodsWidth']    = $goodsWidth;
+                    $data['goodsWidth']    = $width;
                     // 赋值数据[货物高度]
-                    $data['goodsHeight']   = $goodsHeight;
+                    $data['goodsHeight']   = $height;
                     // 赋值数据[货物重量]
-                    $data['goodsWeight']   = $goodsWeight;
+                    $data['goodsWeight']   = $weight;
                     // 赋值数据[货物数量]
-                    $data['count']         = $count;
+                    $data['count']         = $no;
                     // 赋值数据[货物类型]
-                    $data['goodsType']     = $goodsType;
+                    $data['goodsType']     = $type;
                     // 赋值数据[状态]
                     $data['state']         = STATE_ON;
                     // 赋值数据[订单生成时间]
                     $data['createTime']    = time();
                     // 赋值数据[订单修改时间]
                     $data['updateTime']    = time();
-
 
                     // ###保存
                     $goodsId = $this->model_order_goods->saveData($data);
@@ -360,7 +370,7 @@ class OrderController extends BaseController
         $this->endTrans($status);
 
         if ($status) {
-            $this->success('新增成功', U('index'));
+            $this->success('新增成功', U('add'));
         } else {
             $this->error('新增失败');
         }
@@ -392,7 +402,19 @@ class OrderController extends BaseController
      * @author shigin <597852546@qq.com>
      */
     public function edit()
-    {
+    {   
+        // 操作数据
+        $ordeId = I('orderId', '', 'intval');
+
+        if (!$ordeId) $this->error('订单不存在');
+
+        // 指定变量[订单数据]
+        $this->assign('priorities', $this->getPriorities());
+        // 指定变量[装卸人数据]
+        $this->assign('priorities', $this->getPriorities());
+        // 指定变量[物品数据]
+        $this->assign('priorities', $this->getPriorities()); 
+        
         // ###渲染页面
         $this->display();
     }
