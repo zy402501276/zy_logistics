@@ -63,4 +63,38 @@ class OrderChargerModel extends BaseModel
         }
     }
 
+    /**
+     * 获取装卸货人信息
+     * @param int $orderId 订单id
+     * @author shigin <597852546@qq.com>
+     */
+    public function getDataByOrderId($orderId)
+    {   
+        // ###结果数据
+        $data =[];
+        
+        $result = $this->where(['orderId' => $orderId])->select();
+
+        foreach ($result as $key => $value) {
+            // 预估时间
+            $value['estimatedtime'] = ($value['endtime'] - $value['starttime'])/3600;
+            // 经纬度
+            $value['lngandlat']     = $value['longitude'].'  '.$value['latitude'];
+
+            $data[$value['type']]   = $value;
+        }
+
+        // ###返回结果数据
+        return $data;
+    }
+
+    /**
+     * 根据订单id删除数据
+     * @author shigin <597852546@qq.com>
+     */
+    public function deleteDataByOrderId($id)
+    {
+        return $this->where(['orderId' => $id])->delete();
+    }
+
 }

@@ -51,4 +51,22 @@ class OrderGoodsModel extends BaseModel{
         return $result;
     }
 
+    /**
+     * 获取货物信息
+     * @param int $orderId 订单id
+     * @author shigin <597852546@qq.com>
+     */
+    public function getDataByOrderId($orderId)
+    {   
+        return  $this->where(['orderId' => $orderId])->select();
+    }
+
+    /**
+     * 根据订单id删除数据
+     * @author shigin <597852546@qq.com>
+     */
+    public function deleteDataByOrderId($id)
+    {
+        return $this->where(['orderId' => $id])->delete();
+    }
 }

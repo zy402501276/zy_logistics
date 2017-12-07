@@ -13,23 +13,23 @@
 				<ul class="newOrder-type-ul">
 					<li>
 						<select class="newOrder-type-li" name="orderType" form="dataForm">
-							<option value="1">标准货物</option>
-							<option value="2">非常标准货物</option>
+							<option value="1" <eq name="order['ordertype']" value="1">selected</eq>>标准货物</option>
+							<option value="2" <eq name="order['ordertype']" value="2">selected</eq>>非常标准货物</option>
 						</select>
 					</li>
 					<li>
 						<select class="newOrder-type-li" name="transType" form="dataForm">
 							<option value="">用车类型</option>
-							<option value="1">正常模式</option>
-							<option value="2">拼车模式</option>
+							<option value="1" <eq name="order['transtype']" value="1">selected</eq>>正常模式</option>
+							<option value="2" <eq name="order['transtype']" value="2">selected</eq>>拼车模式</option>
 							
 						</select>
 					</li>
 					<li>
 						<select class="newOrder-type-li" name="vehicleType" form="dataForm">
 							<option value="">用车类型</option>
-							<option value="1">重量体积</option>
-							<option value="2">包车</option>
+							<option value="1" <eq name="order['vehicletype']" value="1">selected</eq>>重量体积</option>
+							<option value="2" <eq name="order['vehicletype']" value="2">selected</eq>>包车</option>
 						</select>
 					</li>
 				</ul>
@@ -38,7 +38,7 @@
 		<div class="newOrder-content">
 
 			<!--货物清单信息-->
-			<form action="{:U('save')}" id="dataForm" method="post">
+			<form action="{:U('update')}" id="dataForm" method="post">
 
 				<div class="newOrder-goods-message-area">
 					<div class="newOder-goods-information">
@@ -52,33 +52,35 @@
 							<li>类别</li>
 							<li>物品名</li>
 						</ul>
-						<ul class="goods-information-ul">
-							<li>
-								<input type="text" name="goodsLength[]">
-							</li>
-							<li>
-								<input type="text" name="goodsWidth[]">
-							</li>
-							<li>
-								<input type="text" name="goodsHeight[]">
-							</li>
-							<li>
-								<input type="text" name="goodsWeight[]">
-							</li>
-							<li>
-								<input type="text" name="count[]">
-							</li>
-							<li>
-								<select class="newOrder-type-li" name="goodsType[]">
-									<option value="">请选择</option>
-									<option value="1">固体</option>
-									<option value="2">液体</option>
-								</select>
-							</li>
-							<li>
-								<input type="text" name="goodsName[]">
-							</li>
-						</ul>
+						<volist name="goods" id="vo">
+							<ul class="goods-information-ul">
+								<li>
+									<input type="text" name="goodsLength[]" value="{$vo['goodslength']}">
+								</li>
+								<li>
+									<input type="text" name="goodsWidth[]" value="{$vo['goodswidth']}">
+								</li>
+								<li>
+									<input type="text" name="goodsHeight[]" value="{$vo['goodsheight']}">
+								</li>
+								<li>
+									<input type="text" name="goodsWeight[]" value="{$vo['goodsweight']}">
+								</li>
+								<li>
+									<input type="text" name="count[]" value="{$vo['count']}">
+								</li>
+								<li>
+									<select class="newOrder-type-li" name="goodsType[]">
+										<option value="">请选择</option>
+										<option value="1" <eq name="vo['goodstype']" value="1">selected</eq>>固体</option>
+										<option value="2" <eq name="vo['goodstype']" value="2">selected</eq>>液体</option>
+									</select>
+								</li>
+								<li>
+									<input type="text" name="goodsName[]" value="{$vo['goodsname']}">
+								</li>
+							</ul>
+						</volist>	
 						<div class="add-ul-btn"></div>
 					</div>
 
@@ -89,26 +91,26 @@
 							<span class="tilte-fonts">装货信息</span>
 							<ul class="stowage-ul">
 								<li>
-									<span>装货地点:</span><input type="text" id="input_id" name="s_area"><input type="hidden" id="jingdu" name="s_LngAndLat" value="" />
+									<span>装货地点:</span><input type="text" id="input_id" name="s_area" value="{$stevedoring[1]['area']}""><input type="hidden" id="jingdu" name="s_LngAndLat" value="{$stevedoring[1]['lngandlat']}" />
 									<div id="map_box"></div>
 									<div id='message'></div>
 									<span class="stowage-icon green-icon"></span>
 								</li>
-								<li><span>详细地址:</span><input type="text" name="s_address"></li>
+								<li><span>详细地址:</span><input type="text" name="s_address" value="{$stevedoring[1]['address']}"></li>
 								<li>
-									<span>装货联系人:</span><input class="name-input" type="text" placeholder="姓名" name="s_name"><input class="phone-input" type="text" placeholder="电话" name="s_mobile">
+									<span>装货联系人:</span><input class="name-input" type="text" placeholder="姓名" name="s_name" value="{$stevedoring[1]['name']}"><input class="phone-input" type="text" placeholder="电话" name="s_mobile" value="{$stevedoring[1]['mobile']}">
 								</li>
 								<li>
-									<span>装货时间:</span><input type="text" id="test4" name="s_startTime">
+									<span>装货时间:</span><input type="text" id="test4" name="s_startTime" value="{$stevedoring[1]['starttime']|date="Y-m-d H:i:s",###}">
 									<span class="stowage-span">预计装货:</span>
 									<select name="s_estimatedTime">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="2">3</option>
+									<option value="1" <eq name="stevedoring[1]['estimatedtime']" value="1">selected</eq>>1</option>
+									<option value="2" <eq name="stevedoring[1]['estimatedtime']" value="2">selected</eq>>2</option>
+									<option value="3" <eq name="stevedoring[1]['estimatedtime']" value="3">selected</eq>>3</option>
 								</select><span class="stowage-hour">小时</span>
 								</li>
 								<li>
-									<span>装货备注:</span><input type="text" name="s_desc">
+									<span>装货备注:</span><input type="text" name="s_desc" value="{$stevedoring[1]['desc']}">
 								</li>
 							</ul>
 						</div>
@@ -116,31 +118,31 @@
 							<span class="tilte-fonts">卸货信息</span>
 							<ul class="stowage-ul">
 								<li>
-									<span>卸货地点:</span><input type="text" id="input_id2" name="d_area"><input type="hidden" id="jingdu2" name="d_LngAndLat" value="" />
+									<span>卸货地点:</span><input type="text" id="input_id2" name="d_area" value="{$stevedoring[2]['area']}"><input type="hidden" id="jingdu2" name="d_LngAndLat" value="{$stevedoring[2]['lngandlat']}" />
 									<div id="map_box2"></div>
 									<span class="stowage-icon red-icon"></span>
 								</li>
-								<li><span>详细地址:</span><input type="text" name="d_address"></li>
+								<li><span>详细地址:</span><input type="text" name="d_address" value="{$stevedoring[2]['address']}"></li>
 								<li>
-									<span>卸货联系人:</span><input class="name-input" type="text" placeholder="姓名" name="d_name"><input class="phone-input" type="text" placeholder="电话" name="d_mobile">
+									<span>卸货联系人:</span><input class="name-input" type="text" placeholder="姓名" name="d_name" value="{$stevedoring[2]['name']}"><input class="phone-input" type="text" placeholder="电话" name="d_mobile" value="{$stevedoring[2]['mobile']}">
 								</li>
 								<li>
-									<span>卸货时间:</span><input type="text" id="test5" name="d_startTime">
+									<span>卸货时间:</span><input type="text" id="test5" name="d_startTime" value="{$stevedoring[2]['starttime']|date="Y-m-d H:i:s",###}">
 									<span class="stowage-span">预计卸货:</span>
 									<select name="d_estimatedTime">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
+									<option value="1" <eq name="stevedoring[1]['estimatedtime']" value="1">selected</eq>>1</option>
+									<option value="2" <eq name="stevedoring[2]['estimatedtime']" value="2">selected</eq>>2</option>
+									<option value="3" <eq name="stevedoring[3]['estimatedtime']" value="3">selected</eq>>3</option>
 								</select><span class="stowage-hour">小时</span>
 								</li>
 								<li>
-									<span>卸货备注:</span><input type="text" name="d_desc">
+									<span>卸货备注:</span><input type="text" name="d_desc" value="{$stevedoring[2]['desc']}">
 								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
-
+				<input type="hidden" name="id" value="{$order['id']}">
 				<input type="submit" id="btns" value="" />
 			</form>
 		</div>
