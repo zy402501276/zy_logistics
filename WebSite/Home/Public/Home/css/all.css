@@ -1069,6 +1069,7 @@ footer{
 .ul-bottom{
 	padding-bottom: 5px;
 	border-bottom: 1px solid #E6E6E6;
+	width: 100%;
 }
 .n-height{
 	height: 81px;
@@ -1136,6 +1137,9 @@ footer{
 .stowage-ul2 li span:nth-child(4){
 	font-size: 14px;
 	color: #898989;
+}
+.stowage-ul2 li span{
+	margin-right: 10px;
 }
 .stowage-ul2 .stowage-icon{
 	left: 190px;
@@ -1804,7 +1808,7 @@ footer{
     height: 350px;
     position: absolute;
     top: 33px;
-    left: 69px;
+    left: 90px;
     z-index:99;
     background-color: #fff;
     display:none;
@@ -1981,8 +1985,10 @@ right: 0;
 	float: right;
 	margin-right: 10px;
 }
-
-
+/*时间插件*/
+#layui-laydate1,.layui-laydate-main{
+	width: 270px!important;
+}
 
 
 

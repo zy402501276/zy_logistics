@@ -26,8 +26,8 @@ class OrderGoodsModel extends BaseModel{
         $string = '';
         $result = $this
             ->JOIN("LEFT JOIN `goodstype` ON `ordergoods`.goodsType = `goodstype`.id")
-            ->where("orderId=$ordeId")
-            ->select();
+            ->WHERE("orderId=$ordeId")
+            ->SELECT();
         if(!empty($result)){
             foreach ($result as $key =>$value){
                 $string .= $value['name'].'/';
@@ -35,6 +35,20 @@ class OrderGoodsModel extends BaseModel{
             $string = substr($string,0,-1);
         }
         return $string;
+    }
+
+    /**
+     * 获取订单的货物信息
+     * @author: zy
+     * @param $orderId int 订单表主键
+     */
+    public function getGoodsById($orderId){
+        $where['orderId'] = $orderId;
+        $result = $this
+                  ->WHERE($where)
+                  ->JOIN("LEFT JOIN `goodstype` ON `ordergoods`.goodsType = `goodstype`.id")
+                  ->SELECT();
+        return $result;
     }
 
 }

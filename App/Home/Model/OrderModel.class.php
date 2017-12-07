@@ -60,4 +60,64 @@ class OrderModel extends BaseModel
         }
         return $array;
     }
+
+
+    /**
+     * 根据订单id获取订单详情
+     * @author: zy
+     * @param $ordeId int order表主键
+     */
+
+    public function getOrderInfo($orderId){
+        $model = $this->find($orderId);
+        if(empty($model)){
+            return ['state'=>false,'message'=>'订单不存在'];
+        }
+        $orderArr = [
+                'orderType' => $this->orderTypeArr($model['ordertype']), //货物类型
+                'transType' => $this->transTypeArr($model['transtype']),//运输类型
+                'vehicleType' => $this->vehicleTypeArr($model['vehicletype']),//车辆类型
+                'loadRate'  =>$model['loadrate'],//装货率
+                'sumPrice'  =>$model['sumprice'],//总费用
+                ];
+        return ['state'=>true,'result'=>$orderArr];
+    }
+
+    /**
+     * 获取货物类型
+     * @time 2017年12月1日14:00:45
+     * @author zhangye
+     */
+    private function orderTypeArr($type = '', $echoString = false){
+        $array = array(
+            ORDER_NORMAL => '标准货物',
+            ORDER_ABNORMAL => '非标准货物',
+        );
+        return getState($array, $type, $echoString);
+    }
+    /**
+     * 获取运输类型
+     * @time 2017年12月1日14:00:45
+     * @author zhangye
+     */
+    private function transTypeArr($type = '', $echoString = false){
+        $array = array(
+            TRANS_NORMAL => '正常模式',
+            TRANS_CARPOOL => '拼车模式',
+        );
+        return getState($array, $type, $echoString);
+    }
+    /**
+     * 获取车辆类型
+     * @time 2017年12月1日14:00:45
+     * @author zhangye
+     */
+    private function vehicleTypeArr($type = '', $echoString = false){
+        $array = array(
+            VEHICLE_VOL => '重量体积',
+            VEHICLE_RENT => '包车',
+        );
+        return getState($array, $type, $echoString);
+    }
+
 }

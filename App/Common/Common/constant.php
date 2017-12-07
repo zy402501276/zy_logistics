@@ -83,3 +83,11 @@
      * 订单状态-完成
      */
     CONST ORDER_STATE_FINISH = 8;
+    /**
+     * 负责人类型-装货人
+     */
+    CONST CHARGER_LOAD = 1;
+    /**
+     * 负责人类型-卸货人
+     */
+    CONST CHARGER_UNLOAD = 2;
