@@ -34,5 +34,5 @@ function getWeek($time){
 function getCostTime($startTime,$endTime){
     $startTime = intval($startTime);
     $endTime = intval($endTime);
-    return (($endTime-$startTime)/3600) .'小时';
+    return intval((($endTime-$startTime)/3600)) .'小时';
 }

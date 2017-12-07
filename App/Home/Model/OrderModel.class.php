@@ -77,8 +77,12 @@ class OrderModel extends BaseModel
                 'orderType' => $this->orderTypeArr($model['ordertype']), //货物类型
                 'transType' => $this->transTypeArr($model['transtype']),//运输类型
                 'vehicleType' => $this->vehicleTypeArr($model['vehicletype']),//车辆类型
-                'loadRate'  =>$model['loadrate'],//装货率
-                'sumPrice'  =>$model['sumprice'],//总费用
+                'loadRate'  => $model['loadrate'],//装货率
+                'sumPrice'  => $model['sumprice'],//总费用
+                'orderNum'  => $model['ordernum'],//订单号
+                'driverId' => $model['driverid'],//司机id
+                'createTime'=> $model['createtime'],//创建时间
+                'distributeTime' => $model['distributetime'],//接单时间
                 ];
         return ['state'=>true,'result'=>$orderArr];
     }

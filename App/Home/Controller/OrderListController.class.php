@@ -59,6 +59,10 @@ class OrderListController extends BaseController{
         $this->userInfo =  ['id'=>1];
     }
 
+    /**
+     * 订单列表页
+     * @author: zy
+     */
     public function lists(){
         $orderState = I('orderState',1);
         $userInfo = $this->userInfo;
