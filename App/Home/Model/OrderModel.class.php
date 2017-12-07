@@ -83,6 +83,7 @@ class OrderModel extends BaseModel
                 'driverId' => $model['driverid'],//司机id
                 'createTime'=> $model['createtime'],//创建时间
                 'distributeTime' => $model['distributetime'],//接单时间
+                'orderId' => $model['id'],//id
                 ];
         return ['state'=>true,'result'=>$orderArr];
     }
