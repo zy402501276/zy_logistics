@@ -91,3 +91,5 @@
      * 负责人类型-卸货人
      */
     CONST CHARGER_UNLOAD = 2;
+
+

@@ -23,3 +23,12 @@ function getState(array $data, $status = '', $echoString = false) {
     }
     return $data;
 }
+
+/**
+ * 获取图片
+ * @author zhangye
+ */
+function getImg($img) {
+    $img = getcwd().'/../Static/Upload/'.$img;
+    return $img;
+}

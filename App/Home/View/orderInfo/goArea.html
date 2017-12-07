@@ -1,0 +1,87 @@
+
+
+		<div class="order-details-bar">
+			<ul id="breadcrumb">
+				<li class="li-active">
+					<a href="#">订单详情</a>
+				</li>
+				<li>
+					<a href="#">前往装货</a>
+				</li>
+				<li class="active">
+					<a href="#">确认装货</a>
+				</li>
+				<li class="active">
+					<a href="#">前往卸货</a>
+				</li>
+				<li class="active">
+					<a href="#">确认卸货</a>
+				</li>
+				<li class="active">
+					<a href="#">订单完成</a>
+				</li>
+			</ul>
+		</div>
+		<div class="load-goods">
+			<!--左侧地图-->
+			<div class="address-map">
+				<div id="container"></div>
+				<div id="panel"></div>
+			</div>
+			<!--右侧装货信息-->
+			<div class="goods-info">
+				<div class="driver-info">
+					<div class="pop-left">
+						<div class="pop-head-img"></div>
+					</div>
+					<div class="pop-right">
+						<span class="driver-name">{$driver['account']}</span>
+						<p class="driver-details"><span>电话:</span><span>{$driver['mobile']}</span></p>
+						<p class="driver-details"><span>车型:</span><span>{$driver['vehicletype']}</span></p>
+						<p class="driver-details"><span>车牌:</span><span>{$driver['licence']}</span></p>
+
+					</div>
+				</div>
+				<div class="loading-info">
+					<span class="tilte-fonts tilte-fonts2">{$title}</span>
+				</div>
+				<div class="goods-infomation">
+					<p><span class="loading-span-hui">地址 ： </span><span class="loading-span-hei"> {$loader['area']}</span></p>
+					<p><span class="loading-span-hui">联系人 ： </span><span class="loading-span-hei"> {$loader['name']}  {$loader['mobile']}</span></p>
+					<p><span class="loading-span-hui">时间 ： </span><span class="loading-span-hei"> {$loader['starttime'] | date='m-d',###}  {$loader['starttime'] | date='H:i',###} 预计装货{$loader['caculateTime']}小时</span></p>
+					<span class="estimate-time"><span class="loading-span-hei">当前距离目的地1.2公里</span><span class="loading-span-hei">预计</span><span class="loading-time">17:30</span><span class="loading-span-hei">抵达装货地点</span></span>
+					<p><span class="loading-span-hui">备注:{$loader['desc']}</span></p>
+				</div>
+			</div>
+		</div>
+
+		<!--遮罩-->
+		<div class="overMasking"></div>
+
+
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=199fbca875e24c457e78f2a07468a86f&plugin=AMap.Driving"></script>
+
+<script type="text/javascript">
+
+	var destLongtide = {$loader.longitude}; //目的地经度
+    var destLatide = {$loader.latitude};//目的地纬度
+
+    var driLongtide = {$driver.longitude}; //司机目前地经度
+    var dritLatide = {$driver.latitude};//司机目前地纬度
+
+	//自动定位
+	var map = new AMap.Map("container", {
+		resizeEnable: true
+	});
+	//构造路线导航类
+	var driving = new AMap.Driving({
+		map: map,
+		panel: "panel"
+	});
+	// 根据起终点经纬度规划驾车导航路线
+	driving.search(new AMap.LngLat(114.064552, 22.548457), new AMap.LngLat(114.164552, 22.548457));
+	//点击地图上的任意一点，获取经纬度
+	map.on('click', function(e) {
+		console.log(e.lnglat.getLng(), e.lnglat.getLat());
+	});
+</script>
