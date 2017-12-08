@@ -161,7 +161,7 @@ class OrderController extends BaseController
             if(true) {
                 // ###封装数据
                 // 赋值数据[订单类型]
-                $data['userId']        = 1;  
+                $data['userId']        = session('userId');  
                 // 赋值数据[订单类型]
                 $data['orderType']     = $orderType;
                  // 赋值数据[运输类型]  

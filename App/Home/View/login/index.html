@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录界面</title>
+		<link rel="stylesheet" type="text/css" href="__CSS__/style.css" />
+		<link rel="stylesheet" type="text/css" href="__CSS__/all.css" />
+	</head>
+	<body>
+		<div class="login-box">
+			<form method="post" action="{:U('login')}">
+				<div class="login-logo"></div>
+				<div class="login-content">
+					<div class="login-tips">
+						<span class="tips-icon"></span>
+						<span>您输入的用户名和密码不匹配</span>
+					</div>
+					<div class="login-inp">
+						<input type="text" placeholder="用户名" name='userName'/>
+					</div>
+					<div class="login-inp">
+						<input type="password" placeholder="输入密码" name='pwd'/>
+					</div>
+					<div class="login-button">
+						<input type="submit" class="login-btn"></input>
+					</div>
+					<!-- <div class="login-foot">
+						<a href="###"><span>申请新用户</span></a>
+						<span>|</span>
+						<a href="###"><span>忘记密码</span></a>
+					</div> -->
+				</div>
+			</form>
+		</div>
+	</body>
+
+</html>
