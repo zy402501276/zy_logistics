@@ -84,11 +84,9 @@
 //	map.on('click', function(e) {
 //		console.log(e.lnglat.getLng(), e.lnglat.getLat());
 //	});
-    var aa = "深圳市";
-    var bb = "深圳站";
-    var cc = "深圳西站"
-
     //基本地图加载
+
+
     var map = new AMap.Map("container", {
         resizeEnable: true,
         //center: [116.397428, 39.90923], //地图中心点
@@ -99,15 +97,7 @@
         map: map,
     });
     // 根据起终点名称规划驾车导航路线
-    driving.search([{
-        keyword: bb,
-        city: aa
-    },
-        {
-            keyword: cc,
-            city: aa
-        }
-    ], function(status, result) {
+    driving.search([driLongtide, dritLatide], [destLongtide, destLatide], function(status, result) {
         if(status === 'complete' && result.info
 
             === 'OK') {
@@ -115,7 +105,6 @@
             console.log(jl)
             $('.address-dis').html(jl);
             //假设车速是5000米/小时
-			var speed = 5000;
             var orderTime = Math.ceil(jl/5000);
             console.log(orderTime);
             $('.loading-time').html(orderTime+'小时');
@@ -123,6 +112,7 @@
             alert(result);
         }
     });
+
 
 
 

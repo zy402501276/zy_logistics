@@ -208,6 +208,7 @@ class OrderInfoController extends BaseController{
 
         $imgArr = $this->model_order_img->getPhoto($orderId,$type);//获取照片
 
+        $this->assign('type',$type);
         $this->assign('order',$orderModel);
         $this->assign('title',$title);
         $this->assign('loader',$loader);
@@ -217,5 +218,38 @@ class OrderInfoController extends BaseController{
         $this->assign('signImg',$imgArr['signImg']);
 
         $this->display();
+    }
+
+    /*
+     * 确认
+     * @author zhangye
+     */
+    public function checkOrder(){
+        $orderId = I('id',3);
+        $type = I('type',2);//默认1，前往装货 2，前往卸货
+        switch ($type){
+            case 1:
+                $data['orderState'] = 5;
+                $data['updateTime'] =time();
+                $data['id'] = $orderId;
+                $flag = $this->model_order->saveOrUpdateData($data);
+                if($flag){
+                    $this->success('放行成功',U('orderInfo/goArea',['id'=>$orderId,'type'=>2]));
+                }else{
+                    $this->error('放行失败');
+                }
+                break;
+            case 2:
+                $data['orderState'] = 8;
+                $data['updateTime'] =time();
+                $data['id'] = $orderId;
+                $flag = $this->model_order->saveOrUpdateData($data);
+                if($flag){
+                    $this->success('货主确认成功',U('orderInfo/finish',['id'=>$orderId]));
+                }else{
+                    $this->error('货主确认失败');
+                }
+                break;
+        }
     }
 }

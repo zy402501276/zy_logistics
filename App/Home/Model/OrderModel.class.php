@@ -38,7 +38,6 @@ class OrderModel extends BaseModel
             $unloader = D('OrderCharger')->getLoader($value['id'],2);//获取卸货人信息
             $goodsInfo = D('OrderGoods')->getGoodsInfo($value['id']);//货物数量重量
             $goodsType =  D('OrderGoods')->getGoodsType($value['id']);//货物类型
-
             $array[] = ['id'          => $value['id'],
                         'createTime' => date('Y-m-d',$value['createtime']),
                         'orderNum'   => $value['ordernum'],

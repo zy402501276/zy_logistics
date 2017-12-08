@@ -57,7 +57,7 @@ class OrderController extends BaseController
 
         // ###本类调用
         // 实例模型[货品信息表]
-        $this->model_order_goods   = D('Ordergoods');
+        $this->model_order_goods   = D('OrderGoods');
 
         
 
@@ -370,7 +370,7 @@ class OrderController extends BaseController
         $this->endTrans($status);
 
         if ($status) {
-            $this->success('新增成功', U('add'));
+            $this->success('新增成功', U('orderList/lists'));
         } else {
             $this->error('新增失败');
         }

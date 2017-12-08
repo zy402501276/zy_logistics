@@ -54,29 +54,29 @@
 						</ul>
 						<ul class="goods-information-ul">
 							<li>
-								<input type="text" name="goodsLength[]">
+								<input type="text" name="goodsLength[]" class="a1 aa">
 							</li>
 							<li>
-								<input type="text" name="goodsWidth[]">
+								<input type="text" name="goodsWidth[]" class="a2 aa">
 							</li>
 							<li>
-								<input type="text" name="goodsHeight[]">
+								<input type="text" name="goodsHeight[]" class="a3 aa">
 							</li>
 							<li>
-								<input type="text" name="goodsWeight[]">
+								<input type="text" name="goodsWeight[]" class="a4 aa">
 							</li>
 							<li>
-								<input type="text" name="count[]">
+								<input type="text" name="count[]" class="a5 aa">
 							</li>
 							<li>
-								<select class="newOrder-type-li" name="goodsType[]">
+								<select class="newOrder-type-li a6 aa" name="goodsType[]" >
 									<option value="">请选择</option>
 									<option value="1">固体</option>
 									<option value="2">液体</option>
 								</select>
 							</li>
 							<li>
-								<input type="text" name="goodsName[]">
+								<input type="text" name="goodsName[]" class="a7 aa">
 							</li>
 						</ul>
 						<div class="add-ul-btn"></div>
@@ -89,7 +89,7 @@
 							<span class="tilte-fonts">装货信息</span>
 							<ul class="stowage-ul">
 								<li>
-									<span>装货地点:</span><input type="text" id="input_id" name="s_area"><input type="hidden" id="jingdu" name="s_LngAndLat" value="" />
+									<span>装货地点:</span><input type="text" id="input_id" name="s_area" class="a8 aa"><input type="hidden" id="jingdu" name="s_LngAndLat" value="" />
 									<div id="map_box"></div>
 									<div id='message'></div>
 									<span class="stowage-icon green-icon"></span>
@@ -116,7 +116,7 @@
 							<span class="tilte-fonts">卸货信息</span>
 							<ul class="stowage-ul">
 								<li>
-									<span>卸货地点:</span><input type="text" id="input_id2" name="d_area"><input type="hidden" id="jingdu2" name="d_LngAndLat" value="" />
+									<span>卸货地点:</span><input type="text" id="input_id2" name="d_area" class="a9 aa"><input type="hidden" id="jingdu2" name="d_LngAndLat" value="" />
 									<div id="map_box2"></div>
 									<span class="stowage-icon red-icon"></span>
 								</li>
@@ -154,8 +154,10 @@
 			<div class="foot-price">
 				<span class="foot-wen">装货率</span>
 				<span class="loading-rate">20%</span>
+				<input type="hidden" name="loadRate" value="" class="loading-rate" style="display:none">
 				<span class="foot-wen">预计金额</span>
 				<span class="amount">600元</span>
+				<input type="hidden" name="sumPrice" value="" class="amount" style="display:none">
 			</div>
 
 		</footer>
@@ -406,13 +408,25 @@
             $(".orders").submit();
         }
     })
-	
 
-	
-	
-	
-	
-	
+    $(document).on('change', '.aa', function() {
+        var a1 = $(".a1").val();
+        var a2 = $(".a2").val();
+        var a3 = $(".a3").val();
+        var a4 = $(".a4").val();
+        var a5 = $(".a5").val();
+        var a6 = $(".a6 option:selected").text();
+        var a7 = $(".a7").val();
+        var a8 = $(".a8").val();
+        var a9 = $(".a9").val();
+        if(a1 == "" || a2 == "" || a3 == "" || a4 == "" || a5 == "" || a6 == "" || a7 == "" || a8 == "" || a9 == "") {
+            $(".amount").hide();
+        } else {
+            $(".amount").show();
+        }
+        console.log(a1, a2, a3, a4, a5, a6, a7)
+    })
+
 	
 </script>
 <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
