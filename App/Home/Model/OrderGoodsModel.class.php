@@ -69,5 +69,4 @@ class OrderGoodsModel extends BaseModel{
     {
         return $this->where(['orderId' => $id])->delete();
     }
-    
 }
