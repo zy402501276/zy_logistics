@@ -1215,6 +1215,7 @@ footer{
 	height: 400px;
 	margin-right: 10px;
 	float: left;
+    position: relative;
 }
 .goods-info{
 	width: 450px;

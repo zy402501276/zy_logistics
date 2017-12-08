@@ -29,6 +29,7 @@ function getState(array $data, $status = '', $echoString = false) {
  * @author zhangye
  */
 function getImg($img) {
-    $img = getcwd().'/../Static/Upload/'.$img;
+    //$img = getcwd().'/../Static/Upload/'.$img;
+    $img = IMG_URL.'/'.$img;
     return $img;
 }

@@ -58,6 +58,10 @@ class OrderInfoController extends BaseController{
         $this->model_order_goods   = D('OrderGoods');
 
         // ###本类调用
+        // 实例模型[订单照片信息表]
+        $this->model_order_img   = D('OrderImg');
+
+        // ###本类调用
         // 实例模型[用户信息表]
         $this->model_user   = D('User');
 
@@ -170,6 +174,48 @@ class OrderInfoController extends BaseController{
         $this->assign('title',$title);
         $this->assign('loader',$loader);
         $this->assign('driver',$driverInfo);
+        $this->display();
+    }
+
+    /**
+     * 确认装卸货
+     * @author: zy
+     */
+    public function check(){
+        $orderId = I('id',3);
+        $type = I('type',2);//默认1，前往装货 2，前往卸货
+
+        switch ($type){
+            case 1:
+                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_LOAD);//获取装货人信息
+                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//装货日期
+                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
+                $title = '装货信息';
+                break;
+            case 2:
+                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
+                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
+                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
+                $title = '卸货货信息';
+                break;
+        }
+        $orderModel = $this->model_order->find($orderId);//订单信息
+
+        $driverInfo = $this->model_driver->getDriver($orderModel['driverid']); //司机信息
+        $driverInfo['avatar'] = getImg($driverInfo['avatar']);
+
+        $goodsDetail = $this->model_order_goods->getGoodsInfo($orderId);//货物重量数量
+
+        $imgArr = $this->model_order_img->getPhoto($orderId,$type);//获取照片
+
+        $this->assign('order',$orderModel);
+        $this->assign('title',$title);
+        $this->assign('loader',$loader);
+        $this->assign('driver',$driverInfo);
+        $this->assign('goods',$goodsDetail);
+        $this->assign('loadImg',$imgArr['loadImg']);
+        $this->assign('signImg',$imgArr['signImg']);
+
         $this->display();
     }
 }

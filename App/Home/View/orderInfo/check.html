@@ -1,0 +1,101 @@
+
+
+		<div class="order-details-bar">
+			<ul id="breadcrumb3">
+				<li class="active">
+					<a href="#">订单详情</a>
+				</li>
+				<li class="active">
+					<a href="#">前往装货</a>
+				</li>
+				<li>
+					<a href="#">确认装货</a>
+				</li>
+				<li class="active active2">
+					<a href="#">前往卸货</a>
+				</li>
+				<li class="active active2">
+					<a href="#">确认卸货</a>
+				</li>
+				<li class="active active2">
+					<a href="#">订单完成</a>
+				</li>
+			</ul>
+		</div>
+		<div class="load-goods">
+			<!--左侧地图-->
+			<div class="address-map">
+				<div id="container"></div>
+				<div id="panel"></div>
+			</div>
+			<!--右侧装货信息-->
+			<div class="goods-info">
+				<div class="loading-info confirm-info">
+					<span class="tilte-fonts tilte-fonts2">{$title}</span>
+				</div>
+				<div class="goods-infomation">
+					<p><span class="loading-span-hui">地址 ： </span><span class="loading-span-hei"> {$loader['area']}</span></p>
+					<p><span class="loading-span-hui">联系人 ： </span><span class="loading-span-hei"> {$loader['name']}  {$loader['mobile']}</span></p>
+					<p><span class="loading-span-hui">时间 ： </span><span class="loading-span-hei"> {$loader['starttime'] | date='m-d',###}  {$loader['starttime'] | date='H:i',###} 预计装货{$loader['caculateTime']}</span></p>
+					<p><span class="loading-span-hui">备注:</span>{$loader['desc']}</p>
+
+				</div>
+				<div class="goods-total">
+					<span class="goods-titles">货物共计 :</span>
+					<span class="loading-span-hei">{$goods['sum(count)']}</span>
+					<span class="loading-span-hei">{$goods['sum(goodsweight)']}件</span>
+					<span class="loading-span-hei goods-title-detail"><a href="{:U('orderInfo/wait',['id'=>$order['id']])}">货物详情  〉</a></span>
+				</div>
+				<div class="goods-pictures">
+					<p>装货现场拍照留存 :</p>
+					<div class="goods-img">
+						<volist name="loadImg" id="vo">
+						<span><img src="{$vo}"/></span>
+						</volist>
+					</div>
+				</div>
+				<div class="goods-pictures" style="height: 100px;">
+					<p>装货负责人签字 :</p>
+					<div class="goods-img">
+						<span>等待签名<img src="{$signImg}"/></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--遮罩-->
+		<div class="overMasking"></div>
+		<footer>
+			<a href="###" style="float: right;">
+				<div class="place-order">
+					确认装货
+				</div>
+			</a>
+		</footer>
+
+
+
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=199fbca875e24c457e78f2a07468a86f&plugin=AMap.Driving"></script>
+<script type="text/javascript">
+    var destLongtide = {$loader.longitude}; //目的地经度
+    var destLatide = {$loader.latitude};//目的地纬度
+
+    var driLongtide = {$driver.longitude}; //司机目前地经度
+    var dritLatide = {$driver.latitude};//司机目前地纬度
+
+	//自动定位
+	var map = new AMap.Map("container", {
+		resizeEnable: true
+	});
+	//构造路线导航类
+	var driving = new AMap.Driving({
+		map: map,
+		panel: "panel"
+	});
+	// 根据起终点经纬度规划驾车导航路线
+	driving.search(new AMap.LngLat(114.064552, 22.548457), new AMap.LngLat(114.164552, 22.548457));
+	//点击地图上的任意一点，获取经纬度
+	map.on('click', function(e) {
+		console.log(e.lnglat.getLng(), e.lnglat.getLat());
+	});
+</script>
