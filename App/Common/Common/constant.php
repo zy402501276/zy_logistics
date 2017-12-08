@@ -92,4 +92,25 @@
      */
     CONST CHARGER_UNLOAD = 2;
 
+    /**
+     * 照片类型-装货
+     */
+    CONST TYPE_LOAD = 1;
+    /**
+     * 照片类型-卸货
+     */
+    CONST TYPE_UNLOAD = 2;
+    /**
+     * 照片类型-装货签名
+     */
+    CONST TYPE_LOAD_SIGN = 3;
+    /**
+     * 照片类型-卸货签名
+     */
+    CONST TYPE_UNLOAD_SIGN = 4;
 
+
+    /**
+     * 图片服务器域名
+     */
+    CONST IMG_URL  = 'http://static.zy.com';
