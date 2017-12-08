@@ -27,16 +27,21 @@ class BaseController extends Controller
     /* 初始化 */
     protected function _initialize() 
     {   
-        // ###设置json输出header头
-        header("Access-Control-Allow-Origin: *"); 
-        header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, X-Access-Token, x-token");
-
         // 实例空模型
         if (self::$model_ === NULL) {
             self::$model_ = M();
     	}
+        if(!$this->isLogined() && strtolower(CONTROLLER_NAME) !== 'login') $this->redirect('Login/index');
     }
 
+    /**
+     * 验证登录
+     * @author shigin <597852546@qq.com>
+     */
+    public function isLogined() 
+    {
+        return session('userName');
+    }
 
     //----------------------------------
     // 事务
