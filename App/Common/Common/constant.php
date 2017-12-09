@@ -113,4 +113,4 @@
     /**
      * 图片服务器域名
      */
-    CONST IMG_URL  = 'http://static.zy.com';
+    CONST IMG_URL  = 'http://static.yunpeih.com:53177/Upload';

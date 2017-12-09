@@ -103,7 +103,7 @@ class OrderInfoController extends BaseController{
         $this->assign("loader",$loader);
         $this->assign("unloader",$unloader);
 
-        $this->display();
+        $this->display('orderInfo/wait');
     }
 
     /**
@@ -119,7 +119,6 @@ class OrderInfoController extends BaseController{
         }
         $order = $orderResult['result'];
 
-
         $goods = $this->model_order_goods->getGoodsById($orderId);//获取货物信息
         $goodsDetail = $this->model_order_goods->getGoodsInfo($orderId);//货物重量数量
 
@@ -132,7 +131,7 @@ class OrderInfoController extends BaseController{
         $unloader['timeLoad'] = date("H:i",$unloader['starttime']).'-'.date("H:i",$unloader['endtime']);//卸货时间
 
 
-        $driverInfo = $this->model_user->find($order['driveId']);//司机信息
+        $driverInfo = $this->model_user->find($order['driverId']);//司机信息
 
         $this->assign("order",$order);
         $this->assign("goods",$goods);
@@ -141,7 +140,7 @@ class OrderInfoController extends BaseController{
         $this->assign("unloader",$unloader);
         $this->assign("driver",$driverInfo);
 
-        $this->display();
+        $this->display('orderInfo/finish');
     }
 
     /**
@@ -167,14 +166,13 @@ class OrderInfoController extends BaseController{
                 break;
         }
         $orderModel = $this->model_order->find($orderId);
-
         $driverInfo = $this->model_driver->getDriver($orderModel['driverid']); //司机信息
         $driverInfo['avatar'] = getImg($driverInfo['avatar']);
 
         $this->assign('title',$title);
         $this->assign('loader',$loader);
         $this->assign('driver',$driverInfo);
-        $this->display();
+        $this->display('orderInfo/goArea');
     }
 
     /**
@@ -217,7 +215,7 @@ class OrderInfoController extends BaseController{
         $this->assign('loadImg',$imgArr['loadImg']);
         $this->assign('signImg',$imgArr['signImg']);
 
-        $this->display();
+        $this->display('orderInfo/check');
     }
 
     /*

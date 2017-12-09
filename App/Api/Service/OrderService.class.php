@@ -32,9 +32,11 @@ class OrderService extends Model{
             }
             $order = D('Order');
 //            $order->driverId = $driver['id'];
-            $data['driverId'] = $driver['id'];
+            $data['driverId'] = $driver['id'];//司机ID
             $data['updateTime'] = time();
-            //$order->orderState = $order::ORDER_STATE_GOTOLOADING;//状态
+            $data['distributeTime'] = time(); //司机接单时间
+            $data['orderState'] = 2;  //状态改为前往装货
+//            $order->orderState = ORDER_STATE_GOTOLOADING;//状态改为前往装货
 //            $order->updateTime = time();
             $order->where("orderNum=$orderId")->save($data);
             return array('state'=> true);

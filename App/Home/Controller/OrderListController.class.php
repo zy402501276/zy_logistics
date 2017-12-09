@@ -55,8 +55,8 @@ class OrderListController extends BaseController{
         $this->model_order_charger = D('OrderGoods');
 
         //###登录信息赋值
-        //$this->userInfo = session('user');
-        $this->userInfo =  ['id'=>1];
+        $this->userInfo = session('user');
+
     }
 
     /**
@@ -66,10 +66,10 @@ class OrderListController extends BaseController{
     public function lists(){
         $orderState = I('orderState',1);
         $userInfo = $this->userInfo;
-        $result = $this->model_order->getOrderList($userInfo['id'],$orderState);
+        $result = $this->model_order->getOrderList(session('userId'),$orderState);
         $this->assign('list',$result);
         $this->assign('state',$orderState);
-        $this->display();
+        $this->display('orderList/lists');
     }
 
 }

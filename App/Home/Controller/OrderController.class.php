@@ -119,7 +119,7 @@ class OrderController extends BaseController
         // 经度
         $d_longitude     = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
+        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[1];
         // 装货时间
         $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
         // 预估时间
@@ -394,7 +394,7 @@ class OrderController extends BaseController
     public function add()
     {
         // ###渲染页面
-        $this->display();
+        $this->display('order/add');
     }
 
     /**
@@ -417,7 +417,7 @@ class OrderController extends BaseController
         $this->assign('goods',       $this->getGoods($ordeId)); 
         
         // ###渲染页面
-        $this->display();
+        $this->display('order/edit');
     }
 
     /**
@@ -480,7 +480,7 @@ class OrderController extends BaseController
         // 经度
         $d_longitude     = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
+        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[1];
         // 装货时间
         $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
         // 预估时间

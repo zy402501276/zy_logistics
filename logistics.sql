@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-12-07 22:09:59
+Date: 2017-12-09 13:10:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,6 +51,23 @@ CREATE TABLE `driveraddress` (
 -- ----------------------------
 INSERT INTO `driveraddress` VALUES ('1', '3', '1', '2', '1512369714');
 INSERT INTO `driveraddress` VALUES ('2', '3', '3', '3', '1512369724');
+
+-- ----------------------------
+-- Table structure for `driverinfo`
+-- ----------------------------
+DROP TABLE IF EXISTS `driverinfo`;
+CREATE TABLE `driverinfo` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `licence` varchar(20) DEFAULT NULL COMMENT '车牌',
+  `vehicleType` varchar(20) DEFAULT NULL COMMENT '车辆类型',
+  `userId` int(11) unsigned DEFAULT NULL COMMENT '司机-关联user表主键',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of driverinfo
+-- ----------------------------
+INSERT INTO `driverinfo` VALUES ('1', '123213', '卡车', '2');
 
 -- ----------------------------
 -- Table structure for `goodstype`
@@ -114,14 +131,13 @@ CREATE TABLE `order` (
   `driverId` int(11) unsigned DEFAULT NULL COMMENT '司机-关联user表主键',
   `distributeTime` int(11) unsigned DEFAULT NULL COMMENT '接单时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 -- ----------------------------
 -- Records of order
 -- ----------------------------
-INSERT INTO `order` VALUES ('1', '1', '1', '1', '1', '80', '600', '123456adbcd', '2', '广东省 深圳市 南山区 中山大学', '广东省 惠州市 CBD 万达广场', '1512318454', '1512403200', '1', '1512105949', '1512105949', '1', null);
-INSERT INTO `order` VALUES ('2', '1', '1', '1', '1', '90', '1000', '123123123', '3', '广东省 深圳市 南山区 中山大学', '广东省 惠州市 CBD 万达广场', '1512403300', '1512576000', '1', '1512489600', '1512376295', '2', '1512630020');
-INSERT INTO `order` VALUES ('3', '1', '1', '2', '2', '12', '111', '17120523480716834899', '1', '广东省 深圳市 南山区', '广东省 深圳市 宝安区', '1512488037', '1512488037', '1', '1512488037', '1512488037', '2', '1512650020');
+INSERT INTO `order` VALUES ('5', '1', '1', '1', '1', '', '', '17120823253251278137', '8', '广东省  深圳市  福田区   华富街道  莲花路中山大学', '广东省  深圳市  福田区   园岭街道  红荔路中山大学2', '1512751719', '1512739020', '1', '1512748337', '1512750947', '2', '1512748337');
+INSERT INTO `order` VALUES ('6', '1', '2', '1', '2', '', '', '17120823023787537445', '1', '广东省  深圳市  福田区   华富街道  莲科一路打发发呆', '广东省  深圳市  福田区   园岭街道  园岭中路adsf', '1512666000', '1512739020', '1', '1512748599', '1512748599', '2', '1512748337');
 
 -- ----------------------------
 -- Table structure for `ordercharger`
@@ -146,13 +162,15 @@ CREATE TABLE `ordercharger` (
   `updateTime` int(40) unsigned DEFAULT NULL COMMENT '最后更新时间',
   `desc` varchar(40) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='订单负责人';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='订单负责人';
 
 -- ----------------------------
 -- Records of ordercharger
 -- ----------------------------
-INSERT INTO `ordercharger` VALUES ('1', '3', '小王', '110', '深圳市 南山区', '广door人', '1512111909', '1514736000', '1', null, null, null, null, '1', null, null, null);
-INSERT INTO `ordercharger` VALUES ('2', '3', '老王', '123', '惠州市 惠州路', ' 老乡', '1519837260', '1522515622', '2', null, null, null, null, '1', null, null, null);
+INSERT INTO `ordercharger` VALUES ('5', '5', '老王', '12345678911', '广东省  深圳市  福田区   华富街道  莲花路', '中山大学', '1512748119', '1512751719', '1', null, null, '114.067991218923', '22.559365604240295', '1', '1512748337', '1512748337', '111');
+INSERT INTO `ordercharger` VALUES ('6', '5', '小王', '1231332131', '广东省  深圳市  福田区   园岭街道  红荔路', '中山大学2', '1512735420', '1512739020', '2', null, null, '114.09751697575894', '114.09751697575894', '1', '1512748337', '1512748337', 'adfasf');
+INSERT INTO `ordercharger` VALUES ('7', '6', '131', '123131', '广东省  深圳市  福田区   华富街道  莲科一路', '打发发呆', '1512662400', '1512666000', '1', null, null, '114.07176776921597', '22.56190200143603', '1', '1512748599', '1512748599', '13123213');
+INSERT INTO `ordercharger` VALUES ('8', '6', '阿道夫', 'a1231323', '广东省  深圳市  福田区   园岭街道  园岭中路', 'adsf', '1512735420', '1512739020', '2', null, null, '114.09957691228237', '114.09957691228237', '1', '1512748599', '1512748599', '12313');
 
 -- ----------------------------
 -- Table structure for `ordergoods`
@@ -172,13 +190,15 @@ CREATE TABLE `ordergoods` (
   `createTime` int(40) unsigned DEFAULT NULL COMMENT '新增时间',
   `updateTime` int(40) unsigned DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='订单货物表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='订单货物表';
 
 -- ----------------------------
 -- Records of ordergoods
 -- ----------------------------
 INSERT INTO `ordergoods` VALUES ('1', '3', '货物1', '1', '2', '3.0', '4', '100', '1', '1', null, null);
 INSERT INTO `ordergoods` VALUES ('2', '3', '23', '3123', '3', '32', '3', '123', '2', '1', null, null);
+INSERT INTO `ordergoods` VALUES ('3', '5', '获取', '1', '2', '3', '4', '6', '1', '1', '1512748337', '1512748337');
+INSERT INTO `ordergoods` VALUES ('4', '6', '货物2', '3', '2', '1', '3', '13', '1', '1', '1512748599', '1512748599');
 
 -- ----------------------------
 -- Table structure for `orderimg`
@@ -191,13 +211,15 @@ CREATE TABLE `orderimg` (
   `orderid` int(11) unsigned DEFAULT NULL COMMENT '订单id',
   `createTime` int(40) DEFAULT NULL COMMENT '新增时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orderimg
 -- ----------------------------
-INSERT INTO `orderimg` VALUES ('1', './Upload/20171204/5a2506c16a4d2.jpg1', '1', '1', '1512376071');
-INSERT INTO `orderimg` VALUES ('2', './Upload/20171204/5a2506c16a4d2.jpg', '1', '2', '1512376295');
+INSERT INTO `orderimg` VALUES ('1', '20171204/5a2506c16a4d2.jpg', '1', '3', '1512376071');
+INSERT INTO `orderimg` VALUES ('2', '20171204/5a2506c16a4d2.jpg', '2', '3', '1512376295');
+INSERT INTO `orderimg` VALUES ('3', '20171204/5a2506c16a4d2.jpg', '3', '3', '1512376295');
+INSERT INTO `orderimg` VALUES ('4', '20171204/5a2506c16a4d2.jpg', '4', '3', '1512376295');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -215,12 +237,13 @@ CREATE TABLE `user` (
   `state` tinyint(3) unsigned DEFAULT '1' COMMENT '状态[1 正常 | 0禁用]',
   `createTime` int(40) DEFAULT NULL COMMENT '新增时间',
   `updateTime` int(40) unsigned DEFAULT NULL COMMENT '最后更新时间',
+  `avatar` varchar(60) DEFAULT NULL COMMENT '头像',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '小野君', '0890c785bd9e23fc5df3d39e5425834c', '18649717819', '18649717819', '4012000@qq.com', '1', '123456789', '1', '1512105949', '1512105949');
-INSERT INTO `user` VALUES ('2', '小野君2号', '0890c785bd9e23fc5df3d39e5425834c', '13823517819', '13823517819', '4012000@qq.com', '1', '3214567', '1', '1512105949', null);
-INSERT INTO `user` VALUES ('7', '小野菌', '0890c785bd9e23fc5df3d39e5425834c', '18649717815', null, null, '1', null, '1', '1512388971', '1512388971');
+INSERT INTO `user` VALUES ('1', '小野君', '0890c785bd9e23fc5df3d39e5425834c', '18649717819', '18649717819', '4012000@qq.com', '1', '123456789', '1', '1512105949', '1512105949', null);
+INSERT INTO `user` VALUES ('2', '小野君2号', '0890c785bd9e23fc5df3d39e5425834c', '13823517819', '13823517819', '4012000@qq.com', '1', '3214567', '1', '1512105949', null, '20171204/5a2506c16a4d2.jpg');
+INSERT INTO `user` VALUES ('7', '小野菌', '0890c785bd9e23fc5df3d39e5425834c', '18649717815', null, null, '1', null, '1', '1512388971', '1512388971', null);

@@ -93,7 +93,7 @@
 		panel: "panel"
 	});
 	// 根据起终点经纬度规划驾车导航路线
-	driving.search(new AMap.LngLat(114.064552, 22.548457), new AMap.LngLat(114.164552, 22.548457));
+	driving.search(new AMap.LngLat(driLongtide, dritLatide), new AMap.LngLat(destLongtide, destLatide));
 	//点击地图上的任意一点，获取经纬度
 	map.on('click', function(e) {
 		console.log(e.lnglat.getLng(), e.lnglat.getLat());

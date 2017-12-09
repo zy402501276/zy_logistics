@@ -26,7 +26,7 @@ class UserService extends Model{
 //            $data['mobile'] = trim(isset($post['mobile']));
             $result = $user->userValidate($data);
             if($result['state']){
-                $data['pwd'] = md5($post['pwd'].$user::PWD_KEY);
+                $data['pwd'] = md5($post['password'].$user::PWD_KEY);
                 $data['state'] = $user::STATE_ON;
                 $data['createTime'] = $data['updateTime'] = time();
                 $user->add($data);
