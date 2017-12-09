@@ -69,7 +69,13 @@ class OrderInfoController extends BaseController{
         // 实例模型[司机信息表]
         $this->model_driver  = D('DriverInfo');
 
-
+        //判断该订单的状态是否可以进入下一个页面
+        $orderId = I('id',3);
+        $is_check = I('checkVal');//当前页的状态值
+        $orderModel = $this->model_order->find($orderId);
+        if($orderModel['orderstate'] <$is_check){
+            $this->error('订单尚未进行该步骤！请稍后再试');
+        }
     }
 
     /**
@@ -98,6 +104,8 @@ class OrderInfoController extends BaseController{
         $unloader['timeLoad'] = date("H:i",$unloader['starttime']).'-'.date("H:i",$unloader['endtime']);//卸货时间
 
         $this->assign("order",$order);
+        $this->assign("orderId",$orderId);//订单id
+        $this->assign("orderState",$order['orderState']);//订单当前状态
         $this->assign("goods",$goods);
         $this->assign("goodsDetail",$goodsDetail);
         $this->assign("loader",$loader);
@@ -134,6 +142,8 @@ class OrderInfoController extends BaseController{
         $driverInfo = $this->model_user->find($order['driverId']);//司机信息
 
         $this->assign("order",$order);
+        $this->assign("orderId",$orderId);//订单id
+        $this->assign("orderState",$order['orderState']);//订单当前状态
         $this->assign("goods",$goods);
         $this->assign("goodsDetail",$goodsDetail);
         $this->assign("loader",$loader);
@@ -170,6 +180,8 @@ class OrderInfoController extends BaseController{
         $driverInfo['avatar'] = getImg($driverInfo['avatar']);
 
         $this->assign('title',$title);
+        $this->assign("orderState",$orderModel['orderstate']);//订单当前状态
+        $this->assign("orderId",$orderId);//订单id
         $this->assign('loader',$loader);
         $this->assign('driver',$driverInfo);
         $this->display('orderInfo/goArea');
@@ -208,6 +220,8 @@ class OrderInfoController extends BaseController{
 
         $this->assign('type',$type);
         $this->assign('order',$orderModel);
+        $this->assign('orderId',$orderId);//订单ID
+        $this->assign("orderState",$orderModel['orderstate']);//订单当前状态
         $this->assign('title',$title);
         $this->assign('loader',$loader);
         $this->assign('driver',$driverInfo);

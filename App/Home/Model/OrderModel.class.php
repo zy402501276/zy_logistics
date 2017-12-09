@@ -83,6 +83,7 @@ class OrderModel extends BaseModel
                 'createTime'=> $model['createtime'],//创建时间
                 'distributeTime' => $model['distributetime'],//接单时间
                 'orderId' => $model['id'],//id
+                'orderState' => $model['orderstate'],//订单状态
                 ];
         return ['state'=>true,'result'=>$orderArr];
     }

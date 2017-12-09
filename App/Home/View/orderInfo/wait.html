@@ -2,25 +2,25 @@
 
 <div class="order-details-bar">
 	<ul id="breadcrumb">
-	<li>
-		<a href="#">等待接单</a>
-	</li>
-	<li class="active">
-		<a href="#">前往装货</a>
-	</li>
-	<li class="active">
-		<a href="#">确认装货</a>
-	</li>
-	<li class="active">
-		<a href="#">前往卸货</a>
-	</li>
-	<li class="active">
-		<a href="#">确认卸货</a>
-	</li>
-	<li class="active">
-		<a href="#">订单完成</a>
-	</li>
-</ul>
+		<li <lt name="orderState" value="1" > class="active"</lt> >
+		<a href="{:U('orderInfo/wait',['id'=>$orderId,'checkVal'=>1])}">等待接单</a>
+		</li>
+		<li <lt name="orderState" value="2" > class="active"</lt> >
+		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>1,'checkVal'=>2])}">前往装货</a>
+		</li>
+		<li <lt name="orderState" value="4" > class="active"</lt>>  <!-- 状态3到状态4显示同一一个样式><!-->
+		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>1,'checkVal'=>4])}">确认装货</a>
+		</li>
+		<li <lt name="orderState" value="5" > class="active"</lt>>
+		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>2,'checkVal'=>5])}">前往卸货</a>
+		</li>
+		<li <lt name="orderState" value="7" > class="active"</lt>> <!-- 状态6到状态7显示同一一个样式><!-->
+		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>2,'checkVal'=>7])}">确认卸货</a>
+		</li>
+		<li <lt name="orderState" value="8" > class="active"</lt>>
+		<a href="{:U('orderInfo/finish',['id'=>$orderId,'checkVal'=>8])}">订单完成</a>
+		</li>
+	</ul>
 </div>
 
 
