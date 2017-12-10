@@ -101,6 +101,12 @@ class OrderController extends BaseController
         $s_mobile        = I('s_mobile', '', 'strval');
         // 地理位置
         $s_area          = I('s_area', '', 'strval');
+        $s_area = explode(' ', $s_area);
+        // 过滤具体位置
+        foreach ($s_area as $key => $value) {
+            if (empty($s_area[$key])) unset($s_area[$key]);
+        }
+        $s_area = implode('  ',$s_area);
         // 具体位置
         $s_address       = I('s_address', '', 'strval');
         // 经度
@@ -111,8 +117,6 @@ class OrderController extends BaseController
         $s_startTime     = strtotime(I('s_startTime', '', 'strval'));
         // 预估时间
         $s_estimatedTime = I('s_estimatedTime', '', 'strval');
-        // type
-        $s_type          = I('s_type', '', 'intval');
         // 备注
         $s_desc          = I('s_desc', '', 'strval');
 
@@ -130,17 +134,14 @@ class OrderController extends BaseController
         // 纬度
         $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[1];
         // 卸货时间
-       $d_startTime     = strtotime(I('d_startTime', '', 'strval'));
-        // $d_startTime     = strtotime($_POST['d_startTime']);
+        $d_startTime     = strtotime(I('d_startTime', '', 'strval'));
         // 预估时间
         $d_estimatedTime = I('d_estimatedTime', '', 'intval');
-        // type
-        $d_type          = I('d_type', '', 'intval');
         // 备注
         $d_desc          = I('d_desc', '', 'strval');
 
         // ###物品信息
-        // 姓名
+        // 货物名称
         $goodsName   = I('goodsName');
         // 货物长度
         $goodsLength = I('goodsLength');
@@ -154,8 +155,40 @@ class OrderController extends BaseController
         $count       = I('count');
         // 货物类型
         $goodsType   = I('goodsType');
+        
+
         // ###检验数据   
-        // $result = $this->orderValidate($data);
+        if (empty($orderType)) $this->error('订单类型不能为空');
+        if (empty($transType)) $this->error('运输类型不能为空');
+        if (empty($vehicleType)) $this->error('用车类型不能为空');
+        foreach ($goodsName as $key => $value) {
+           if (empty($goodsName[$key])) $this->error('货物名称不能为空');
+           if (empty($goodsLength[$key])) $this->error('货物长度不能为空');
+           if (empty($goodsWidth[$key])) $this->error('货物宽度不能为空');
+           if (empty($goodsHeight[$key])) $this->error('货物高度不能为空');
+           if (empty($goodsWeight[$key])) $this->error('货物数量不能为空');
+           if (empty($count[$key])) $this->error('货物类型不能为空');
+        }
+        // if (empty($loadRate)) $this->error('装货率不能为空');
+        // if (empty($sumPrice)) $this->error('总费用不能为空');
+        if (empty($s_area)) $this->error('装货地点不能为空');
+        if (empty($s_address)) $this->error('装货详细地址不能为空');
+        if (empty($s_name)) $this->error('装货联系人不能为空');
+        if (empty($s_mobile)) $this->error('装货人手机不能为空');
+        if (empty($s_startTime)) $this->error('装货时间不能为空');
+        if (empty($s_estimatedTime)) $this->error('装货预估时间不能为空');
+        if (empty($s_desc)) $this->error('装货描述不能为空');
+
+        if (empty($d_area)) $this->error('卸货地点不能为空');
+        if (empty($d_address)) $this->error('卸货详细地址不能为空');
+        if (empty($d_name)) $this->error('卸货联系人不能为空');
+        if (empty($d_mobile)) $this->error('卸货人手机不能为空');
+        if (empty($d_startTime)) $this->error('卸货时间不能为空');
+        if (empty($d_estimatedTime)) $this->error('卸货预估时间不能为空');
+        if (empty($d_desc)) $this->error('卸货描述不能为空');
+        
+        
+        
 
         if(($s_startTime+$s_estimatedTime*3600)>($d_startTime)){    //判断装货完成时间是否大于卸货时间
             $this->error('装货完成时间必须小于卸货时间');
@@ -471,6 +504,12 @@ class OrderController extends BaseController
         $s_area          = I('s_area', '', 'strval');
         // 具体位置
         $s_address       = I('s_address', '', 'strval');
+        $s_area = explode(' ', $s_area);
+        // 过滤具体位置
+        foreach ($s_area as $key => $value) {
+            if (empty($s_area[$key])) unset($s_area[$key]);
+        }
+        $s_area = implode('  ',$s_area);
         // 经度
         $s_longitude     = explode('  ', I('s_LngAndLat', '', 'strval'))[0];
         // 纬度
@@ -498,8 +537,7 @@ class OrderController extends BaseController
         // 纬度
         $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[1];
         // 装货时间
-        // $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
-        $d_startTime     = strtotime($_POST['d_startTime']);
+        $d_startTime     = strtotime(I('d_startTime', '', 'strval'));
         // 预估时间
         $d_estimatedTime = I('d_estimatedTime', '', 'intval');
         // type
@@ -524,7 +562,35 @@ class OrderController extends BaseController
         $goodsType   = I('goodsType');
 
         // ###检验数据   
-        // $result = $this->orderValidate($data);
+        if (empty($orderType)) $this->error('订单类型不能为空');
+        if (empty($transType)) $this->error('运输类型不能为空');
+        if (empty($vehicleType)) $this->error('用车类型不能为空');
+        foreach ($goodsName as $key => $value) {
+           if (empty($goodsName[$key])) $this->error('货物名称不能为空');
+           if (empty($goodsLength[$key])) $this->error('货物长度不能为空');
+           if (empty($goodsWidth[$key])) $this->error('货物宽度不能为空');
+           if (empty($goodsHeight[$key])) $this->error('货物高度不能为空');
+           if (empty($goodsWeight[$key])) $this->error('货物数量不能为空');
+           if (empty($count[$key])) $this->error('货物类型不能为空');
+        }
+        // if (empty($loadRate)) $this->error('装货率不能为空');
+        // if (empty($sumPrice)) $this->error('总费用不能为空');
+        if (empty($s_area)) $this->error('装货地点不能为空');
+        if (empty($s_address)) $this->error('装货详细地址不能为空');
+        if (empty($s_name)) $this->error('装货联系人不能为空');
+        if (empty($s_mobile)) $this->error('装货人手机不能为空');
+        if (empty($s_startTime)) $this->error('装货时间不能为空');
+        if (empty($s_estimatedTime)) $this->error('装货预估时间不能为空');
+        if (empty($s_desc)) $this->error('装货描述不能为空');
+
+        if (empty($d_area)) $this->error('卸货地点不能为空');
+        if (empty($d_address)) $this->error('卸货详细地址不能为空');
+        if (empty($d_name)) $this->error('卸货联系人不能为空');
+        if (empty($d_mobile)) $this->error('卸货人手机不能为空');
+        if (empty($d_startTime)) $this->error('卸货时间不能为空');
+        if (empty($d_estimatedTime)) $this->error('卸货预估时间不能为空');
+        if (empty($d_desc)) $this->error('卸货描述不能为空');
+
         if(($s_startTime+$s_estimatedTime*3600)>($d_startTime)){    //判断装货完成时间是否大于卸货时间
             $this->error('装货完成时间必须小于卸货时间');
         }
@@ -799,30 +865,4 @@ class OrderController extends BaseController
     {
         return $this->model_order_goodstype->getAll();
     }
-
-    /**
-     * 检验数据
-     * @param  array $data 数据源
-     * @author shigin <597852546@qq.com>
-     */
-    public function orderValidate($data){
-        if(empty($data['departArea'])){
-            return ['state'=>false,'message'=>'请选择出发地'];
-        }
-        if(empty($data['destArea'])){
-            return ['state'=>false,'message'=>'请选择目的地'];
-        }
-        if(empty($data['departArea'])){
-            return ['state'=>false,'message'=>'请选择出发地'];
-        }
-        if(empty($data['departTime'])){
-            return ['state'=>false,'message'=>'请选择出发时间'];
-        }
-        if(empty($data['arrivedTime'])){
-            return ['state'=>false,'message'=>'请选择到货时间'];
-        }
-        return true;
-    }
-
-
 }
