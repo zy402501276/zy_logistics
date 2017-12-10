@@ -14,12 +14,12 @@
 					<li>
 						<select class="newOrder-type-li" name="orderType" form="dataForm">
 							<option value="1">标准货物</option>
-							<option value="2">非常标准货物</option>
+							<option value="2">非标准货物</option>
 						</select>
 					</li>
 					<li>
 						<select class="newOrder-type-li" name="transType" form="dataForm">
-							<option value="">用车类型</option>
+							<!--<option value="">用车类型</option>-->
 							<option value="1">正常模式</option>
 							<option value="2">拼车模式</option>
 							
@@ -27,7 +27,7 @@
 					</li>
 					<li>
 						<select class="newOrder-type-li" name="vehicleType" form="dataForm">
-							<option value="">用车类型</option>
+							<!--<option value="">用车类型</option>-->
 							<option value="1">重量体积</option>
 							<option value="2">包车</option>
 						</select>
@@ -44,11 +44,11 @@
 					<div class="newOder-goods-information">
 						<div class="title-box">货物信息</div>
 						<ul class="goods-information-ulname">
-							<li>长</li>
-							<li>宽</li>
-							<li>高</li>
-							<li>重量</li>
-							<li>数量</li>
+							<li>长(厘米)</li>
+							<li>宽(厘米)</li>
+							<li>高(厘米)</li>
+							<li>重量(KG)</li>
+							<li>数量(个)</li>
 							<li>类别</li>
 							<li>物品名</li>
 						</ul>
@@ -69,8 +69,8 @@
 								<input type="text" name="count[]" class="a5 aa">
 							</li>
 							<li>
-								<select class="newOrder-type-li a6 aa" name="goodsType[]" >
-									<option value="">请选择</option>
+								<select class="newOrder-type-li" name="goodsType[]" >
+									<!--<option value="">请选择</option>-->
 									<option value="1">固体</option>
 									<option value="2">液体</option>
 								</select>
@@ -140,7 +140,8 @@
 						</div>
 					</div>
 				</div>
-
+				<input type="hidden" name="loadRate" value="" class="loading-rate randRate" style="display:none">
+				<input type="hidden" name="sumPrice" value="" class="amount randPrice" style="display:none">
 				<input type="submit" id="btns" value="" />
 			</form>
 		</div>
@@ -153,11 +154,11 @@
 			</a>
 			<div class="foot-price">
 				<span class="foot-wen">装货率</span>
-				<span class="loading-rate">20%</span>
-				<input type="hidden" name="loadRate" value="" class="loading-rate" style="display:none">
+				<span class="loading-rate" style="display: none;">20%</span>
+
 				<span class="foot-wen">预计金额</span>
-				<span class="amount">600元</span>
-				<input type="hidden" name="sumPrice" value="" class="amount" style="display:none">
+				<span class="amount" style="display: none;">600元</span>
+
 			</div>
 
 		</footer>
@@ -176,7 +177,7 @@
 
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.2&key=199fbca875e24c457e78f2a07468a86f"></script>
 <script type="text/javascript">
-	var newDom = '<ul class="goods-information-ul"><li><input type="text" name="goodsLength[]" value="" ></li><li><input type="text" name="goodsWidth[]" value=""></li><li><input type="text"name="goodsHeight[]" value=""></li><li><input type="text"name="goodsWeight[]" value=""></li><li><input type="text" name="count[]"></li><li><select class="newOrder-type-li" name="goodsType[]" ><option value ="">拼车1</option><option value ="">拼车2</option><option value="">拼车3</option></select><li><input type="text" name="goodsName[]"></li><li><div class="delete-btn"></div></li></ul>';
+	var newDom = '<ul class="goods-information-ul"><li><input type="text" name="goodsLength[]" class="aa a1" value="" ></li><li><input type="text" name="goodsWidth[]" class="aa a2" value=""></li><li><input type="text"name="goodsHeight[]" class="aa a3" value=""></li><li><input type="text"name="goodsWeight[]" class="aa a4" value=""></li><li><input type="text" name="count[]" class="aa a5"></li><li><select class="newOrder-type-li" name="goodsType[]" ><option value ="1">固体</option><option value ="2">液体</option></select><li><input type="text" name="goodsName[]" class="aa a7"></li><li><div class="delete-btn"></div></li></ul>';
 	var domIndex = 0;
 	//新增货物信息
 	$('.add-ul-btn').click(function(event) {

@@ -109,11 +109,10 @@ class OrderController extends Controller
             output(-1, '', '没有传订单id');
         }
         $orderModel = D('Order');
-        $order = $orderModel->where("orderNum = $orderId")->find();
+        $order = $orderModel->where("orderNum = '$orderId'")->find();
         if(empty($order)){
             output(-1, '', '该订单不存在');
         }
-
         $service = D('Order','Service');
         $result = $service->distributeOrder($orderId);
         if(!$result['state']){

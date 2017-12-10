@@ -134,6 +134,6 @@ class BaseModel extends Model
      * @author shigin <597852546@qq.com>
      */
     public function deleteDataFalse($id) {
-        return $this->where('id='.$id)->save(array('is_del'=>VAL_YES));
+        return $this->where('id='.$id)->save(array('state'=>STATE_OFF,'updateTime'=>time()));
     }
 }

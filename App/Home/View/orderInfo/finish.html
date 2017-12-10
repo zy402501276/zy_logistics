@@ -1,23 +1,23 @@
 
 
 <div class="order-details-bar">
-    <ul id="breadcrumb">
-        <li <lt name="orderState" value="1" > class="active"</lt> >
+    <ul id="breadcrumb3">
+        <li <if condition="$orderState gt 1"> class="active" <elseif condition="$orderState lt 1"/>class="active2"<else /></if >>
         <a href="{:U('orderInfo/wait',['id'=>$orderId,'checkVal'=>1])}">等待接单</a>
         </li>
-        <li <lt name="orderState" value="2" > class="active"</lt> >
+        <li <if condition="$orderState gt 2"> class="active" <elseif condition="$orderState lt 2"/>class="active2"<else /></if >>
         <a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>1,'checkVal'=>2])}">前往装货</a>
         </li>
-        <li <lt name="orderState" value="4" > class="active"</lt>>  <!-- 状态3到状态4显示同一一个样式><!-->
+        <li <if condition="$orderState gt 4"> class="active" <elseif condition="($orderState lt 4) AND ($orderState neq 3)"/>class="active2"<elseif condition="$orderState eq 4"/>class="active3"<else /></if >>  <!-- 状态3到状态4显示同一一个样式><!-->
         <a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>1,'checkVal'=>4])}">确认装货</a>
         </li>
-        <li <lt name="orderState" value="5" > class="active"</lt>>
+        <li <if condition="$orderState gt 5"> class="active" <elseif condition="$orderState lt 5"/>class="active2"<else /></if >>
         <a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>2,'checkVal'=>5])}">前往卸货</a>
         </li>
-        <li <lt name="orderState" value="7" > class="active"</lt>> <!-- 状态6到状态7显示同一一个样式><!-->
+        <li <if condition="$orderState gt 7"> class="active" <elseif condition="($orderState lt 7) AND ($orderState neq 6)"/>class="active2"<elseif condition="$orderState eq 7"/>class="active3"<else /></if >> <!-- 状态6到状态7显示同一一个样式><!-->
         <a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>2,'checkVal'=>7])}">确认卸货</a>
         </li>
-        <li <lt name="orderState" value="8" > class="active"</lt>>
+        <li <if condition="$orderState gt 8"> class="active" <elseif condition="$orderState lt 8"/>class="active2"<else /></if >>
         <a href="{:U('orderInfo/finish',['id'=>$orderId,'checkVal'=>8])}">订单完成</a>
         </li>
     </ul>
@@ -26,11 +26,11 @@
 <!--司机信息-->
 <div class="order-complated-head-area">
     <div class="order-icon-left">
-        <img class="complate-icon" src="img/icon-complate.png" alt="暂无图片">
+        <img class="complate-icon" src="__IMG__/grade.png" alt="暂无图片">
         <span class="complate-fonts">订单完成</span>
     </div>
     <div class="driver-headImg-area">
-        <span class="headImg"><img src="" alt="暂无图片"></span>
+        <span class="headImg"><img src="__IMG__/grade.png" alt="暂无图片"></span>
         <div class="driver-name-area">
             <p>{$driver['account']}</p>
             <p><span>联系电话</span><span>{$driver['mobile']}</span></p>
@@ -39,6 +39,9 @@
     <div class="driver-advice">
         评价建议
     </div>
+</div>
+<div class="order-map">
+    <div id="container"></div>
 </div>
 
 <!--评价-->
@@ -59,7 +62,7 @@
 <div class="order-complate-details">
     <div class="order-complate-head">
         <span>订单详情</span>
-        <span>查看路线></span>
+        <span class="see-rotate">查看路线></span>
     </div>
     <ul class="order-complate-details-ul">
         <li>
@@ -106,19 +109,19 @@
             <volist name="goods" id="vo">
                 <ul class="goods-information-ul goods-information-ul2">
                     <li>
-                        <span>长:</span><input type="text" value="{$vo['goodslength']}">
+                        <span>长:</span><input type="text" value="{$vo['goodslength']}厘米">
                     </li>
                     <li>
-                        <span>宽:</span><input type="text" value="{$vo['goodswidth']}">
+                        <span>宽:</span><input type="text" value="{$vo['goodswidth']}厘米">
                     </li>
                     <li>
-                        <span>高:</span><input type="text" value="{$vo['goodsheight']}">
+                        <span>高:</span><input type="text" value="{$vo['goodsheight']}厘米">
                     </li>
                     <li>
-                        <span>重量:</span><input type="text" value="{$vo['goodsweight']}">
+                        <span>重量:</span><input type="text" value="{$vo['goodsweight']}KG">
                     </li>
                     <li>
-                        <span>数量:</span><input type="text" value="{$vo['count']}">
+                        <span>数量:</span><input type="text" value="{$vo['count']}个">
                     </li>
                     <li>
                         <span>类别:</span><input type="text" value="{$vo['name']}">
@@ -138,7 +141,7 @@
                 <span class="tilte-fonts tilte-fonts2 tilte-fonts3">装货信息</span>
                 <ul class="stowage-ul2">
                     <li>
-                        <span>地址:</span><span>{$loader['area']}</span><span class="stowage-icon green-icon"></span>
+                        <span>地址:</span><span>{$loader['area']}</span>
                     </li>
                     <li>
                         <span>负责人:</span><span>{$loader['name']}</span><span>{$loader['mobile']}</span>
@@ -155,7 +158,7 @@
                 <span class="tilte-fonts tilte-fonts2  tilte-fonts3 tilte-fonts4">卸货信息</span>
                 <ul class="stowage-ul2">
                     <li>
-                        <span>地址:</span><span>{$unloader['area']}</span><span class="stowage-icon red-icon"></span>
+                        <span>地址:</span><span>{$unloader['area']}</span>
                     </li>
                     <li>
                         <span>负责人:</span><span>{$unloader['name']}</span><span>{$unloader['mobile']}</span>
@@ -205,3 +208,38 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+        var destLongtide = {$unloader.longitude}; //目的地经度
+        var destLatide = {$unloader.latitude};//目的地纬度
+
+        var depLongtide = {$loader.longitude}; //出发地地经度
+        var deptLatide = {$loader.latitude};//出发地地纬度
+
+
+
+        //基本地图加载
+
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            //center: [116.397428, 39.90923], //地图中心点
+            zoom: 13 //地图显示的缩放级别
+        });
+        //构造路线导航类
+        var driving = new AMap.Driving({
+            map: map,
+        });
+
+        // 根据起终点名称规划驾车导航路线
+        driving.search([depLongtide,deptLatide],[destLongtide,destLatide], function(status, result) {
+            if(status === 'complete' && result.info === 'OK') {
+                var jl = result.routes[0].distance * 1;
+                console.log(jl)
+            } else {
+                alert(result);
+            }
+        });
+
+
+</script>

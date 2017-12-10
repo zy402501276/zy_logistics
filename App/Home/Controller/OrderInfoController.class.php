@@ -70,12 +70,13 @@ class OrderInfoController extends BaseController{
         $this->model_driver  = D('DriverInfo');
 
         //判断该订单的状态是否可以进入下一个页面
-        $orderId = I('id',3);
+        $orderId = I('id');
         $is_check = I('checkVal');//当前页的状态值
         $orderModel = $this->model_order->find($orderId);
         if($orderModel['orderstate'] <$is_check){
             $this->error('订单尚未进行该步骤！请稍后再试');
         }
+
     }
 
     /**
@@ -263,5 +264,16 @@ class OrderInfoController extends BaseController{
                 }
                 break;
         }
+    }
+
+    /**
+     * 软删除
+     * @author: zy
+     */
+    public function fakeDelete(){
+        $orderId = I('id');
+        if(empty($orderId)) $this->error('id不存在');
+        $this->model_order->deleteDataFalse($orderId);
+        $this->success('删除成功',U("orderList/lists"));
     }
 }
