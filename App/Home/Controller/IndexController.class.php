@@ -55,6 +55,7 @@ class IndexController extends BaseController
 
     public function index()
     {	
+        $this->redirect('OrderList/lists');
     }
 
    	/**

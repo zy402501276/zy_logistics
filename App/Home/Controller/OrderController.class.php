@@ -24,19 +24,25 @@ class OrderController extends BaseController
      * 模型对象[订单]
      * @var $model
      */
-    protected $model_order         =  NULL;
+    protected $model_order           = NULL;
 
     /**
-     * 引用对象[下单用户信息表]
+     * 引用对象[下单用户信息]
      * @var $model
      */
-    protected $model_order_charger = NULL;
+    protected $model_order_charger   = NULL;
 
     /**
-     * 引用对象[下单货物信息表]
+     * 引用对象[下单货物信息]
      * @var $model
      */
-    protected $model_order_goods   = NULL;
+    protected $model_order_goods     = NULL;
+
+     /**
+     * 引用对象[货物类型]
+     * @var $model
+     */
+    protected $model_order_goodstype  = NULL;
 
     /**
      * 初始化
@@ -49,15 +55,19 @@ class OrderController extends BaseController
 
         // ###本类调用
         // 实例模型[订单]
-        $this->model_order         = D('Order');
+        $this->model_order             = D('Order');
 
         // ###本类调用
         // 实例模型[下单用户信息表]
-        $this->model_order_charger = D('OrderCharger');
+        $this->model_order_charger     = D('OrderCharger');
 
         // ###本类调用
         // 实例模型[货品信息表]
-        $this->model_order_goods   = D('OrderGoods');
+        $this->model_order_goods       = D('OrderGoods');
+
+        // ###本类调用
+        // 实例模型[货物类型表]
+        $this->model_order_goodstype   = D('Goodstype');
 
         
 
@@ -394,7 +404,9 @@ class OrderController extends BaseController
      * @author shigin <597852546@qq.com>
      */
     public function add()
-    {
+    {   
+        // 指定变量[货物类型]
+        $this->assign('goodsType',  $this->getGoodsType());
         // ###渲染页面
         $this->display('order/add');
     }
@@ -417,6 +429,8 @@ class OrderController extends BaseController
         $this->assign('stevedoring', $this->stevedoring($ordeId));
         // 指定变量[物品数据]
         $this->assign('goods',       $this->getGoods($ordeId)); 
+        // 指定变量[货物类型]
+        $this->assign('goodsType',   $this->getGoodsType());
         
         // ###渲染页面
         $this->display('order/edit');
@@ -775,6 +789,15 @@ class OrderController extends BaseController
     public function getGoods($id)
     {
         return $this->model_order_goods->getDataByOrderId($id);
+    }
+
+     /**
+     * 获取货物信息
+     * @author shigin <597852546@qq.com>
+     */
+    public function getGoodsType()
+    {
+        return $this->model_order_goodstype->getAll();
     }
 
     /**
