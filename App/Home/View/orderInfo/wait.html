@@ -2,22 +2,22 @@
 
 <div class="order-details-bar">
 	<ul id="breadcrumb3">
-		<li <if condition="$orderState gt 1"> class="active" <elseif condition="$orderState lt 1"/>class="active2"<else /></if >>
+		<li class="active3">
 		<a href="{:U('orderInfo/wait',['id'=>$orderId,'checkVal'=>1])}">等待接单</a>
 		</li>
-		<li <if condition="$orderState gt 2"> class="active" <elseif condition="$orderState lt 2"/>class="active2"<else /></if >>
+		<li>
 		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>1,'checkVal'=>2])}">前往装货</a>
 		</li>
-		<li <if condition="$orderState gt 4"> class="active" <elseif condition="($orderState lt 4) AND ($orderState neq 3)"/>class="active2"<elseif condition="$orderState eq 4"/>class="active3"<else /></if >>  <!-- 状态3到状态4显示同一一个样式><!-->
+		<li>  <!-- 状态3到状态4显示同一一个样式><!-->
 		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>1,'checkVal'=>4])}">确认装货</a>
 		</li>
-		<li <if condition="$orderState gt 5"> class="active" <elseif condition="$orderState lt 5"/>class="active2"<else /></if >>
+		<li>
 		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>2,'checkVal'=>5])}">前往卸货</a>
 		</li>
-		<li <if condition="$orderState gt 7"> class="active" <elseif condition="($orderState lt 7) AND ($orderState neq 6)"/>class="active2"<elseif condition="$orderState eq 7"/>class="active3"<else /></if >> <!-- 状态6到状态7显示同一一个样式><!-->
+		<li > <!-- 状态6到状态7显示同一一个样式><!-->
 		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>2,'checkVal'=>7])}">确认卸货</a>
 		</li>
-		<li <if condition="$orderState gt 8"> class="active" <elseif condition="$orderState lt 8"/>class="active2"<else /></if >>
+		<li >
 		<a href="{:U('orderInfo/finish',['id'=>$orderId,'checkVal'=>8])}">订单完成</a>
 		</li>
 	</ul>

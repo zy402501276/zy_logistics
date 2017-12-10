@@ -70,12 +70,12 @@ class OrderInfoController extends BaseController{
         $this->model_driver  = D('DriverInfo');
 
         //判断该订单的状态是否可以进入下一个页面
-        $orderId = I('id',3);
-        $is_check = I('checkVal');//当前页的状态值
-        $orderModel = $this->model_order->find($orderId);
-        if($orderModel['orderstate'] <$is_check){
-            $this->error('订单尚未进行该步骤！请稍后再试');
-        }
+//        $orderId = I('id',3);
+//        $is_check = I('checkVal');//当前页的状态值
+//        $orderModel = $this->model_order->find($orderId);
+//        if($orderModel['orderstate'] <$is_check){
+//            $this->error('订单尚未进行该步骤！请稍后再试');
+//        }
     }
 
     /**
@@ -161,8 +161,8 @@ class OrderInfoController extends BaseController{
      * @author: zy
      */
     public function goArea(){
-        $orderId = I('id',3);
-        $type = I('type',1);//默认1，前往装货 2，前往卸货
+        $orderId = I('id');
+        $type = I('type',1);//默认1，前往装货 2，前往卸货 3 装货中间值 4 卸货中间值
 
         switch ($type){
             case 1:
@@ -173,6 +173,19 @@ class OrderInfoController extends BaseController{
                 $title = '装货信息';
                 break;
             case 2:
+                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
+                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
+                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
+                $title = '卸货信息';
+                break;
+            case 3:
+//                $this->redirectPart($orderId,2);
+                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_LOAD);//获取装货人信息
+                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//装货日期
+                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
+                $title = '装货信息';
+                break;
+            case 4:
                 $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
                 $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
                 $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
@@ -198,7 +211,6 @@ class OrderInfoController extends BaseController{
     public function check(){
         $orderId = I('id',3);
         $type = I('type',2);//默认1，前往装货 2，前往卸货
-
         switch ($type){
             case 1:
                 $loader = $this->model_order_charger->getLoader($orderId,CHARGER_LOAD);//获取装货人信息
@@ -210,7 +222,7 @@ class OrderInfoController extends BaseController{
                 $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
                 $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
                 $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
-                $title = '卸货货信息';
+                $title = '卸货信息';
                 break;
         }
         $orderModel = $this->model_order->find($orderId);//订单信息
@@ -286,12 +298,9 @@ class OrderInfoController extends BaseController{
      * @param $id ordreId
      * @param $nowState 当前状态
      */
-    private function redirectPart($id,$nowState){
+    public  function redirectPart($id){
         $orderModel = $this->model_order->find($id);
 
-        if($orderModel['orderstate'] == $nowState){
-            return true;
-        }
         if($orderModel['orderstate'] == 1){
             $this->redirect('wait',['id'=>$id]);
         }elseif ($orderModel['orderstate'] == 2){
@@ -310,4 +319,6 @@ class OrderInfoController extends BaseController{
             $this->redirect('finish',['id' => $id,'type' => 2]);
         }
     }
+
+
 }
