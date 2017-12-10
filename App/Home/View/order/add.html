@@ -19,7 +19,7 @@
 					</li>
 					<li>
 						<select class="newOrder-type-li" name="transType" form="dataForm">
-							<option value="">用车类型</option>
+							<option value="">运输类型</option>
 							<option value="1">正常模式</option>
 							<option value="2">拼车模式</option>
 							
@@ -71,8 +71,9 @@
 							<li>
 								<select class="newOrder-type-li" name="goodsType[]">
 									<option value="">请选择</option>
-									<option value="1">固体</option>
-									<option value="2">液体</option>
+										<volist name='goodsType' id="vo">
+											<option value="{$vo['id']}">{$vo['name']}</option>
+									</volist>
 								</select>
 							</li>
 							<li>
