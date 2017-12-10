@@ -125,5 +125,18 @@
             $('.loading-time').html(orderTime+'小时');
         }
     });
-
+    function showUnreadNews()
+    {
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET",
+                url: "{:U('orderInfo/redirectPart',['id'=>$order['orderId']])}",
+                dataType: "json",
+                success: function(data) {
+                    window.location.href = data.url;
+                }
+            });
+        });
+    }
+    setInterval('showUnreadNews()',5000);//轮询执行，5000ms一次
 </script>

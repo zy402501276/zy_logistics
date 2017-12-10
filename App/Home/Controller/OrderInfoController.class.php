@@ -302,21 +302,31 @@ class OrderInfoController extends BaseController{
         $orderModel = $this->model_order->find($id);
 
         if($orderModel['orderstate'] == 1){
-            $this->redirect('wait',['id'=>$id]);
+            $url = U('orderInfo/wait',['id'=>$id]);
+            echo json_encode(array("url"=>$url));exit;
         }elseif ($orderModel['orderstate'] == 2){
-            $this->redirect('goArea',['id'=>$id,'type'=>1]);
+            $url = U('orderInfo/goArea',['id'=>$id,'type'=>1]);
+            echo json_encode(array("url"=>$url));exit;
         }elseif ($orderModel['orderstate'] == 3){
-            $this->redirect('goArea',['id'=>$id,'type'=>1]);
+            $url = U('orderInfo/goArea',['id'=>$id,'type'=>1]);
+            echo json_encode(array("url"=>$url));exit;
         }elseif ($orderModel['orderstate'] == 4){
-            $this->redirect('check',['id'=>$id,'type'=>1]);
+            $url = U('orderInfo/check',['id'=>$id,'type'=>1]);
+            echo json_encode(array("url"=>$url));exit;
         }elseif ($orderModel['orderstate'] == 5){
+            $url = U('orderInfo/goArea',['id'=>$id,'type'=>2]);
+            echo json_encode(array("url"=>$url));exit;
             $this->redirect('goArea',['id'=>$id,'type'=>2]);
         }elseif ($orderModel['orderstate'] == 6){
+            $url = U('orderInfo/goArea',['id'=>$id,'type'=>2]);
+            echo json_encode(array("url"=>$url));exit;
             $this->redirect('goArea',['id'=>$id,'type'=>2]);
         }elseif ($orderModel['orderstate'] == 7){
-            $this->redirect('check',['id'=>$id,'type'=>2]);
+            $url = U('orderInfo/check',['id'=>$id,'type'=>2]);
+            echo json_encode(array("url"=>$url));exit;
         }elseif ($orderModel['orderstate'] == 8) {
-            $this->redirect('finish',['id' => $id,'type' => 2]);
+            $url = U('orderInfo/finish',['id'=>$id]);
+            echo json_encode(array("url"=>$url));exit;
         }
     }
 
