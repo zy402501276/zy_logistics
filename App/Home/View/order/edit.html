@@ -19,7 +19,6 @@
 					</li>
 					<li>
 						<select class="newOrder-type-li" name="transType" form="dataForm">
-							<!--<option value="">用车类型</option>-->
 							<option value="1" <eq name="order['transtype']" value="1">selected</eq>>正常模式</option>
 							<option value="2" <eq name="order['transtype']" value="2">selected</eq>>拼车模式</option>
 							
@@ -27,7 +26,6 @@
 					</li>
 					<li>
 						<select class="newOrder-type-li" name="vehicleType" form="dataForm">
-							<!--<option value="">用车类型</option>-->
 							<option value="1" <eq name="order['vehicletype']" value="1">selected</eq>>重量体积</option>
 							<option value="2" <eq name="order['vehicletype']" value="2">selected</eq>>包车</option>
 						</select>
@@ -71,7 +69,6 @@
 								</li>
 								<li>
 									<select class="newOrder-type-li" name="goodsType[]">
-										<option value="">请选择</option>
 										<option value="1" <eq name="vo['goodstype']" value="1">selected</eq>>固体</option>
 										<option value="2" <eq name="vo['goodstype']" value="2">selected</eq>>液体</option>
 									</select>
@@ -130,9 +127,9 @@
 									<span>卸货时间:</span><input type="text" id="test5" name="d_startTime" value="{$stevedoring[2]['starttime']|date="Y-m-d H:i:s",###}">
 									<span class="stowage-span">预计卸货:</span>
 									<select name="d_estimatedTime">
-									<option value="1" <eq name="stevedoring[1]['estimatedtime']" value="1">selected</eq>>1</option>
+									<option value="1" <eq name="stevedoring[2]['estimatedtime']" value="1">selected</eq>>1</option>
 									<option value="2" <eq name="stevedoring[2]['estimatedtime']" value="2">selected</eq>>2</option>
-									<option value="3" <eq name="stevedoring[3]['estimatedtime']" value="3">selected</eq>>3</option>
+									<option value="3" <eq name="stevedoring[2]['estimatedtime']" value="3">selected</eq>>3</option>
 								</select><span class="stowage-hour">小时</span>
 								</li>
 								<li>

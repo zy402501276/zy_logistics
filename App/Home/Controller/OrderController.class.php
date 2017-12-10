@@ -130,8 +130,8 @@ class OrderController extends BaseController
         // 纬度
         $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[1];
         // 卸货时间
-       // $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
-        $d_startTime     = strtotime($_POST['d_startTime']);
+       $d_startTime     = strtotime(I('d_startTime', '', 'strval'));
+        // $d_startTime     = strtotime($_POST['d_startTime']);
         // 预估时间
         $d_estimatedTime = I('d_estimatedTime', '', 'intval');
         // type
