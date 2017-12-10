@@ -70,13 +70,12 @@ class OrderInfoController extends BaseController{
         $this->model_driver  = D('DriverInfo');
 
         //判断该订单的状态是否可以进入下一个页面
-        $orderId = I('id');
+        $orderId = I('id',3);
         $is_check = I('checkVal');//当前页的状态值
         $orderModel = $this->model_order->find($orderId);
         if($orderModel['orderstate'] <$is_check){
             $this->error('订单尚未进行该步骤！请稍后再试');
         }
-
     }
 
     /**
@@ -87,11 +86,13 @@ class OrderInfoController extends BaseController{
         $orderId = I('id',3);
         if(empty($orderId)) $this->error('订单id为空');
         $orderResult = $this->model_order->getOrderInfo($orderId);//获取运货车辆订单类型
+
         if(!$orderResult['state']){
             $this->error($orderResult['message']);
         }
         $order = $orderResult['result'];
 
+        $this->redirectPart($orderId,1);
 
         $goods = $this->model_order_goods->getGoodsById($orderId);//获取货物信息
         $goodsDetail = $this->model_order_goods->getGoodsInfo($orderId);//货物重量数量
@@ -275,5 +276,35 @@ class OrderInfoController extends BaseController{
         if(empty($orderId)) $this->error('id不存在');
         $this->model_order->deleteDataFalse($orderId);
         $this->success('删除成功',U("orderList/lists"));
+    }
+
+    /**
+     * 重定向
+     * @author: zy
+     * @param $id ordreId
+     * @param $nowState 当前状态
+     */
+    private function redirectPart($id,$nowState){
+        $orderModel = $this->model_order->find($id);
+        if($orderModel['orderstate'] == $nowState){
+            return true;
+        }
+        if($orderModel['orderstate'] == 1){
+            $this->redirect('wait',['id'=>$id]);
+        }elseif ($orderModel['orderstate'] == 2){
+            $this->redirect('goArea',['id'=>$id,'type'=>1]);
+        }elseif ($orderModel['orderstate'] == 3){
+            $this->redirect('goArea',['id'=>$id,'type'=>1]);
+        }elseif ($orderModel['orderstate'] == 4){
+            $this->redirect('check',['id'=>$id,'type'=>1]);
+        }elseif ($orderModel['orderstate'] == 5){
+            $this->redirect('goArea',['id'=>$id,'type'=>2]);
+        }elseif ($orderModel['orderstate'] == 6){
+            $this->redirect('goArea',['id'=>$id,'type'=>2]);
+        }elseif ($orderModel['orderstate'] == 7){
+            $this->redirect('check',['id'=>$id,'type'=>2]);
+        }elseif ($orderModel['orderstate'] == 8) {
+            $this->redirect('finish',['id' => $id,'type' => 2]);
+        }
     }
 }
