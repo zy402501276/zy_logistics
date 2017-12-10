@@ -821,7 +821,7 @@ class OrderController extends BaseController
         $this->endTrans($status);
 
         if ($status) {
-            $this->success('更新成功', U('orderInfo/wait',['id'=>$orderId]));
+            $this->success('更新成功', U('OrderInfo/wait',['id'=>$orderId]));
         } else {
             $this->error('更新失败');
         }
