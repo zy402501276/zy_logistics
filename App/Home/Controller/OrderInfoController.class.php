@@ -92,7 +92,7 @@ class OrderInfoController extends BaseController{
         }
         $order = $orderResult['result'];
 
-        $this->redirectPart($orderId,1);
+//        $this->redirectPart($orderId,1);
 
         $goods = $this->model_order_goods->getGoodsById($orderId);//获取货物信息
         $goodsDetail = $this->model_order_goods->getGoodsInfo($orderId);//货物重量数量
@@ -128,6 +128,7 @@ class OrderInfoController extends BaseController{
             $this->error($orderResult['message']);
         }
         $order = $orderResult['result'];
+//        $this->redirectPart($orderId,8);
 
         $goods = $this->model_order_goods->getGoodsById($orderId);//获取货物信息
         $goodsDetail = $this->model_order_goods->getGoodsInfo($orderId);//货物重量数量
@@ -165,6 +166,7 @@ class OrderInfoController extends BaseController{
 
         switch ($type){
             case 1:
+//                $this->redirectPart($orderId,2);
                 $loader = $this->model_order_charger->getLoader($orderId,CHARGER_LOAD);//获取装货人信息
                 $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//装货日期
                 $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
@@ -174,7 +176,7 @@ class OrderInfoController extends BaseController{
                 $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
                 $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
                 $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
-                $title = '卸货货信息';
+                $title = '卸货信息';
                 break;
         }
         $orderModel = $this->model_order->find($orderId);
@@ -286,6 +288,7 @@ class OrderInfoController extends BaseController{
      */
     private function redirectPart($id,$nowState){
         $orderModel = $this->model_order->find($id);
+
         if($orderModel['orderstate'] == $nowState){
             return true;
         }
