@@ -48,7 +48,7 @@ class LoginController extends BaseController
         layout(false);
 
         // ###渲染界面
-        $this->display();
+        $this->display('login/index');
     }
 
     /**
@@ -62,7 +62,6 @@ class LoginController extends BaseController
         $userName     = I('userName', ' ', 'strval');
         // 密码
         $pwd          = I('pwd', '', 'strval');
-
         // ###处理逻辑
         // 判断用户帐号是否存在
         if (empty($userName)) {

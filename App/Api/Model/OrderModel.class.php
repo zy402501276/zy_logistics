@@ -126,7 +126,8 @@ class OrderModel extends Model{
                     'rent_type'  => intval($model['vehicletype']),//用车类型
                     'lct_depart' => $lct_depart,//出发地
                     'lct_dest'   => $lct_dest,//目的地
-                    'times'       => array(intval($model['departtime']),$loadTime,intval($model['arrivedtime']),$unloadTime),//出发时间戳，装货时间，到达时间戳，卸货时间
+                   // 'times'       => array(intval($model['departtime']),$loadTime,intval($model['arrivedtime']),$unloadTime),//出发时间戳，装货时间，到达时间戳，卸货时间
+                    'times'       => array($loader['starttime'],$loadTime,$unloader['starttime'],$unloadTime),//出发时间戳，装货时间，到达时间戳，卸货时间
                     'loader'     => array($loader['name'],$loader['mobile']),//装货人信息
                     'unloader'   => array($unloader['name'],$unloader['mobile']),//卸货人信息
                     'cargo'      => $goodsInfo,//货物
@@ -178,7 +179,7 @@ class OrderModel extends Model{
      * 分割地区
      */
     private function explodeArea($string){
-        $array = explode(" ",$string);
+        $array = explode("  ",$string);
         return $array;
     }
 

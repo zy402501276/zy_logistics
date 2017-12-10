@@ -15,7 +15,7 @@ function generateOrderSn() {
  */
 function getCity($area){
     if(empty($area)) return ;
-    $arr = explode(" ",$area);
+    $arr = explode("  ",$area);
     return $arr[1];
 }
 

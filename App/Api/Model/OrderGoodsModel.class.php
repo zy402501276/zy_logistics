@@ -19,19 +19,18 @@ class OrderGoodsModel extends Model{
     public function findGoodsByPk($id){
         $where['id'] = $id;
         $field = array('goodsName'  =>'name',
-                        'goodsType' => 'type',
+                        'goodstype.name' => 'type',
                         'count' => 'number',
                         'goodsWeight' => 'weight',
-                        'goodsLength',
-                        'goodsWidth',
-                        'goodsHeight',
+                        'goodsLength' =>'length',
+                        'goodsWidth' => 'width',
+                        'goodsHeight' =>'height',
                         );
-        $result = $this->field($field)->where($where)->find();
-        $result['volumn'] = intval($result['goodslength'])*intval($result['goodswidth'])*intval($result['goodsheight']);
-        unset($result['goodsheight']);
-        unset($result['goodslength']);
-        unset($result['goodswidth']);
-
+        $result = $this
+                ->field($field)
+                ->join("LEFT JOIN `goodstype` ON (`goodstype`.id = `ordergoods`.goodstype) ")
+                ->where($where)->find();
+        $result['volumn'] = intval($result['length'])*intval($result['width'])*intval($result['height']);
         $result['number'] = intval($result['number']);
         $result['weight'] = intval($result['weight']);
         return $result;
@@ -45,14 +44,18 @@ class OrderGoodsModel extends Model{
     public function findByOrderId($orderId){
         $where['orderId'] = $orderId;
         $field = array('goodsName'  =>'name',
-            'goodsType' => 'type',
+            'goodstype.name' => 'type',
             'count' => 'number',
             'goodsWeight' => 'weight',
             'goodsLength',
             'goodsWidth',
             'goodsHeight',
         );
-        $result = $this->field($field)->where($where)->select();
+        $result = $this
+                ->field($field)
+                ->join("LEFT JOIN `goodstype` ON (`goodstype`.id = `ordergoods`.goodstype) ")
+                ->where($where)
+                ->select();
         $goodsArr = array();
         if(!empty($result)){
             foreach ($result as $key => $value){
@@ -62,6 +65,9 @@ class OrderGoodsModel extends Model{
                     'number' => intval($value['number']),
                     'weight' => intval($value['weight']),
                     'volumn' => intval($value['goodslength'])*intval($value['goodswidth'])*intval($value['goodsheight']),
+                    'length' => intval($value['goodslenght']),
+                    'width' => intval($value['goodswidth']),
+                    'height' => intval($value['goodsheight']),
                 );
             }
         }

@@ -1,27 +1,27 @@
 
 
-		<div class="order-details-bar">
-			<ul id="breadcrumb3">
-				<li class="active">
-					<a href="#">订单详情</a>
-				</li>
-				<li class="active">
-					<a href="#">前往装货</a>
-				</li>
-				<li>
-					<a href="#">确认装货</a>
-				</li>
-				<li class="active active2">
-					<a href="#">前往卸货</a>
-				</li>
-				<li class="active active2">
-					<a href="#">确认卸货</a>
-				</li>
-				<li class="active active2">
-					<a href="#">订单完成</a>
-				</li>
-			</ul>
-		</div>
+<div class="order-details-bar">
+	<ul id="breadcrumb3">
+		<li <if condition="$orderState gt 1"> class="active" <elseif condition="$orderState lt 1"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/wait',['id'=>$orderId,'checkVal'=>1])}">等待接单</a>
+		</li>
+		<li <if condition="$orderState gt 2"> class="active" <elseif condition="$orderState lt 2"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>1,'checkVal'=>2])}">前往装货</a>
+		</li>
+		<li <if condition="$orderState gt 4"> class="active" <elseif condition="($orderState lt 4) AND ($orderState neq 3)"/>class="active2"<elseif condition="$orderState eq 4"/>class="active3"<else /></if >>  <!-- 状态3到状态4显示同一一个样式><!-->
+		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>1,'checkVal'=>4])}">确认装货</a>
+		</li>
+		<li <if condition="$orderState gt 5"> class="active" <elseif condition="$orderState lt 5"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>2,'checkVal'=>5])}">前往卸货</a>
+		</li>
+		<li <if condition="$orderState gt 7"> class="active" <elseif condition="($orderState lt 7) AND ($orderState neq 6)"/>class="active2"<elseif condition="$orderState eq 7"/>class="active3"<else /></if >> <!-- 状态6到状态7显示同一一个样式><!-->
+		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>2,'checkVal'=>7])}">确认卸货</a>
+		</li>
+		<li <if condition="$orderState gt 8"> class="active" <elseif condition="$orderState lt 8"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/finish',['id'=>$orderId,'checkVal'=>8])}">订单完成</a>
+		</li>
+	</ul>
+</div>
 		<div class="load-goods">
 			<!--左侧地图-->
 			<div class="address-map">
@@ -42,8 +42,8 @@
 				</div>
 				<div class="goods-total">
 					<span class="goods-titles">货物共计 :</span>
-					<span class="loading-span-hei">{$goods['sum(count)']}</span>
-					<span class="loading-span-hei">{$goods['sum(goodsweight)']}件</span>
+					<span class="loading-span-hei">{$goods['sum(count)']}KG</span>
+					<span class="loading-span-hei">{$goods['sum(goodsweight)']}个</span>
 					<span class="loading-span-hei goods-title-detail"><a href="{:U('orderInfo/wait',['id'=>$order['id']])}">货物详情  〉</a></span>
 				</div>
 				<div class="goods-pictures">
@@ -66,7 +66,7 @@
 		<!--遮罩-->
 		<div class="overMasking"></div>
 		<footer>
-			<a href="###" style="float: right;">
+			<a href="{:U('orderInfo/checkOrder',['id'=>$order['id'],'type'=>$type])}" style="float: right;">
 				<div class="place-order">
 					确认装货
 				</div>
@@ -93,7 +93,7 @@
 		panel: "panel"
 	});
 	// 根据起终点经纬度规划驾车导航路线
-	driving.search(new AMap.LngLat(114.064552, 22.548457), new AMap.LngLat(114.164552, 22.548457));
+	driving.search(new AMap.LngLat(driLongtide, dritLatide), new AMap.LngLat(destLongtide, destLatide));
 	//点击地图上的任意一点，获取经纬度
 	map.on('click', function(e) {
 		console.log(e.lnglat.getLng(), e.lnglat.getLat());

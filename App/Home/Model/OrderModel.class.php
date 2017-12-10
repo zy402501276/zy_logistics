@@ -27,6 +27,7 @@ class OrderModel extends BaseModel
             $where['orderState'] = $orderState;
         }
         $where['userId'] = $userId;
+        $wher['state'] = STATE_ON;//正常使用的订单
         $result = $this
         //          ->JOIN("LEFT JOIN `ordergoods` ON `order`.id = `ordergoods`.orderId")
          //         ->JOIN("LEFT JOIN `ordercharger` ON `order`.id = `ordercharger`.orderId")
@@ -38,7 +39,6 @@ class OrderModel extends BaseModel
             $unloader = D('OrderCharger')->getLoader($value['id'],2);//获取卸货人信息
             $goodsInfo = D('OrderGoods')->getGoodsInfo($value['id']);//货物数量重量
             $goodsType =  D('OrderGoods')->getGoodsType($value['id']);//货物类型
-
             $array[] = ['id'          => $value['id'],
                         'createTime' => date('Y-m-d',$value['createtime']),
                         'orderNum'   => $value['ordernum'],
@@ -51,11 +51,12 @@ class OrderModel extends BaseModel
                         'loadTime'    => date('H:i',$loader['starttime']),
                         'loadTimeH'   =>'预计装货'.getCostTime($loader['starttime'],$loader['endtime']),
                         'unloadTime'  => date('H:i',$unloader['starttime']),
-                        'unloadTime'  =>'预计卸货'.getCostTime($unloader['starttime'],$unloader['endtime']),
+                        'unloadTimeH'  =>'预计卸货'.getCostTime($unloader['starttime'],$unloader['endtime']),
                         'num'          => $goodsInfo['sum(count)'],
                         'weight'       => $goodsInfo['sum(goodsweight)'],
                         'goodsType'    => $goodsType,
                         'cost'          => $value['sumprice'],
+                        'orderState'   => $value['orderstate'],
                        ];
         }
         return $array;
@@ -84,6 +85,7 @@ class OrderModel extends BaseModel
                 'createTime'=> $model['createtime'],//创建时间
                 'distributeTime' => $model['distributetime'],//接单时间
                 'orderId' => $model['id'],//id
+                'orderState' => $model['orderstate'],//订单状态
                 ];
         return ['state'=>true,'result'=>$orderArr];
     }

@@ -1,27 +1,26 @@
 
-
-		<div class="order-details-bar">
-			<ul id="breadcrumb">
-				<li class="li-active">
-					<a href="#">订单详情</a>
-				</li>
-				<li>
-					<a href="#">前往装货</a>
-				</li>
-				<li class="active">
-					<a href="#">确认装货</a>
-				</li>
-				<li class="active">
-					<a href="#">前往卸货</a>
-				</li>
-				<li class="active">
-					<a href="#">确认卸货</a>
-				</li>
-				<li class="active">
-					<a href="#">订单完成</a>
-				</li>
-			</ul>
-		</div>
+<div class="order-details-bar">
+	<ul id="breadcrumb3">
+		<li <if condition="$orderState gt 1"> class="active" <elseif condition="$orderState lt 1"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/wait',['id'=>$orderId,'checkVal'=>1])}">等待接单</a>
+		</li>
+		<li <if condition="$orderState gt 2"> class="active" <elseif condition="$orderState lt 2"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>1,'checkVal'=>2])}">前往装货</a>
+		</li>
+		<li <if condition="$orderState gt 4"> class="active" <elseif condition="($orderState lt 4) AND ($orderState neq 3)"/>class="active2"<elseif condition="$orderState eq 4"/>class="active3"<else /></if >>  <!-- 状态3到状态4显示同一一个样式><!-->
+		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>1,'checkVal'=>4])}">确认装货</a>
+		</li>
+		<li <if condition="$orderState gt 5"> class="active" <elseif condition="$orderState lt 5"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/goArea',['id'=>$orderId,'type'=>2,'checkVal'=>5])}">前往卸货</a>
+		</li>
+		<li <if condition="$orderState gt 7"> class="active" <elseif condition="($orderState lt 7) AND ($orderState neq 6)"/>class="active2"<elseif condition="$orderState eq 7"/>class="active3"<else /></if >> <!-- 状态6到状态7显示同一一个样式><!-->
+		<a href="{:U('orderInfo/check',['id'=>$orderId,'type'=>2,'checkVal'=>7])}">确认卸货</a>
+		</li>
+		<li <if condition="$orderState gt 8"> class="active" <elseif condition="$orderState lt 8"/>class="active2"<else /></if >>
+		<a href="{:U('orderInfo/finish',['id'=>$orderId,'checkVal'=>8])}">订单完成</a>
+		</li>
+	</ul>
+</div>
 		<div class="load-goods">
 			<!--左侧地图-->
 			<div class="address-map">
@@ -32,7 +31,7 @@
 			<div class="goods-info">
 				<div class="driver-info">
 					<div class="pop-left">
-						<div class="pop-head-img"></div>
+						<div class="pop-head-img"><img src="__IMG__/grade.png"></div>
 					</div>
 					<div class="pop-right">
 						<span class="driver-name">{$driver['account']}</span>
@@ -49,7 +48,7 @@
 					<p><span class="loading-span-hui">地址 ： </span><span class="loading-span-hei"> {$loader['area']}</span></p>
 					<p><span class="loading-span-hui">联系人 ： </span><span class="loading-span-hei"> {$loader['name']}  {$loader['mobile']}</span></p>
 					<p><span class="loading-span-hui">时间 ： </span><span class="loading-span-hei"> {$loader['starttime'] | date='m-d',###}  {$loader['starttime'] | date='H:i',###} 预计装货{$loader['caculateTime']}小时</span></p>
-					<span class="estimate-time"><span class="loading-span-hei">当前距离目的地<span class="address-dis"></span>公里</span><span class="loading-span-hei">预计</span><span class="loading-time">17:30</span><span class="loading-span-hei">抵达装货地点</span></span>
+					<span class="estimate-time"><span class="loading-span-hei">当前距离目的地<span class="address-dis"></span>公里</span><span class="loading-span-hei">预计</span><span class="loading-time">...小时</span><span class="loading-span-hei">抵达装货地点</span></span>
 					<p><span class="loading-span-hui">备注:{$loader['desc']}</span></p>
 				</div>
 			</div>
@@ -84,11 +83,9 @@
 //	map.on('click', function(e) {
 //		console.log(e.lnglat.getLng(), e.lnglat.getLat());
 //	});
-    var aa = "深圳市";
-    var bb = "深圳站";
-    var cc = "深圳西站"
-
     //基本地图加载
+
+
     var map = new AMap.Map("container", {
         resizeEnable: true,
         //center: [116.397428, 39.90923], //地图中心点
@@ -99,32 +96,16 @@
         map: map,
     });
     // 根据起终点名称规划驾车导航路线
-    driving.search([{
-        keyword: bb,
-        city: aa
-    },
-        {
-            keyword: cc,
-            city: aa
-        }
-    ], function(status, result) {
-        if(status === 'complete' && result.info
-
-            === 'OK') {
+    driving.search([driLongtide, dritLatide], [destLongtide, destLatide], function(status, result) {
+        if(status === 'complete' && result.info === 'OK') {
             var jl = result.routes[0].distance * 1 / 1000;
             console.log(jl)
             $('.address-dis').html(jl);
             //假设车速是5000米/小时
-			var speed = 5000;
             var orderTime = Math.ceil(jl/5000);
             console.log(orderTime);
             $('.loading-time').html(orderTime+'小时');
-        } else {
-            alert(result);
         }
     });
-
-
-
 
 </script>

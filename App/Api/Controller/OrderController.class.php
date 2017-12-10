@@ -109,11 +109,10 @@ class OrderController extends Controller
             output(-1, '', '没有传订单id');
         }
         $orderModel = D('Order');
-        $order = $orderModel->where("orderNum = $orderId")->find();
+        $order = $orderModel->where("orderNum = '$orderId'")->find();
         if(empty($order)){
             output(-1, '', '该订单不存在');
         }
-
         $service = D('Order','Service');
         $result = $service->distributeOrder($orderId);
         if(!$result['state']){
@@ -169,11 +168,12 @@ class OrderController extends Controller
         }
         $model = D('order');
         //$model->orderState = $model::ORDER_STATE_GOTOLOADING;//前往装货
-        $data['orderState'] = $model::ORDER_STATE_GOTOLOADING;
+       // $data['orderState'] = $model::ORDER_STATE_GOTOLOADING;
+        $data['orderState'] = $model::ORDER_STATE_PHOTO; //状态3
         $data['updateTime'] = time();
        // $model->updateTime = time();
         $model->where("orderNum='$orderid'")->save($data);
-        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::ORDER_STATE_GOTOLOADING));exit;
+        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid));exit;
 
     }
 
@@ -188,7 +188,8 @@ class OrderController extends Controller
         }
         $model = D('order');
         //$model->orderState = $model::ORDER_STATE_PHOTO;//装货并拍照
-        $data['orderState'] = $model::ORDER_STATE_PHOTO;
+        //$data['orderState'] = $model::ORDER_STATE_PHOTO;
+        $data['orderState'] = $model::ORDER_STATE_CONFIRM; //状态4
         $data['updateTime'] = time();
         //$model->updateTime = time();
         $model->where("orderNum='$orderid'")->save($data);
@@ -213,7 +214,7 @@ class OrderController extends Controller
         }
         $imgModel->addAll($data);
 
-        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid,'type'=>$model::ORDER_STATE_PHOTO));exit;
+        echo json_encode(array('status'=>0,'msg'=>"",'orderid'=>$orderid));exit;
     }
 
     /**

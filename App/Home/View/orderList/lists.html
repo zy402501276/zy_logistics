@@ -6,13 +6,13 @@
 			<div class="order-progress">
 				<ul class="order-progress-list">
 					<li <eq name="state" value="1">class="order-active"</eq>>
-						<a href="{:U('lists',array('orderState'=>1))}">未处理</a><span class="order-bar"></span><eq name="state" value="1"><span class="message1"></span></eq>
+						<a href="{:U('lists',array('orderState'=>1))}">未处理</a><span class="order-bar"></span><eq name="state" value="1"><span class="message1" style="display:none"></span></eq>
 					</li>
 					<li <eq name="state" value="2">class="order-active"</eq>>
-						<a href="{:U('lists',array('orderState'=>2))}">进行中</a><span class="order-bar"></span><eq name="state" value="2"><span class="message1"></span></eq>
+						<a href="{:U('lists',array('orderState'=>2))}">进行中</a><span class="order-bar"></span><eq name="state" value="2"><span class="message1" style="display:none"></span></eq>
 					</li>
 					<li <eq name="state" value="8">class="order-active"</eq>>
-						<a href="{:U('lists',array('orderState'=>8))}">已完成</a><span class="order-bar"></span><eq name="state" value="8"><span class="message1"></span></eq>
+						<a href="{:U('lists',array('orderState'=>8))}">已完成</a><span class="order-bar"></span><eq name="state" value="8"><span class="message1" style="display:none"></span></eq>
 					</li>
 				</ul>
 			</div>
@@ -24,28 +24,44 @@
 				<span class="num">总重量</span>
 				<span class="category">货物类别</span>
 				<span class="total-amount">总金额</span>
-				<span class="delet"></span>
+				<span class="delet" style="display: none"></span>
 			</div>
 		</div>
 		<div class="order-content">
 			<!--订单消息列表-->
 			<div class="order-table">
 				<div class="order-list-icon">
-					<a href="{:U(order/neworder)}"><span class="add-order"></span></a>
-					<a href="###"><span class="more"></span></a>
+					<a href="{:U('order/add')}"><span class="add-order"></span></a>
+					<!--<a href="###"><span class="more"></span></a>-->
 				</div>
 				<volist name="list" id="list">
-				<a href="{:U('orderInfo/wait',array('id'=>$list['id']))}">
+				<if condition=" $list.orderState eq 1">
+					<a href="{:U('orderInfo/wait',array('id'=>$list['id']))}">  <!-- 等待装货-->
+				<elseif condition=" $list.orderState eq 2"/>
+					<a href="{:U('orderInfo/goArea',array('id'=>$list['id'],'type'=>1))}"><!-- 前往装货-->
+				<elseif condition=" $list.orderState eq 3"/>
+					<a href="{:U('orderInfo/goArea',array('id'=>$list['id'],'type'=>1))}"><!-- 前往装货-->
+				<elseif condition=" $list.orderState eq 4" />
+					<a href="{:U('orderInfo/check',array('id'=>$list['id'],'type'=>1))}"><!-- 确认装货-->
+				<elseif condition=" $list.orderState eq 5" />
+					<a href="{:U('orderInfo/goArea',array('id'=>$list['id'],'type'=>2))}"><!-- 前往卸货-->
+				<elseif condition=" $list.orderState eq 6" />
+					<a href="{:U('orderInfo/goArea',array('id'=>$list['id'],'type'=>2))}"><!-- 前往卸货-->
+				<elseif condition=" $list.orderState eq 7" />
+					<a href="{:U('orderInfo/check',array('id'=>$list['id'],'type'=>2))}"><!-- 确认卸货-->
+				<else/>
+					<a href="{:U('orderInfo/finish',array('id'=>$list['id']))}"><!-- 确认订单-->
+				</if>
 				<div class="order-table-list">
 					<div class="order-table-head">
 						<div class="order-table-left">
-							<span class="message2"></span>
-							<span class="check-span"><input type="checkbox"/></span>
+							<span class="message2" style="display:none"></span>
+							<span class="check-span" style="display: none"><input type="checkbox"/></span>
 							<span class="order-www">{$list['createTime']}</span>
 							<span class="order-www">订单号:{$list['orderNum']}</span>
 						</div>
 						<div class="order-table-right" style="justify-content: flex-end;">
-							<span class="order-state"><span class="order-span evaluation-order">评价订单</span></span>
+							<span class="order-state"><span class="order-span evaluation-order" style="display: none">评价订单</span></span>
 						</div>
 
 					</div>
@@ -74,7 +90,7 @@
 						</div>
 						<div class="order-price">
 							<span>￥{$list['cost']}</span><br />
-							<span>(含加急费:￥0.00)</span>
+							<!--<span>(含加急费:￥0.00)</span>-->
 						</div>
 					</div>
 

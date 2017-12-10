@@ -94,7 +94,6 @@ class OrderController extends BaseController
         // 总费用
         $sumPrice    = I('sumPrice', '', 'intval');
 
-
         // ###装货人信息
         // 姓名
         $s_name          = I('s_name', '', 'strval');
@@ -129,9 +128,10 @@ class OrderController extends BaseController
         // 经度
         $d_longitude     = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
-        // 装货时间
-        $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
+        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[1];
+        // 卸货时间
+       // $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
+        $d_startTime     = strtotime($_POST['d_startTime']);
         // 预估时间
         $d_estimatedTime = I('d_estimatedTime', '', 'intval');
         // type
@@ -154,10 +154,12 @@ class OrderController extends BaseController
         $count       = I('count');
         // 货物类型
         $goodsType   = I('goodsType');
-
         // ###检验数据   
         // $result = $this->orderValidate($data);
-        
+
+        if(($s_startTime+$s_estimatedTime*3600)>($d_startTime)){    //判断装货完成时间是否大于卸货时间
+            $this->error('装货完成时间必须小于卸货时间');
+        }
         // ###保存数据
         do {
             // 状态值
@@ -380,7 +382,7 @@ class OrderController extends BaseController
         $this->endTrans($status);
 
         if ($status) {
-            $this->success('新增成功', U('add'));
+            $this->success('新增成功', U('orderList/lists'));
         } else {
             $this->error('新增失败');
         }
@@ -406,7 +408,7 @@ class OrderController extends BaseController
         // 指定变量[货物类型]
         $this->assign('goodsType',  $this->getGoodsType());
         // ###渲染页面
-        $this->display();
+        $this->display('order/add');
     }
 
     /**
@@ -431,7 +433,7 @@ class OrderController extends BaseController
         $this->assign('goodsType',   $this->getGoodsType());
         
         // ###渲染页面
-        $this->display();
+        $this->display('order/edit');
     }
 
     /**
@@ -494,9 +496,10 @@ class OrderController extends BaseController
         // 经度
         $d_longitude     = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
         // 纬度
-        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[0];
+        $d_latitude      = explode('  ', I('d_LngAndLat', '', 'strval'))[1];
         // 装货时间
-        $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
+        // $d_startTime     = strtotime(I('d_startTime', '', 'intval'));
+        $d_startTime     = strtotime($_POST['d_startTime']);
         // 预估时间
         $d_estimatedTime = I('d_estimatedTime', '', 'intval');
         // type
@@ -522,7 +525,9 @@ class OrderController extends BaseController
 
         // ###检验数据   
         // $result = $this->orderValidate($data);
-        
+        if(($s_startTime+$s_estimatedTime*3600)>($d_startTime)){    //判断装货完成时间是否大于卸货时间
+            $this->error('装货完成时间必须小于卸货时间');
+        }
         // ###更新数据
         do {
             // 状态值
@@ -750,7 +755,7 @@ class OrderController extends BaseController
         $this->endTrans($status);
 
         if ($status) {
-            $this->success('更新成功', U('orderInfo/wait'));
+            $this->success('更新成功', U('orderInfo/wait',['id'=>$orderId]));
         } else {
             $this->error('更新失败');
         }

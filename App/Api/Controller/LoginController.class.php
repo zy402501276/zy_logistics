@@ -29,7 +29,7 @@ class LoginController extends Controller{
         if(!$res['state']){
             output(-1,'',$res['message']);
         }
-        session(array('id','expire'=>'60'));//session_id和过期时间
+        session(array('id','expire'=>'300'));//session_id和过期时间
         session('user',$res['result']);
         echo json_encode(array('status'=>0,'msg'=>'登录成功','login_name'=>$res['result']['account']));exit;
     }
