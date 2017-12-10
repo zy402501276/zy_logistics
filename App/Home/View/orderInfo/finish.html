@@ -245,7 +245,7 @@
             $(document).ready(function() {
                 $.ajax({
                     type: "GET",
-                    url: "{:U('orderInfo/redirectPart',['id'=>$order['orderId']])}",
+                    url: "{:U('orderInfo/redirectPart',['id'=>$orderId])}",
                     dataType: "json",
                     success: function(data) {
                         window.location.href = data.url;
