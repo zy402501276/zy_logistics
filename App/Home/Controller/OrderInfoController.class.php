@@ -217,12 +217,14 @@ class OrderInfoController extends BaseController{
                 $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//装货日期
                 $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
                 $title = '装货信息';
+                $button = '确认装货';
                 break;
             case 2:
                 $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
                 $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
                 $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
                 $title = '卸货信息';
+                $button = '确认卸货';
                 break;
         }
         $orderModel = $this->model_order->find($orderId);//订单信息
@@ -242,6 +244,7 @@ class OrderInfoController extends BaseController{
         $this->assign('loader',$loader);
         $this->assign('driver',$driverInfo);
         $this->assign('goods',$goodsDetail);
+        $this->assign('button',$button);
         $this->assign('loadImg',$imgArr['loadImg']);
         $this->assign('signImg',$imgArr['signImg']);
 
