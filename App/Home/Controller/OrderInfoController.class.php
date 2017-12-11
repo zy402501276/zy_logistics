@@ -178,19 +178,19 @@ class OrderInfoController extends BaseController{
                 $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
                 $title = '卸货信息';
                 break;
-            case 3:
-//                $this->redirectPart($orderId,2);
-                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_LOAD);//获取装货人信息
-                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//装货日期
-                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
-                $title = '装货信息';
-                break;
-            case 4:
-                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
-                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
-                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
-                $title = '卸货信息';
-                break;
+//            case 3:
+////                $this->redirectPart($orderId,2);
+//                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_LOAD);//获取装货人信息
+//                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//装货日期
+//                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
+//                $title = '装货信息';
+//                break;
+//            case 4:
+//                $loader = $this->model_order_charger->getLoader($orderId,CHARGER_UNLOAD);//获取卸货人信息
+//                $loader['timeDay'] = date('m-d',$loader['starttime']).getWeek($loader['starttime']);//卸货日期
+//                $loader['caculateTime'] = getCostTime($loader['starttime'],$loader['endtime']);//预计时间
+//                $title = '卸货信息';
+//                break;
         }
         $orderModel = $this->model_order->find($orderId);
         $driverInfo = $this->model_driver->getDriver($orderModel['driverid']); //司机信息
