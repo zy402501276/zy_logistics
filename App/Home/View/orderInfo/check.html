@@ -85,13 +85,12 @@
 
 
 
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.2&key=199fbca875e24c457e78f2a07468a86f&plugin=AMap.Driving"></script>
 <script type="text/javascript">
-    var destLongtide = {$loader.longitude}; //目的地经度
-    var destLatide = {$loader.latitude};//目的地纬度
+    var destLongtide = "{$loader.longitude}"; //目的地经度
+    var destLatide = "{$loader.latitude}";//目的地纬度
 
-    var driLongtide = {$driver.longitude}; //司机目前地经度
-    var dritLatide = {$driver.latitude};//司机目前地纬度
+    var driLongtide = "{$driver.longitude}"; //司机目前地经度
+    var dritLatide = "{$driver.latitude}";//司机目前地纬度
 
 	//自动定位
 	var map = new AMap.Map("container", {
