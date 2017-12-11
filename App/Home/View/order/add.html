@@ -88,6 +88,11 @@
 							<ul class="stowage-ul">
 								<li>
 									<span>装货地点:</span><input type="text" id="input_id" name="s_area" class="a8 aa"><input type="hidden" id="jingdu" name="s_LngAndLat" value="" />
+									<!--<input type="hidden" class="shipment_province" name="shipment_province"  value="" />-->
+									<!--<input type="hidden" class="shipment_city" name="shipment_city"  value="" />-->
+									<!--<input type="hidden" class="shipment_district" name="shipment_district"  value="" />-->
+									<!--<input type="hidden" class="shipment_township" name="shipment_township"  value="" />-->
+									<!--<input type="hidden" class="shipment_street" name="shipment_street"  value="" />-->
 									<div id="map_box"></div>
 									<div id='message'></div>
 									<span class="stowage-icon green-icon"></span>
@@ -115,6 +120,11 @@
 							<ul class="stowage-ul">
 								<li>
 									<span>卸货地点:</span><input type="text" id="input_id2" name="d_area" class="a9 aa"><input type="hidden" id="jingdu2" name="d_LngAndLat" value="" />
+									<!--<input type="hidden" class="discharged_province" name="discharged_province" value="" />-->
+									<!--<input type="hidden" class="discharged_city" name="discharged_city"  value="" />-->
+									<!--<input type="hidden" class="discharged_district" name="discharged_district"  value="" />-->
+									<!--<input type="hidden" class="discharged_township" name="discharged_township" value="" />-->
+									<!--<input type="hidden" class="discharged_street" name="discharged_street"  value="" />-->
 									<div id="map_box2"></div>
 									<span class="stowage-icon red-icon"></span>
 								</li>
@@ -337,7 +347,12 @@
 				if(status == 'complete') {
 					$('#input_id').val(result.regeocode.addressComponent.province + '  ' + result.regeocode.addressComponent.city + '  ' +
 						result.regeocode.addressComponent.district + '   ' + result.regeocode.addressComponent.township + '  ' + result.regeocode.addressComponent.street);
-					$('#jingdu').val(e.lnglat.L + '  ' + e.lnglat.N);
+//                    $('.shipment_province').val(result.regeocode.addressComponent.province);
+//                    $('.shipment_city').val(result.regeocode.addressComponent.city);
+//                    $('.shipment_district').val(result.regeocode.addressComponent.district);
+//                    $('.shipment_township').val(result.regeocode.addressComponent.township);
+//                    $('.shipment_street').val(result.regeocode.addressComponent.street);
+                    $('#jingdu').val(e.lnglat.L + '  ' + e.lnglat.N);
 					message.innerHTML = ''
 				} else {
 					message.innerHTML = '无法获取地址'
@@ -366,7 +381,12 @@
 				if(status == 'complete') {
 					$('#input_id2').val(result.regeocode.addressComponent.province + '  ' + result.regeocode.addressComponent.city + '  ' +
 						result.regeocode.addressComponent.district + '   ' + result.regeocode.addressComponent.township + '  ' + result.regeocode.addressComponent.street);
-					$('#jingdu2').val(e.lnglat.L + '  ' + e.lnglat.N);
+//                    $('.discharged_province').val(result.regeocode.addressComponent.province);
+//                    $('.discharged_city').val(result.regeocode.addressComponent.city);
+//                    $('.discharged_district').val(result.regeocode.addressComponent.district);
+//                    $('.discharged_township').val(result.regeocode.addressComponent.township);
+//                    $('.discharged_street').val(result.regeocode.addressComponent.street);
+                    $('#jingdu2').val(e.lnglat.L + '  ' + e.lnglat.N);
 					message.innerHTML = ''
 				} else {
 					message.innerHTML = '无法获取地址'
